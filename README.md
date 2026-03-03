@@ -45,6 +45,13 @@ go-game/
 
 ### Docker Compose
 
+0. clone git repo
+
+   ```bash
+   git clone https://github.com/ava1anch33/go-game.git
+
+   ```
+
 1. make sure you have [Docker](https://www.docker.com/) in your computer
 
 2. start
