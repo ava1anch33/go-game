@@ -57,14 +57,13 @@ go-game/
 
    # or if u want make it run at backend, can check at docker desktop
    docker compose up --build -d
+
+   # open to preview web and ionic mobile
+   xdg-open || open || start http://localhost:5173
+   xdg-open || open || start http://localhost:8100
    ```
 
-3. following url to check
-
-    Web ：<http://localhost:5173>
-    Ionic ：<http://localhost:8100>
-
-4. stop service
+3. To Stop service
 
     ```bash
     cd go-game
