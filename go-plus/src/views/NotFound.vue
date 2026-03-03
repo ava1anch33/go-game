@@ -18,7 +18,7 @@ let app: PIXI.Application | null = null
 let particleLayer: PIXI.Container | null = null
 
 const goHome = () => {
-	router.replace({ name: 'Practice' })
+	router.replace({ name: 'AiGame' })
 }
 
 function random(min: number, max: number) {

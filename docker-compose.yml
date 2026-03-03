@@ -38,6 +38,23 @@ services:
     networks:
       - app-net
 
+  ionic-frontend:             # ai-go Ionic 前端
+    build:
+      context: ./ai-go
+      dockerfile: Dockerfile
+    ports:
+      - "8100:8100"
+    volumes:
+      - ./ai-go:/app
+      - ai_go_node_modules:/app/node_modules
+    environment:
+      - VITE_API_URL=http://api:4000/api/v1
+    command: npm run dev
+    depends_on:
+      - api
+    networks:
+      - app-net
+
   mongo:
     image: mongo:7
     ports:
@@ -53,6 +70,7 @@ volumes:
   mongo-data:
   frontend_node_modules:
   backend_node_modules:
+  ai_go_node_modules:
 
 networks:
   app-net:

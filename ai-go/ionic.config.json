@@ -1,0 +1,8 @@
+{
+  "name": "AI-go",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue-vite",
+  "id": "1bc03176"
+}

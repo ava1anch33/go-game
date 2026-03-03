@@ -49,6 +49,9 @@ export default defineConfig({
       interval: 10000,            
       binaryInterval: 1000,
       followSymlinks: true
+    },
+    hmr: {
+      clientPort: 5173
     }
   }
 })
