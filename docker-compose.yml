@@ -25,12 +25,12 @@ services:
 
   frontend:
     build:
-      context: ./go-plus
+      context: ./go-game-frontend
       dockerfile: Dockerfile
     ports:
       - "5173:5173"
     volumes:
-      - ./go-plus:/app
+      - ./go-game-frontend:/app
       - frontend_node_modules:/app/node_modules
     command: npm run dev
     depends_on:
@@ -40,12 +40,12 @@ services:
 
   ionic-frontend:             # ai-go Ionic 前端
     build:
-      context: ./ai-go
+      context: ./go-game-ionic-frontend
       dockerfile: Dockerfile
     ports:
       - "8100:8100"
     volumes:
-      - ./ai-go:/app
+      - ./go-game-ionic-frontend:/app
       - ai_go_node_modules:/app/node_modules
     environment:
       - VITE_API_URL=http://api:4000/api/v1

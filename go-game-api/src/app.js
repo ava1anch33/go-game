@@ -12,7 +12,9 @@ app.use(morgan('dev'));
 app.use(cors({
   origin: [
     'http://localhost:5173',
-    'http://frontend:5173'  
+    'http://frontend:5173',
+    'http://localhost:8100',
+    'http://ionic-frontend:8100'
   ],
   credentials: true,             
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
