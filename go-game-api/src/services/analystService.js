@@ -1,4 +1,4 @@
-import { pos } from "../utils/index.js"
+import { getStoneIntArrayPosition } from "../utils/index.js"
 
 class AnalystService {
     SIZE = 19
@@ -42,7 +42,7 @@ class AnalystService {
                     const sign = base > 0 ? 1 : -1
 
 
-                    influence[pos(x, y)] += sign * value
+                    influence[getStoneIntArrayPosition(x, y)] += sign * value
                 }
             }
         }

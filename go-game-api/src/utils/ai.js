@@ -1,5 +1,9 @@
-import { getLegalMoves, cloneBoard, setStone, hasLiberty, captureGroups, pos, coord } from './board.js'
+import { getLegalMoves, cloneBoard, setStone, hasLiberty, captureGroups, getStoneIntArrayPosition, getStone2DPosition } from './board.js'
 
+/**
+ * A simple AI for Go using Monte Carlo Tree Search (MCTS).
+ * It performs random simulations to evaluate moves and selects the one with the most wins.
+ */
 class SimpleGoAI {
   constructor(board, simulations = 5) {
     this.board = board;
@@ -39,7 +43,7 @@ class SimpleGoAI {
 
     const stats = new Map();
     for (const move of moves) {
-      stats.set(pos(move.x, move.y), { visits: 0, wins: 0 });
+      stats.set(getStoneIntArrayPosition(move.x, move.y), { visits: 0, wins: 0 });
     }
 
     for (let i = 0; i < this.simulations; i++) {
@@ -50,7 +54,7 @@ class SimpleGoAI {
 
       const score = this.simulate(3 - color);
 
-      const key = pos(move.x, move.y);
+      const key = getStoneIntArrayPosition(move.x, move.y);
       const s = stats.get(key);
       s.visits++;
       s.wins += score > 0 ? 1 : (score < 0 ? 0 : 0.5);
@@ -61,7 +65,7 @@ class SimpleGoAI {
     for (const [key, s] of stats) {
       if (s.visits > bestVisits) {
         bestVisits = s.visits;
-        bestMove = coord(key);
+        bestMove = getStone2DPosition(key);
       }
     }
     return bestMove;
