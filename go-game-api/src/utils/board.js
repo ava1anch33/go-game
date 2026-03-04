@@ -1,5 +1,5 @@
 export {
-  pos,
+  getStoneIntArrayPosition,
   getStone2DPosition,
   isStonePositionValid,
   getPositionStoneValue,
