@@ -1,5 +1,12 @@
 import AppError from '../utils/AppError.js';
 
+/**
+ * Sends an error response to the client.
+ * It formats the error response based on the environment and handles specific error types like validation errors, cast errors, and duplicate key errors.
+ * In production, it hides the stack trace and detailed error information, 
+ * while in development, it includes them for easier debugging.
+ * It also standardizes the error response format with a success flag, error message, and an optional error code.
+ */
 const sendErrorResponse = (res, err) => {
   const statusCode = err.statusCode || 500;
   const isProduction = process.env.NODE_ENV === 'production';

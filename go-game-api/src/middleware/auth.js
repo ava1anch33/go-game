@@ -7,6 +7,11 @@ if (!VALID_API_KEY) {
   throw new Error('API_KEY environment variable is required');
 }
 
+/**
+ * Authenticates requests using a simple API key.
+ * if the API key is missing or invalid, it responds with a 401 Unauthorized error.
+ * If the API key is valid, it allows the request to proceed to the next middleware or route handler.
+ */
 export const apiKeyAuth = (req, res, next) => {
   const apiKey = req.headers['x-api-key'] || req.headers['api-key'];
   
@@ -30,6 +35,11 @@ export const apiKeyAuth = (req, res, next) => {
   next();
 };
 
+/**
+ * Middleware to protect routes that require authentication.
+ * It checks for a JWT token in the Authorization header, verifies it, and attaches the decoded user information to the request object.
+ * If the token is missing, invalid, or expired, it responds with a 401 Unauthorized error.
+ */
 export const protect = async (req, res, next) => {
   let token;
 
