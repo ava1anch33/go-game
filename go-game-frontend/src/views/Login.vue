@@ -66,6 +66,7 @@
 </template>
 
 <script setup lang="ts">
+import { showDialog } from '@/components/ui/dialog'
 import { useAuthStore } from '@/stores'
 
 const auth = useAuthStore()
@@ -93,19 +94,22 @@ const handleSubmit = async () => {
 			await auth.register(formData.email, formData.password)
 		}
 		router.replace({ name: 'AiGame' })
-	} catch (error) {}
+	} catch (error) {
+		await showDialog({
+			title: '错误',
+			content: '登录或注册失败，请重试。',
+		})
+	}
 }
 </script>
 
 <style scoped>
-/* --- 布局与背景 (保留你要求的背景色) --- */
 .go-login-container {
 	min-height: 100vh;
 	width: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	/* 核心背景色 */
 	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 	position: relative;
 	overflow: hidden;

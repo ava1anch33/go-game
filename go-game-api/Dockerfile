@@ -6,10 +6,10 @@ RUN apk add --no-cache bash git python3 make g++
 
 COPY package*.json ./
 
-RUN npm ci
+RUN npm ci --legacy-peer-deps
 
 COPY . .
 
 EXPOSE 4000
 
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "start"]
