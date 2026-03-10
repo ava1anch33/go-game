@@ -1,0 +1,13 @@
+{
+  "login": {
+    "title": "바둑 · 경계",
+    "email": "이메일",
+    "password": "비밀번호",
+    "submit": "바둑",
+    "noAccount": "아직 계정이 없으신가요?",
+    "registerNow": "지금 가입하기",
+    "backToGame": "바둑판으로 돌아가기",
+    "newToGame": "바둑 세계에 처음 오신 분",
+    "confirmPassword": "비밀번호 확인"
+  }
+}

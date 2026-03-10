@@ -11,8 +11,8 @@
 			<div class="stone stone-white"></div>
 
 			<div class="header">
-				<h1 class="title">弈 · 境</h1>
-				<p class="subtitle">{{ isLogin ? '重返棋局' : '初入棋坛' }}</p>
+				<h1 class="title">{{ $t('login.title') }}</h1>
+				<p class="subtitle">{{ isLogin ? $t('login.backToGame') : $t('login.newToGame') }}</p>
 			</div>
 
 			<form @submit.prevent="handleSubmit" class="form-body">
