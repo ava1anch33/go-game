@@ -70,13 +70,12 @@ go-game/
    # create new bash window 
    cd go-game-frontend 
    npm run dev
-   
+
    # create new bash window 
    cd go-game-ionic-frontend 
    npm run dev 
 
-   xdg-open || open || start http://localhost:5173
-   xdg-open || open || start http://localhost:8100
+   # open your browser and go to http://localhost:5173 and http://localhost:8100
    ```
 
 3. To Stop service
