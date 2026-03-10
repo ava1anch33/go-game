@@ -6,7 +6,7 @@ services:
     ports:
       - "4000:4000"
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development
       - PORT=4000
       - MONGO_URI=mongodb://mongo:27017/gogame
       - API_KEY=comp7270_api_key
@@ -15,50 +15,18 @@ services:
       - JWT_ACCESS_EXPIRY=15m
       - JWT_REFRESH_EXPIRY=7d
     volumes:
-      - ./go-game-api:/app     
-      - backend_node_modules:/app/node_modules    
+      - ./go-game-api:/app
+      - backend_node_modules:/app/node_modules
     depends_on:
       - mongo
-    command: npm run start
-    networks:
-      - app-net
-
-  frontend:
-    build:
-      context: ./go-game-frontend
-      dockerfile: Dockerfile
-    ports:
-      - "5173:5173"
-    volumes:
-      - ./go-game-frontend:/app
-      - frontend_node_modules:/app/node_modules
     command: npm run dev
-    depends_on:
-      - api
-    networks:
-      - app-net
-
-  ionic-frontend:             # ai-go Ionic 前端
-    build:
-      context: ./go-game-ionic-frontend
-      dockerfile: Dockerfile
-    ports:
-      - "8100:8100"
-    volumes:
-      - ./go-game-ionic-frontend:/app
-      - ai_go_node_modules:/app/node_modules
-    environment:
-      - VITE_API_URL=http://api:4000/api/v1
-    command: npm run dev
-    depends_on:
-      - api
     networks:
       - app-net
 
   mongo:
     image: mongo:7
     ports:
-      - "27017:27017"   
+      - "27017:27017"
     volumes:
       - mongo-data:/data/db
     environment:
@@ -68,9 +36,7 @@ services:
 
 volumes:
   mongo-data:
-  frontend_node_modules:
   backend_node_modules:
-  ai_go_node_modules:
 
 networks:
   app-net:

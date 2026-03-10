@@ -59,13 +59,22 @@ go-game/
    ```bash
    cd go-game
 
-   # build and start all services
+   # build and start backend and mongoDB service
    docker compose up --build
 
    # or if u want make it run at backend, can check at docker desktop
    docker compose up --build -d
 
-   # open to preview web and ionic mobile
+   # start frontend and ionic dev preview
+
+   # create new bash window 
+   cd go-game-frontend 
+   npm run dev
+   
+   # create new bash window 
+   cd go-game-ionic-frontend 
+   npm run dev 
+
    xdg-open || open || start http://localhost:5173
    xdg-open || open || start http://localhost:8100
    ```

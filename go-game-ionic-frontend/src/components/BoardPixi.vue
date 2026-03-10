@@ -5,7 +5,9 @@
 			backgroundImage: `url(${boardImg})`,
 		}"
 		class="canvas-wrapper"
-		@click.stop="handleBoardClick"
+		@pointerdown="handleBoardTouch"
+		@touchstart.prevent="handleBoardTouch"
+		@mousedown="handleBoardTouch"
 	></div>
 </template>
 
@@ -41,9 +43,9 @@ watch(
 	{ deep: true },
 )
 
-const padding = 60
+const padding = 20
 const displaySize = computed(() => {
-	return Math.floor(( - padding) / game.size) * game.size
+	return Math.floor((window.innerWidth - padding) / game.size) * game.size
 })
 const cellSize = computed(() => displaySize.value / game.size)
 
@@ -243,11 +245,23 @@ function rerender() {
 }
 
 // handle board click event
-const handleBoardClick = (e: MouseEvent) => {
+const handleBoardTouch = (e: TouchEvent | MouseEvent | PointerEvent) => {
 	if (props.forbiddenClick) return
 	const rect = (e.currentTarget as HTMLElement).getBoundingClientRect()
-	const x = Math.floor((e.clientX - rect.left) / cellSize.value)
-	const y = Math.floor((e.clientY - rect.top) / cellSize.value)
+	
+	let clientX: number;
+	let clientY: number;
+
+	if ('touches' in e && e.touches.length > 0) {
+		clientX = e.touches[0].clientX;
+		clientY = e.touches[0].clientY;
+	} else {
+		clientX = (e as PointerEvent | MouseEvent).clientX;
+		clientY = (e as PointerEvent | MouseEvent).clientY;
+	}
+
+	const x = Math.floor((clientX - rect.left) / cellSize.value);
+	const y = Math.floor((clientY - rect.top) / cellSize.value);
 
 	if (x < 0 || y < 0 || x >= game.size || y >= game.size) return
 
