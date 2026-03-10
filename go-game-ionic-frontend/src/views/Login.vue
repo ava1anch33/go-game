@@ -18,7 +18,7 @@
                     <div class="stone stone-white"></div>
 
                     <div class="header ion-text-center">
-                        <h1 class="title">弈 · 境</h1>
+                        <h1 class="title">{{ $t('login.title') }}</h1>
                         <p class="subtitle">{{ isLogin ? '重返棋局' : '初入棋坛' }}</p>
                     </div>
 

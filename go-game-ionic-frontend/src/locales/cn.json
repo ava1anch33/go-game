@@ -1,0 +1,13 @@
+{
+  "login": {
+    "title": "弈 · 境",
+    "email": "邮件",
+    "password": "密码",
+    "submit": "弈",
+    "noAccount": "还没有账号？",
+    "registerNow": "立即注册",
+    "backToGame": "重返棋局",
+    "newToGame": "初入棋局",
+    "confirmPassword": "确认密码"
+  }
+}
