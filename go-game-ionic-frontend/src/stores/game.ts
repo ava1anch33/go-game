@@ -1,4 +1,4 @@
-// import { apiAiThinking, apiCreateNewGame, apiGivenGameAnalyst } from '@/api'
+import { apiAiThinking, apiCreateNewGame, apiGivenGameAnalyst } from '@/api'
 import { Stone } from '@/types'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
@@ -363,27 +363,27 @@ export const useGameStore = defineStore('game', () => {
 		}
 	}
 
-	// async function createNewGame(name: string, aiFirst: boolean) {
-	// 	const {
-	// 		board: newBoard,
-	// 		currentPlayer: newCurrentPlayer,
-	// 		gameId: id,
-	// 	} = await apiCreateNewGame(name, aiFirst)
-	// 	reRenderBoardFromBackend(newBoard, newCurrentPlayer, id)
-	// }
+	async function createNewGame(name: string, aiFirst: boolean) {
+		const {
+			board: newBoard,
+			currentPlayer: newCurrentPlayer,
+			gameId: id,
+		} = await apiCreateNewGame(name, aiFirst)
+		reRenderBoardFromBackend(newBoard, newCurrentPlayer, id)
+	}
 
-	// async function getAiThinking(aiAttempts: number) {
-	// 	if (!gameId.value) return
-	// 	const {
-	// 		aiSuccess,
-	// 		board: newBoard,
-	// 		currentPlayer: newCurrentPlayer,
-	// 	} = await apiAiThinking(board, gameId.value, currentPlayer.value, aiAttempts)
-	// 	if (aiSuccess) {
-	// 		reRenderBoardFromBackend(newBoard, newCurrentPlayer)
-	// 	}
-	// 	return aiSuccess
-	// }
+	async function getAiThinking(aiAttempts: number) {
+		if (!gameId.value) return
+		const {
+			aiSuccess,
+			board: newBoard,
+			currentPlayer: newCurrentPlayer,
+		} = await apiAiThinking(board, gameId.value, currentPlayer.value, aiAttempts)
+		if (aiSuccess) {
+			reRenderBoardFromBackend(newBoard, newCurrentPlayer)
+		}
+		return aiSuccess
+	}
 
 	function reRenderBoardFromBackend(
 		newBoard: Array<number>,
@@ -408,11 +408,11 @@ export const useGameStore = defineStore('game', () => {
 		return safeArray
 	}
 
-	// async function analystImgGame() {
-	// 	const { influence: newInfluence } = await apiGivenGameAnalyst(board)
-	// 	batchSetInfluenceBoard(convertArrayToInt8Array(newInfluence))
-	// 	toggleChanged()
-	// }
+	async function analystImgGame() {
+		const { influence: newInfluence } = await apiGivenGameAnalyst(board)
+		batchSetInfluenceBoard(convertArrayToInt8Array(newInfluence))
+		toggleChanged()
+	}
 
 	return {
 		// state
@@ -431,8 +431,8 @@ export const useGameStore = defineStore('game', () => {
 		undo,
 		determineWhoIsWinner,
 		reset,
-		// createNewGame,
-		// getAiThinking,
-		// analystImgGame,
+		createNewGame,
+		getAiThinking,
+		analystImgGame,
 	}
 })
