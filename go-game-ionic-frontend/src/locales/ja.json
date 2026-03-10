@@ -9,5 +9,10 @@
     "backToGame": "棋局に戻る",
     "newToGame": "棋界へようこそ",
     "confirmPassword": "パスワード確認"
+  },
+  "tabs": {
+    "analysis": "分析",
+    "aiGame": "対局",
+    "settings": "設定"
   }
 }

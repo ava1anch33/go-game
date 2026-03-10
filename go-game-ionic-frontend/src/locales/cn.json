@@ -9,5 +9,10 @@
     "backToGame": "重返棋局",
     "newToGame": "初入棋局",
     "confirmPassword": "确认密码"
+  },
+  "tabs": {
+    "analysis": "分析",
+    "aiGame": "对弈",
+    "settings": "设置"
   }
 }

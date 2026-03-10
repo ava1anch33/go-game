@@ -1,5 +1,7 @@
 <template>
     <ion-page>
+        <custom-header :title="$t('login.title')"></custom-header>
+
         <ion-content 
             :fullscreen="true" 
             class="go-login-content" 
@@ -11,63 +13,63 @@
 
             <div class="center-container">
                 <div class="glass-card ion-padding">
-                    <div class="grid-line line-h"></div>
-                    <div class="grid-line line-v"></div>
+                <div class="grid-line line-h"></div>
+                <div class="grid-line line-v"></div>
 
-                    <div class="stone stone-black"></div>
-                    <div class="stone stone-white"></div>
+                <div class="stone stone-black"></div>
+                <div class="stone stone-white"></div>
 
-                    <div class="header ion-text-center">
-                        <h1 class="title">{{ $t('login.title') }}</h1>
-                        <p class="subtitle">{{ isLogin ? '重返棋局' : '初入棋坛' }}</p>
+                <div class="header ion-text-center">
+                    <h1 class="title">{{ $t('login.title') }}</h1>
+                    <p class="subtitle">{{ isLogin ? $t('login.backToGame') : $t('login.newToGame') }}</p>
+                </div>
+
+                <form @submit.prevent="handleSubmit" class="form-body">
+                    <ion-item lines="full" class="input-item">
+                    <ion-label label-placement="floating">{{ $t('login.email') }}</ion-label>
+                    <ion-input
+                        v-model="formData.email"
+                        type="email"
+                        autocomplete="email"
+                        required
+                    ></ion-input>
+                    </ion-item>
+
+                    <ion-item lines="full" class="input-item">
+                    <ion-label label-placement="floating">{{ $t('login.password') }}</ion-label>
+                    <ion-input
+                        v-model="formData.password"
+                        type="password"
+                        autocomplete="current-password"
+                        required
+                    ></ion-input>
+                    </ion-item>
+
+                    <transition name="fade-slide">
+                    <ion-item v-if="!isLogin" lines="full" class="input-item">
+                        <ion-label label-placement="floating">{{ $t('login.confirmPassword') }}</ion-label>
+                        <ion-input
+                        v-model="formData.confirmPassword"
+                        type="password"
+                        autocomplete="new-password"
+                        required
+                        ></ion-input>
+                    </ion-item>
+                    </transition>
+
+                    <div class="actions ion-margin-top">
+                    <ion-button expand="block" type="submit" class="btn-main" shape="round">
+                        {{ isLogin ? $t('login.submit') : $t('login.submit') }}
+                    </ion-button>
                     </div>
+                </form>
 
-                    <form @submit.prevent="handleSubmit" class="form-body">
-                        <ion-item lines="full" class="input-item">
-                            <ion-label label-placement="floating">Email</ion-label>
-                            <ion-input
-                                v-model="formData.email"
-                                type="email"
-                                autocomplete="email"
-                                required
-                            ></ion-input>
-                        </ion-item>
-
-                        <ion-item lines="full" class="input-item">
-                            <ion-label label-placement="floating">密碼</ion-label>
-                            <ion-input
-                                v-model="formData.password"
-                                type="password"
-                                autocomplete="current-password"
-                                required
-                            ></ion-input>
-                        </ion-item>
-
-                        <transition name="fade-slide">
-                            <ion-item v-if="!isLogin" lines="full" class="input-item">
-                            <ion-label position="floating">確認密碼</ion-label>
-                            <ion-input
-                                v-model="formData.confirmPassword"
-                                type="password"
-                                autocomplete="new-password"
-                                required
-                            ></ion-input>
-                            </ion-item>
-                        </transition>
-
-                        <div class="actions ion-margin-top">
-                            <ion-button expand="block" type="submit" class="btn-main" shape="round">
-                            {{ isLogin ? '登入' : '註冊' }}
-                            </ion-button>
-                        </div>
-                    </form>
-
-                    <div class="footer ion-text-center ion-margin-top">
-                        <span>{{ isLogin ? '還不是會員？' : '已有帳號？' }}</span>
-                        <a href="#" @click.prevent="toggleMode" class="toggle-link">
-                            {{ isLogin ? '立即註冊' : '前往登入' }}
-                        </a>
-                    </div>
+                <div class="footer ion-text-center ion-margin-top">
+                    <span>{{ isLogin ? $t('login.noAccount') : '已有帳號？' }}</span>
+                    <a href="#" @click.prevent="toggleMode" class="toggle-link">
+                    {{ isLogin ? $t('login.registerNow') : '前往登入' }}
+                    </a>
+                </div>
                 </div>
             </div>
         </ion-content>
@@ -80,6 +82,7 @@ import { showDialog } from '@/components/ui/dialog';
 import { useAuthStore } from '@/stores';
 import { useRouter } from 'vue-router';
 import { reactive, ref } from 'vue';
+import CustomHeader from '@/components/ui/CustomHeader.vue';
 
 const auth = useAuthStore();
 const router = useRouter();
@@ -285,5 +288,23 @@ const handleSubmit = async () => {
 .fade-slide-leave-to {
   opacity: 0;
   transform: translateY(-15px);
+}
+
+lang-select {
+  --padding-start: 8px;
+  --padding-end: 8px;
+  --placeholder-color: white;
+  --placeholder-opacity: 0.8;
+  color: white;
+  font-size: 0.95rem;
+  max-width: 140px;
+}
+
+.lang-select::part(placeholder) {
+  color: white;
+}
+
+.lang-select::part(text) {
+  color: white;
 }
 </style>

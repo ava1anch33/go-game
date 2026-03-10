@@ -9,5 +9,10 @@
     "backToGame": "바둑판으로 돌아가기",
     "newToGame": "바둑 세계에 처음 오신 분",
     "confirmPassword": "비밀번호 확인"
+  },
+  "tabs": {
+    "analysis": "분석",
+    "aiGame": "인공지능 대국",
+    "settings": "설정"
   }
 }

@@ -9,5 +9,10 @@
     "backToGame": "Return to Game",
     "newToGame": "New to the Game",
     "confirmPassword": "Confirm"
+  },
+  "tabs": {
+    "analysis": "Analysis",
+    "aiGame": "AI Game",
+    "settings": "Settings"
   }
 }
