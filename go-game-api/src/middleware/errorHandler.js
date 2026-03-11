@@ -1,56 +1,56 @@
-import AppError from '../utils/AppError.js';
+import AppError from '../utils/AppError.js'
 
 /**
  * Sends an error response to the client.
  * It formats the error response based on the environment and handles specific error types like validation errors, cast errors, and duplicate key errors.
- * In production, it hides the stack trace and detailed error information, 
+ * In production, it hides the stack trace and detailed error information,
  * while in development, it includes them for easier debugging.
  * It also standardizes the error response format with a success flag, error message, and an optional error code.
  */
 const sendErrorResponse = (res, err) => {
-  const statusCode = err.statusCode || 500;
-  const isProduction = process.env.NODE_ENV === 'production';
+    const statusCode = err.statusCode || 500
+    const isProduction = process.env.NODE_ENV === 'production'
 
-  const response = {
-    success: false,
-    error: err.message || 'Something went wrong',
-    code: err.code || 'UNKNOWN_ERROR',
-  };
+    const response = {
+        success: false,
+        error: err.message || 'Something went wrong',
+        code: err.code || 'UNKNOWN_ERROR',
+    }
 
-  if (!isProduction) {
-    response.stack = err.stack;
-    response.details = err.details;
-  }
+    if (!isProduction) {
+        response.stack = err.stack
+        response.details = err.details
+    }
 
-  if (err.name === 'ValidationError') {
-    response.code = 'VALIDATION_ERROR';
-    response.details = Object.values(err.errors).map(e => e.message);
-  }
+    if (err.name === 'ValidationError') {
+        response.code = 'VALIDATION_ERROR'
+        response.details = Object.values(err.errors).map((e) => e.message)
+    }
 
-  if (err.name === 'CastError') {
-    response.code = 'INVALID_ID';
-    response.error = 'Invalid ID format';
-  }
+    if (err.name === 'CastError') {
+        response.code = 'INVALID_ID'
+        response.error = 'Invalid ID format'
+    }
 
-  if (err.code === 11000) {
-    response.code = 'DUPLICATE_KEY';
-    response.error = 'Duplicate entry';
-  }
-  
-  return res.status(statusCode).json(response);
-};
+    if (err.code === 11000) {
+        response.code = 'DUPLICATE_KEY'
+        response.error = 'Duplicate entry'
+    }
+
+    return res.status(statusCode).json(response)
+}
 
 export const errorHandler = (err, req, res, next) => {
-  if (err instanceof AppError) {
-    return sendErrorResponse(res, err);
-  }
+    if (err instanceof AppError) {
+        return sendErrorResponse(res, err)
+    }
 
-  const appErr = new AppError(
-    err.message || 'Internal Server Error',
-    err.statusCode || 500,
-    err.code || 'INTERNAL_SERVER_ERROR'
-  );
+    const appErr = new AppError(
+        err.message || 'Internal Server Error',
+        err.statusCode || 500,
+        err.code || 'INTERNAL_SERVER_ERROR',
+    )
 
-  console.error('Unhandled Error:', err);
-  sendErrorResponse(res, appErr);
-};
+    console.error('Unhandled Error:', err)
+    sendErrorResponse(res, appErr)
+}

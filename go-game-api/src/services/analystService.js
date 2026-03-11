@@ -1,4 +1,4 @@
-import { getStoneIntArrayPosition } from "../utils/index.js"
+import { getStoneIntArrayPosition } from '../utils/index.js'
 
 class AnalystService {
     SIZE = 19
@@ -11,9 +11,9 @@ class AnalystService {
     }
 
     async givenBoardAnalyst(passBoard) {
-        const board = Int8Array.from(passBoard);
-        const influence = this.expandInfluence(board);
-        return { influence };
+        const board = Int8Array.from(passBoard)
+        const influence = this.expandInfluence(board)
+        return { influence }
     }
 
     expandInfluence(board) {
@@ -32,15 +32,12 @@ class AnalystService {
                     const dist = Math.abs(dx) + Math.abs(dy)
                     if (dist > 6) continue
 
-
                     const value = Math.floor(Math.abs(base) / (1 << dist))
                     if (value === 0) continue
-
 
                     const x = this.reflect(x0 + dx)
                     const y = this.reflect(y0 + dy)
                     const sign = base > 0 ? 1 : -1
-
 
                     influence[getStoneIntArrayPosition(x, y)] += sign * value
                 }

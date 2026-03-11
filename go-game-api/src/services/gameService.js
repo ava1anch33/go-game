@@ -1,4 +1,4 @@
-import { gameRepository } from '../repositories/index.js';
+import { gameRepository } from '../repositories/index.js'
 import { setStone, SimpleGoAI, captureGroups, cloneBoard } from '../utils/index.js'
 
 class GameService {
@@ -9,47 +9,39 @@ class GameService {
     }
 
     async createNewGame({ userId, name, aiFirst }) {
-        const board = new Int8Array(this.boardSize).fill(0);
+        const board = new Int8Array(this.boardSize).fill(0)
 
-        let currentPlayer = 1;  // black go first
+        let currentPlayer = 1 // black go first
 
         // let ai go first
         if (aiFirst) {
-            currentPlayer = 2;
-            const aiFirstMove = { x: 19 - 3, y: 2 };  // top right star position
-            setStone(board, aiFirstMove.x, aiFirstMove.y, 1);
+            currentPlayer = 2
+            const aiFirstMove = { x: 19 - 3, y: 2 } // top right star position
+            setStone(board, aiFirstMove.x, aiFirstMove.y, 1)
         }
 
-        const gameId = await gameRepository.createNewGame(
-            userId, 
-            name,
-            board, 
-            currentPlayer
-        )
+        const gameId = await gameRepository.createNewGame(userId, name, board, currentPlayer)
 
         return { gameId, board, currentPlayer }
     }
 
     async aiThinking(passBoard, gameId, cPlayer, aiAttempts = 2) {
-        const ai = new SimpleGoAI(cloneBoard(passBoard), aiAttempts);
-        const aiMove = ai.think(cPlayer);
+        const ai = new SimpleGoAI(cloneBoard(passBoard), aiAttempts)
+        const aiMove = ai.think(cPlayer)
 
-        let aiSuccess = false;
+        let aiSuccess = false
         if (aiMove) {
-            setStone(passBoard, aiMove.x, aiMove.y, cPlayer);   
-            captureGroups(passBoard, aiMove.x, aiMove.y, cPlayer);
-            aiSuccess = true;
+            setStone(passBoard, aiMove.x, aiMove.y, cPlayer)
+            captureGroups(passBoard, aiMove.x, aiMove.y, cPlayer)
+            aiSuccess = true
         }
-        const currentPlayer = this.toggleCurrentPlayer(cPlayer);
-        await gameRepository.updateGameInfo(passBoard, gameId, currentPlayer);
-        return { aiSuccess, board: passBoard, currentPlayer };
+        const currentPlayer = this.toggleCurrentPlayer(cPlayer)
+        await gameRepository.updateGameInfo(passBoard, gameId, currentPlayer)
+        return { aiSuccess, board: passBoard, currentPlayer }
     }
 
     async endGame(board, gameId) {
-        await gameRepository.endGame(
-            gameId, 
-            board
-        )
+        await gameRepository.endGame(gameId, board)
     }
 }
 

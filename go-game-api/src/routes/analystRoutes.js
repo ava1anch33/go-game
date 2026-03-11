@@ -1,12 +1,9 @@
-import express from 'express';
-import { analystController } from '../controllers/index.js';
-import { protect } from '../middleware/auth.js';
+import express from 'express'
+import { analystController } from '../controllers/index.js'
+import { protect } from '../middleware/auth.js'
 
-const router = express.Router();
-router.use(protect);
-router.post(
-    '/game-analyst', 
-    analystController.givenGameAnalyst
-)
+const router = express.Router()
+router.use(protect)
+router.post('/game-analyst', analystController.givenGameAnalyst)
 
-export default router;
+export default router

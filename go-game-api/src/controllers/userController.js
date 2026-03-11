@@ -1,13 +1,13 @@
-import { userService } from "../services/index.js"
-import { successResponse, checkUserExist } from '../utils/index.js';
+import { userService } from '../services/index.js'
+import { successResponse, checkUserExist } from '../utils/index.js'
 
 async function getUserInfo(req, res, next) {
     try {
         const tokenUser = checkUserExist(req)
         const user = await userService.getUserById(tokenUser.id)
         successResponse(res, {
-            user
-        });
+            user,
+        })
     } catch (error) {
         next(error)
     }
@@ -15,16 +15,16 @@ async function getUserInfo(req, res, next) {
 
 async function logout(req, res, next) {
     try {
-        const currentUser = req.user;
+        const currentUser = req.user
         if (!currentUser) {
-            return successResponse(res, { message: "ok" });
+            return successResponse(res, { message: 'ok' })
         }
-        await userService.clearAllRefreshTokens(currentUser._id);
+        await userService.clearAllRefreshTokens(currentUser._id)
         successResponse(res, {
-            message: "ok"
-        });
+            message: 'ok',
+        })
     } catch (error) {
-        next(error);
+        next(error)
     }
 }
 
@@ -33,8 +33,8 @@ async function updateUserInfo(req, res, next) {
         const { user: newUserInfo } = req.body
         const user = await userService.updateUser(newUserInfo)
         successResponse(res, {
-            user
-        });
+            user,
+        })
     } catch (error) {
         next(error)
     }
@@ -43,5 +43,5 @@ async function updateUserInfo(req, res, next) {
 export default {
     getUserInfo,
     updateUserInfo,
-    logout
+    logout,
 }

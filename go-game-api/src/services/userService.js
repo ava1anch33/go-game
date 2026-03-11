@@ -1,73 +1,73 @@
-import bcrypt from 'bcryptjs';
-import { userRepository } from '../repositories/index.js';
-import AppError from '../utils/AppError.js';
+import bcrypt from 'bcryptjs'
+import { userRepository } from '../repositories/index.js'
+import AppError from '../utils/AppError.js'
 
 class UserService {
-  async register(userData) {
-    const { email, password } = userData;
+    async register(userData) {
+        const { email, password } = userData
 
-    if (await userRepository.findByEmail(email)) {
-      throw new AppError('Email already exists', 409, 'EMAIL_DUPLICATE');
+        if (await userRepository.findByEmail(email)) {
+            throw new AppError('Email already exists', 409, 'EMAIL_DUPLICATE')
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 12)
+
+        const newUser = await userRepository.create({
+            ...userData,
+            password: hashedPassword,
+        })
+
+        return newUser
     }
 
-    const hashedPassword = await bcrypt.hash(password, 12);
+    async login(userData) {
+        const { email, password } = userData
+        const user = await userRepository.findByEmail(email)
 
-    const newUser = await userRepository.create({
-      ...userData,
-      password: hashedPassword,
-    });
+        if (!user) {
+            throw new AppError('Invalid credentials', 401, 'INVALID_CREDENTIALS')
+        }
 
-    return newUser;
-  }
+        const isMatch = await bcrypt.compare(password, user.password)
+        if (!isMatch) {
+            throw new AppError('Invalid credentials', 401, 'INVALID_CREDENTIALS')
+        }
+        await userRepository.updateLastLogin(user._id)
+        user.lastLoginAt = new Date()
 
-  async login(userData) {
-    const { email, password } = userData;
-    const user = await userRepository.findByEmail(email);
-    
-    if (!user) {
-      throw new AppError('Invalid credentials', 401, 'INVALID_CREDENTIALS');
+        return user
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      throw new AppError('Invalid credentials', 401, 'INVALID_CREDENTIALS');
+    async clearAllRefreshTokens(userId) {
+        await userRepository.clearRefreshTokens(userId)
     }
-    await userRepository.updateLastLogin(user._id);
-    user.lastLoginAt = new Date();
 
-    return user;
-  }
-
-  async clearAllRefreshTokens(userId) {
-    await userRepository.clearRefreshTokens(userId)
-  }
-
-  async getUserById(id) {
-    const user = await userRepository.findById(id);
-    if (!user) {
-      throw new AppError('User not found', 404, 'USER_NOT_FOUND');
+    async getUserById(id) {
+        const user = await userRepository.findById(id)
+        if (!user) {
+            throw new AppError('User not found', 404, 'USER_NOT_FOUND')
+        }
+        return user
     }
-    return user;
-  }
 
-  async getUserByEmail(email) {
-    const user = await userRepository.findByEmail(email);
-    if (!user) {
-      throw new AppError('User not found', 404, 'USER_NOT_FOUND');
+    async getUserByEmail(email) {
+        const user = await userRepository.findByEmail(email)
+        if (!user) {
+            throw new AppError('User not found', 404, 'USER_NOT_FOUND')
+        }
+        return user
     }
-    return user;
-  }
 
-  async updateUser(id, updateData) {
-    const forbiddenFields = ['password', 'role', 'googleId', 'wechatId', 'githubId'];
-    forbiddenFields.forEach(field => delete updateData[field]);
+    async updateUser(id, updateData) {
+        const forbiddenFields = ['password', 'role', 'googleId', 'wechatId', 'githubId']
+        forbiddenFields.forEach((field) => delete updateData[field])
 
-    const updated = await userRepository.updateById(id, updateData);
-    if (!updated) {
-      throw new AppError('User not found', 404, 'USER_NOT_FOUND');
+        const updated = await userRepository.updateById(id, updateData)
+        if (!updated) {
+            throw new AppError('User not found', 404, 'USER_NOT_FOUND')
+        }
+        return updated
     }
-    return updated;
-  }
 }
 
-export const userService = new UserService();
+export const userService = new UserService()

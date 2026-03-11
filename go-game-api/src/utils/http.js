@@ -1,20 +1,20 @@
 export const successResponse = (res, data = null, meta = null, status = 200) => {
-  const response = {
-    success: true,
-    data,
-  };
+    const response = {
+        success: true,
+        data,
+    }
 
-  if (meta) {
-    response.meta = meta;
-  }
+    if (meta) {
+        response.meta = meta
+    }
 
-  res.status(status).json(response);
-};
+    res.status(status).json(response)
+}
 
 export function checkUserExist(req) {
-    const currentUser = req.user;
+    const currentUser = req.user
     if (!currentUser) {
-        throw new AppError('token info missing', 401);
+        throw new AppError('token info missing', 401)
     }
     return currentUser
 }
