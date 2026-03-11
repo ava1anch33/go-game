@@ -1,18 +1,18 @@
 {
-  "login": {
-    "title": "囲碁 ・ 境",
-    "email": "メールアドレス",
-    "password": "パスワード",
-    "submit": "囲碁",
-    "noAccount": "まだアカウントをお持ちでない方",
-    "registerNow": "今すぐ登録",
-    "backToGame": "棋局に戻る",
-    "newToGame": "棋界へようこそ",
-    "confirmPassword": "パスワード確認"
-  },
-  "tabs": {
-    "analysis": "分析",
-    "aiGame": "対局",
-    "settings": "設定"
-  }
+    "login": {
+        "title": "囲碁 ・ 境",
+        "email": "メールアドレス",
+        "password": "パスワード",
+        "submit": "囲碁",
+        "noAccount": "まだアカウントをお持ちでない方",
+        "registerNow": "今すぐ登録",
+        "backToGame": "棋局に戻る",
+        "newToGame": "棋界へようこそ",
+        "confirmPassword": "パスワード確認"
+    },
+    "tabs": {
+        "analysis": "分析",
+        "aiGame": "対局",
+        "settings": "設定"
+    }
 }

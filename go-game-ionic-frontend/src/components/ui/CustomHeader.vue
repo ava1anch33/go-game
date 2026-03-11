@@ -2,11 +2,15 @@
     <ion-header>
         <ion-toolbar
             style="
-                --background: linear-gradient(135deg, rgba(102,126,234,0.4) 0%, rgba(118,75,162,0.4) 100%); 
+                --background: linear-gradient(
+                    135deg,
+                    rgba(102, 126, 234, 0.4) 0%,
+                    rgba(118, 75, 162, 0.4) 100%
+                );
                 --border-color: transparent;
             "
         >
-            <ion-title>{{ title }}</ion-title> 
+            <ion-title>{{ title }}</ion-title>
             <ion-buttons slot="end">
                 <ion-select
                     :value="locale"
@@ -28,14 +32,14 @@
 </template>
 
 <script setup lang="ts">
-import { setLanguage } from '@/locales';
-import { IonHeader, IonToolbar, IonTitle, IonButtons, IonSelect, IonSelectOption } from '@ionic/vue';
-import { earthSharp } from 'ionicons/icons';
-import { useI18n } from 'vue-i18n';
+import { setLanguage } from '@/locales'
+import { IonHeader, IonToolbar, IonTitle, IonButtons, IonSelect, IonSelectOption } from '@ionic/vue'
+import { earthSharp } from 'ionicons/icons'
+import { useI18n } from 'vue-i18n'
 
 defineProps<{
     title: string
 }>()
 
-const { locale } = useI18n();
+const { locale } = useI18n()
 </script>

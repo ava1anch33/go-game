@@ -11,158 +11,158 @@ type RawBody = BodyInit | (() => Promise<BodyInit>)
 type JsonBodyFactory = JsonBody | (() => Promise<JsonBody>)
 
 type BaseOptions = Omit<RequestInit, 'body'> & {
-	params?: Record<string, string | number | boolean>
+    params?: Record<string, string | number | boolean>
 }
 
 export type HttpOptions =
-	| (BaseOptions & {
-			payloadType?: 'json'
-			body?: JsonBodyFactory
-	  })
-	| (BaseOptions & {
-			payloadType: 'raw' | 'upload'
-			body?: RawBody
-	  })
+    | (BaseOptions & {
+          payloadType?: 'json'
+          body?: JsonBodyFactory
+      })
+    | (BaseOptions & {
+          payloadType: 'raw' | 'upload'
+          body?: RawBody
+      })
 
 class HttpClient {
-	private static instance: HttpClient
-	private baseUrl = '/api/v1'
+    private static instance: HttpClient
+    private baseUrl = '/api/v1'
 
-	private isRefreshing = false
-	private refreshQueue: Array<() => void> = []
+    private isRefreshing = false
+    private refreshQueue: Array<() => void> = []
 
-	static getInstance() {
-		if (!this.instance) this.instance = new HttpClient()
-		return this.instance
-	}
+    static getInstance() {
+        if (!this.instance) this.instance = new HttpClient()
+        return this.instance
+    }
 
-	private async request<T>(
-		method: HttpMethod,
-		url: string,
-		options: HttpOptions = {},
-		retried = false,
-	): Promise<T> {
-		const { params, body, payloadType = 'json', headers: customHeaders, ...rest } = options
+    private async request<T>(
+        method: HttpMethod,
+        url: string,
+        options: HttpOptions = {},
+        retried = false,
+    ): Promise<T> {
+        const { params, body, payloadType = 'json', headers: customHeaders, ...rest } = options
 
-		let fullUrl = this.baseUrl + (url.startsWith('/') ? url : `/${url}`)
-		if (params) {
-			const q = new URLSearchParams(Object.entries(params).map(([k, v]) => [k, String(v)]))
-			if (q.toString()) fullUrl += `?${q}`
-		}
+        let fullUrl = this.baseUrl + (url.startsWith('/') ? url : `/${url}`)
+        if (params) {
+            const q = new URLSearchParams(Object.entries(params).map(([k, v]) => [k, String(v)]))
+            if (q.toString()) fullUrl += `?${q}`
+        }
 
-		const headers = new Headers(customHeaders)
-		const auth = useAuthStore()
+        const headers = new Headers(customHeaders)
+        const auth = useAuthStore()
 
-		if (auth.token) {
-			headers.set('Authorization', `Bearer ${auth.token}`)
-		}
+        if (auth.token) {
+            headers.set('Authorization', `Bearer ${auth.token}`)
+        }
 
-		const apiKey = import.meta.env.VITE_API_KEY
-		
-		if (apiKey) {
-			headers.set('X-API-Key', apiKey)
-		}
+        const apiKey = import.meta.env.VITE_API_KEY
 
-		if (payloadType === 'json') {
-			headers.set('Content-Type', 'application/json')
-		}
+        if (apiKey) {
+            headers.set('X-API-Key', apiKey)
+        }
 
-		let resolvedBody: any
+        if (payloadType === 'json') {
+            headers.set('Content-Type', 'application/json')
+        }
 
-		if (typeof body === 'function') {
-			resolvedBody = await body()
-		} else {
-			resolvedBody = body
-		}
+        let resolvedBody: any
 
-		if (payloadType === 'json' && resolvedBody != null) {
-			resolvedBody = JSON.stringify(resolvedBody)
-		}
+        if (typeof body === 'function') {
+            resolvedBody = await body()
+        } else {
+            resolvedBody = body
+        }
 
-		const config: RequestInit = {
-			method,
-			headers,
-			credentials: 'include',
-			body: method === 'GET' || method === 'DELETE' ? undefined : resolvedBody,
-			...rest,
-		}
+        if (payloadType === 'json' && resolvedBody != null) {
+            resolvedBody = JSON.stringify(resolvedBody)
+        }
 
-		const res = await fetch(fullUrl, config)
+        const config: RequestInit = {
+            method,
+            headers,
+            credentials: 'include',
+            body: method === 'GET' || method === 'DELETE' ? undefined : resolvedBody,
+            ...rest,
+        }
 
-		const noNeedRefreshUrls = ['/login', '/refresh', '/register']
-		if (res.status === 401 && !retried && !noNeedRefreshUrls.includes('/refresh')) {
-			return this.handle401<T>(method, url, options)
-		}
+        const res = await fetch(fullUrl, config)
 
-		if (!res.ok) {
-			let err: any
-			try {
-				err = await res.json()
-			} catch {
-				err = { message: res.statusText }
-			}
-			throw new Error(err.message || 'Request failed')
-		}
+        const noNeedRefreshUrls = ['/login', '/refresh', '/register']
+        if (res.status === 401 && !retried && !noNeedRefreshUrls.includes('/refresh')) {
+            return this.handle401<T>(method, url, options)
+        }
 
-		const ct = res.headers.get('content-type')
-		if (ct?.includes('application/json')) {
-			const json = await res.json()
-			return json.data ?? json
-		}
+        if (!res.ok) {
+            let err: any
+            try {
+                err = await res.json()
+            } catch {
+                err = { message: res.statusText }
+            }
+            throw new Error(err.message || 'Request failed')
+        }
 
-		return res as any
-	}
+        const ct = res.headers.get('content-type')
+        if (ct?.includes('application/json')) {
+            const json = await res.json()
+            return json.data ?? json
+        }
 
-	private async handle401<T>(method: HttpMethod, url: string, options: HttpOptions): Promise<T> {
-		if (this.isRefreshing) {
-			return new Promise<T>((resolve) => {
-				this.refreshQueue.push(() => resolve(this.request(method, url, options, true)))
-			})
-		}
+        return res as any
+    }
 
-		this.isRefreshing = true
+    private async handle401<T>(method: HttpMethod, url: string, options: HttpOptions): Promise<T> {
+        if (this.isRefreshing) {
+            return new Promise<T>((resolve) => {
+                this.refreshQueue.push(() => resolve(this.request(method, url, options, true)))
+            })
+        }
 
-		try {
-			const res = await fetch(`${this.baseUrl}/refresh`, {
-				method: 'POST',
-				credentials: 'include',
-			})
+        this.isRefreshing = true
 
-			if (!res.ok) throw new Error('Refresh failed')
+        try {
+            const res = await fetch(`${this.baseUrl}/refresh`, {
+                method: 'POST',
+                credentials: 'include',
+            })
 
-			const { accessToken } = await res.json()
-			const auth = useAuthStore()
-			auth.setToken(accessToken)
+            if (!res.ok) throw new Error('Refresh failed')
 
-			this.refreshQueue.forEach((cb) => cb())
-			this.refreshQueue = []
+            const { accessToken } = await res.json()
+            const auth = useAuthStore()
+            auth.setToken(accessToken)
 
-			return this.request(method, url, options, true)
-		} catch (e) {
-			const auth = useAuthStore()
-			auth.clearToken()
-			window.location.href = '/login'
-			throw e
-		} finally {
-			this.isRefreshing = false
-		}
-	}
+            this.refreshQueue.forEach((cb) => cb())
+            this.refreshQueue = []
 
-	get<T>(url: string, options?: HttpOptions) {
-		return this.request<T>('GET', url, options)
-	}
-	post<T>(url: string, options?: HttpOptions) {
-		return this.request<T>('POST', url, options)
-	}
-	put<T>(url: string, options?: HttpOptions) {
-		return this.request<T>('PUT', url, options)
-	}
-	patch<T>(url: string, options?: HttpOptions) {
-		return this.request<T>('PATCH', url, options)
-	}
-	delete<T>(url: string, options?: HttpOptions) {
-		return this.request<T>('DELETE', url, options)
-	}
+            return this.request(method, url, options, true)
+        } catch (e) {
+            const auth = useAuthStore()
+            auth.clearToken()
+            window.location.href = '/login'
+            throw e
+        } finally {
+            this.isRefreshing = false
+        }
+    }
+
+    get<T>(url: string, options?: HttpOptions) {
+        return this.request<T>('GET', url, options)
+    }
+    post<T>(url: string, options?: HttpOptions) {
+        return this.request<T>('POST', url, options)
+    }
+    put<T>(url: string, options?: HttpOptions) {
+        return this.request<T>('PUT', url, options)
+    }
+    patch<T>(url: string, options?: HttpOptions) {
+        return this.request<T>('PATCH', url, options)
+    }
+    delete<T>(url: string, options?: HttpOptions) {
+        return this.request<T>('DELETE', url, options)
+    }
 }
 
 const http = HttpClient.getInstance()

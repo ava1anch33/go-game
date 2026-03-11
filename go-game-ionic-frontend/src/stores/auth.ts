@@ -4,79 +4,79 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useAuthStore = defineStore('auth', () => {
-	const token = ref<string | null>(null)
-	const currentUser = ref<User | null>(null)
+    const token = ref<string | null>(null)
+    const currentUser = ref<User | null>(null)
 
-	function hasToken(): boolean {
-		syncTokenWithStore()
-		return Boolean(token.value)
-	}
+    function hasToken(): boolean {
+        syncTokenWithStore()
+        return Boolean(token.value)
+    }
 
-	function setToken(newToken: string) {
-		token.value = newToken
-		localStorage.setItem('accessToken', newToken)
-	}
+    function setToken(newToken: string) {
+        token.value = newToken
+        localStorage.setItem('accessToken', newToken)
+    }
 
-	function clearToken() {
-		token.value = null
-		localStorage.removeItem('accessToken')
-	}
+    function clearToken() {
+        token.value = null
+        localStorage.removeItem('accessToken')
+    }
 
-	function syncTokenWithStore() {
-		token.value = localStorage.getItem('accessToken')
-	}
+    function syncTokenWithStore() {
+        token.value = localStorage.getItem('accessToken')
+    }
 
-	async function logout() {
-		try {
-			await apiLogout()
-		} finally {
-			localStorage.clear()
-			window.location.href = '/login'
-		}
-	}
+    async function logout() {
+        try {
+            await apiLogout()
+        } finally {
+            localStorage.clear()
+            window.location.href = '/login'
+        }
+    }
 
-	async function handleAuthApi(res: { user: User; accessToken: string }) {
-		if (res) {
-			const { accessToken } = res
-			setToken(accessToken)
-			await getUserDetail()
-		} else {
-			throw new Error('Network Error')
-		}
-	}
+    async function handleAuthApi(res: { user: User; accessToken: string }) {
+        if (res) {
+            const { accessToken } = res
+            setToken(accessToken)
+            await getUserDetail()
+        } else {
+            throw new Error('Network Error')
+        }
+    }
 
-	async function login(email: string, password: string) {
-		const res = await apiLogin(email, password)
-		handleAuthApi(res)
-	}
+    async function login(email: string, password: string) {
+        const res = await apiLogin(email, password)
+        handleAuthApi(res)
+    }
 
-	async function register(email: string, password: string) {
-		const res = await apiRegister(email, password)
-		handleAuthApi(res)
-	}
+    async function register(email: string, password: string) {
+        const res = await apiRegister(email, password)
+        handleAuthApi(res)
+    }
 
-	async function getUserDetail() {
-		try {
-			const res = await apiLookForUserInfo()
-			if (res) {
-				currentUser.value = res.user
-			}
-		} catch (error) {}
-	}
+    async function getUserDetail() {
+        try {
+            const res = await apiLookForUserInfo()
+            if (res) {
+                currentUser.value = res.user
+            }
+        } catch (error) {}
+    }
 
-	return {
-		get token() {
-			return token
-		},
-		get user() {
-			return currentUser
-		},
-		hasToken,
-		login,
-		register,
-		logout,
-		setToken,
-		clearToken,
-		getUserDetail,
-	}
+    return {
+        get token() {
+            return token
+        },
+        get user() {
+            return currentUser
+        },
+        hasToken,
+        login,
+        register,
+        logout,
+        setToken,
+        clearToken,
+        getUserDetail,
+    }
 })
