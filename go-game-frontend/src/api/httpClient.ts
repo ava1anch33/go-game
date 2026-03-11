@@ -28,6 +28,7 @@ class HttpClient {
 
 	private isRefreshing = false
 	private refreshQueue: Array<() => void> = []
+	private noNeedRefreshUrls = ['/login', '/refresh', '/register']
 
 	static getInstance() {
 		if (!this.instance) this.instance = new HttpClient()
@@ -87,8 +88,8 @@ class HttpClient {
 
 		const res = await fetch(fullUrl, config)
 
-		const noNeedRefreshUrls = ['/login', '/refresh', '/register']
-		if (res.status === 401 && !retried && !noNeedRefreshUrls.includes('/refresh')) {
+		const noNeedRefresh = this.noNeedRefreshUrls.some((u) => url.includes(u))
+		if (res.status === 401 && !retried && !noNeedRefresh) {
 			return this.handle401<T>(method, url, options)
 		}
 
