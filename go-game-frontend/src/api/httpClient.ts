@@ -2,8 +2,6 @@ import { useAuthStore } from '@/stores'
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
 
-type BodyFactory = undefined | null | BodyInit | (() => Promise<BodyInit>)
-
 type JsonBody = Record<string, any>
 
 type RawBody = BodyInit | (() => Promise<BodyInit>)
@@ -58,7 +56,7 @@ class HttpClient {
 		}
 
 		const apiKey = import.meta.env.VITE_API_KEY
-		
+
 		if (apiKey) {
 			headers.set('X-API-Key', apiKey)
 		}

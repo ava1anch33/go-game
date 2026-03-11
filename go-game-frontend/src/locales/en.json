@@ -1,13 +1,13 @@
 {
-  "login": {
-    "title": "Go · Realm",
-    "email": "Email",
-    "password": "Password",
-    "submit": "Go",
-    "noAccount": "No account yet?",
-    "registerNow": "Register Now",
-    "backToGame": "Return to Game",
-    "newToGame": "New to the Game",
-    "confirmPassword": "Confirm"
-  }
+    "login": {
+        "title": "Go · Realm",
+        "email": "Email",
+        "password": "Password",
+        "submit": "Go",
+        "noAccount": "No account yet?",
+        "registerNow": "Register Now",
+        "backToGame": "Return to Game",
+        "newToGame": "New to the Game",
+        "confirmPassword": "Confirm"
+    }
 }

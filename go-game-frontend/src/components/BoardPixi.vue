@@ -78,9 +78,11 @@ function initLayerTree() {
 		},
 	})
 
-	app && app.stage.addChild(boardLayer)
-	app && app.stage.addChild(influenceLayer)
-	app && app.stage.addChild(stoneLayer)
+	if (app) {
+		app.stage.addChild(boardLayer)
+		app.stage.addChild(influenceLayer)
+		app.stage.addChild(stoneLayer)
+	}
 }
 
 /**

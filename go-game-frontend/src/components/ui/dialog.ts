@@ -1,5 +1,5 @@
 import { createApp, h } from 'vue'
-import Dialog from './Dialog.vue'
+import Dialog from './CustomDialog.vue'
 
 let instance: any
 
@@ -12,7 +12,7 @@ function getInstance() {
 			render: () => h(Dialog, { ref: 'dialog' }),
 		})
 
-		const vm = app.mount(div) as any
+		const vm = app.mount(div)
 		instance = vm.$refs.dialog
 	}
 	return instance

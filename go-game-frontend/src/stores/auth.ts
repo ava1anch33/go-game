@@ -59,7 +59,7 @@ export const useAuthStore = defineStore('auth', () => {
 			if (res) {
 				currentUser.value = res.user
 			}
-		} catch (error) {}
+		} catch {}
 	}
 
 	return {

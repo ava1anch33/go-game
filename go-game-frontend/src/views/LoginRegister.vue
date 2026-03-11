@@ -12,7 +12,9 @@
 
 			<div class="header">
 				<h1 class="title">{{ $t('login.title') }}</h1>
-				<p class="subtitle">{{ isLogin ? $t('login.backToGame') : $t('login.newToGame') }}</p>
+				<p class="subtitle">
+					{{ isLogin ? $t('login.backToGame') : $t('login.newToGame') }}
+				</p>
 			</div>
 
 			<form @submit.prevent="handleSubmit" class="form-body">
@@ -94,7 +96,7 @@ const handleSubmit = async () => {
 			await auth.register(formData.email, formData.password)
 		}
 		router.replace({ name: 'AiGame' })
-	} catch (error) {
+	} catch {
 		await showDialog({
 			title: '错误',
 			content: '登录或注册失败，请重试。',

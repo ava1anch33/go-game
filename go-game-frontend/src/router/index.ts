@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import LoginView from '../views/Login.vue'
+import LoginView from '../views/LoginRegister.vue'
 import { useAuthStore } from '@/stores'
 
 const router = createRouter({
@@ -17,12 +17,12 @@ const router = createRouter({
 				{
 					path: 'analysis',
 					name: 'Analysis',
-					component: () => import('@/views/Analyst.vue'),
+					component: () => import('@/views/GameAnalyst.vue'),
 				},
 				{
 					path: 'setting',
 					name: 'Setting',
-					component: () => import('@/views/Setting.vue'),
+					component: () => import('@/views/UserSetting.vue'),
 				},
 				{
 					path: 'ai-game',

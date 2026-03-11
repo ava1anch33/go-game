@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
+defineProps<{
 	modelValue: string | number
 	type?: 'text' | 'password' | 'number' | 'email' | 'search' // 默认 text
 	placeholder?: string
@@ -31,8 +31,6 @@ const props = defineProps<{
 	maxlength?: number
 	minlength?: number
 	autocomplete?: string
-	prefixIcon?: any // 前置图标组件
-	suffixIcon?: any // 后置图标组件
 	error?: string
 }>()
 
@@ -46,9 +44,6 @@ const emit = defineEmits<{
 }>()
 
 const showPassword = ref(false)
-const togglePassword = () => {
-	showPassword.value = !showPassword.value
-}
 
 const handleInput = (e: Event) => {
 	const target = e.target as HTMLInputElement
@@ -59,11 +54,6 @@ const handleInput = (e: Event) => {
 const handleFocus = () => emit('focus')
 const handleBlur = () => emit('blur')
 const handleEnter = () => emit('enter')
-
-const clear = () => {
-	emit('update:modelValue', '')
-	emit('clear')
-}
 </script>
 
 <style scoped>

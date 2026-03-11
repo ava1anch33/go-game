@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import BoardPixi from '@/components/BoardPixi.vue'
-import Button from '@/components/ui/Button.vue'
+import Button from '@/components/ui/CustomButton.vue'
 import { useGameStore } from '@/stores'
 import { Stone } from '@/types'
-import Input from '@/components/ui/Input.vue'
+import Input from '@/components/ui/CustomInput.vue'
 import RadioGroup from '@/components/ui/RadioGroup.vue'
-import Radio from '@/components/ui/Radio.vue'
-import Slider from '@/components/ui/Slider.vue'
+import Radio from '@/components/ui/CustomRadio.vue'
+import Slider from '@/components/ui/CustomSlider.vue'
 import { showDialog } from '@/components/ui/dialog'
 import { apiEndGame } from '@/api'
 
@@ -136,9 +136,7 @@ onMounted(() => {
 				<span v-if="aiThinking">AI 正在思考...</span>
 				<span v-else
 					>轮到
-					{{
-						game.currentPlayer === Stone.Black ? '黑方（你）' : '白方（AI）'
-					}}
+					{{ game.currentPlayer === Stone.Black ? '黑方（你）' : '白方（AI）' }}
 					下子</span
 				>
 			</div>

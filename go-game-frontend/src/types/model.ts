@@ -3,11 +3,11 @@ export interface User {
 	role: string
 	profile: {
 		avatar: Blob
-		phoneCode: String
-		phone: String
-		firstName: String
-		LastName: String
+		phoneCode: string
+		phone: string
+		firstName: string
+		LastName: string
 	}
-    googleId: string
-    githubId: string
+	googleId: string
+	githubId: string
 }

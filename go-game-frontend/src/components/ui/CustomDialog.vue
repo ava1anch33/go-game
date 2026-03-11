@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import Button from './Button.vue'
+import Button from './CustomButton.vue'
 
 const visible = ref(false)
 const title = ref('提示')

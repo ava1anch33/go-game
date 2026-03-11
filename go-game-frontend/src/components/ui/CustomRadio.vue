@@ -28,13 +28,13 @@ const props = defineProps<{
 }>()
 
 const group = inject<{
-	modelValue: any
+	modelValue: string | number | boolean | null
 	disabled: boolean
-	updateValue: (val: any) => void
+	updateValue: (val: string | number | boolean) => void
 }>('radioGroupContext', {
 	modelValue: null,
 	disabled: false,
-	updateValue: () => {}, // 空函数占位
+	updateValue: () => {},
 })
 
 const isChecked = computed(() => {

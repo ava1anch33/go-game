@@ -28,8 +28,8 @@ export default defineConfig({
         target: 'http://localhost:4000',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '/api'),
-        configure: (proxy, options) => {
-          proxy.on('proxyReq', (proxyReq, req, res) => {
+        configure: (proxy) => {
+          proxy.on('proxyReq', (proxyReq, req) => {
             Object.keys(req.headers).forEach(key => {
               if (key !== 'host' && key !== 'connection' && key !== 'upgrade' && key !== 'upgrade-insecure-requests') {
                 proxyReq.setHeader(key, req.headers[key]!);

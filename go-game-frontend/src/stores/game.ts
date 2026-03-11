@@ -43,8 +43,8 @@ export const useGameStore = defineStore('game', () => {
 	function getLiberties(board: Int8Array, x: number, y: number, size: number): number {
 		const color = board[y * size + x]
 		let liberties = 0
-		let stack: [number, number][] = [[x, y]]
-		let visited: Set<string> = new Set()
+		const stack: [number, number][] = [[x, y]]
+		const visited: Set<string> = new Set()
 
 		while (stack.length > 0) {
 			const [cx, cy] = stack.pop()!
