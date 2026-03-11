@@ -37,14 +37,9 @@
 <script setup lang="ts">
 import {
     IonPage,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
     IonContent,
     IonButton,
-    IonSpinner,
-    IonButtons,
-    IonBackButton,
+    IonSpinner
 } from '@ionic/vue'
 import BoardPixi from '@/components/BoardPixi.vue'
 import { useGameStore } from '@/stores'
