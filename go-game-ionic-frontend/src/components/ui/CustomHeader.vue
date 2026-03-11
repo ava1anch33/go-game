@@ -7,9 +7,6 @@
             "
         >
             <ion-title>{{ title }}</ion-title> 
-            <ion-buttons slot="start">
-                <ion-back-button default-href="/home"></ion-back-button>
-            </ion-buttons>
             <ion-buttons slot="end">
                 <ion-select
                     :value="locale"
@@ -32,7 +29,7 @@
 
 <script setup lang="ts">
 import { setLanguage } from '@/locales';
-import { IonHeader, IonToolbar, IonTitle, IonButtons, IonBackButton, IonSelect, IonSelectOption } from '@ionic/vue';
+import { IonHeader, IonToolbar, IonTitle, IonButtons, IonSelect, IonSelectOption } from '@ionic/vue';
 import { earthSharp } from 'ionicons/icons';
 import { useI18n } from 'vue-i18n';
 

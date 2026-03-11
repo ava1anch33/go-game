@@ -128,6 +128,7 @@ const handleSubmit = async () => {
 
 <style scoped>
 .go-login-content {
+  margin-top: -50px;
   --background: none;
   position: relative;
   overflow: hidden;
@@ -179,9 +180,8 @@ const handleSubmit = async () => {
 }
 
 .center-container {
-  width: 100%;
-  max-width: 420px;            
-  padding: 20px;                
+  width: 100%;     
+  padding: 16px;
   box-sizing: border-box;
   display: flex;
   justify-content: center;
@@ -199,7 +199,7 @@ const handleSubmit = async () => {
   color: white;
   width: 100%;                  
   max-width: 380px;             
-  margin: 0 auto;              
+  margin: -50px auto 0;              
 }
 
 .grid-line {
