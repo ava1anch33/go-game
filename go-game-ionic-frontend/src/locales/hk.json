@@ -14,5 +14,10 @@
         "analysis": "分析",
         "aiGame": "對弈",
         "settings": "設定"
+    },
+    "analysis": {
+      "start": "開始分析",
+      "recognize": "棋盤識別",
+      "analyzing": "分析中..."
     }
 }

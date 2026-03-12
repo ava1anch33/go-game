@@ -14,5 +14,10 @@
         "analysis": "분석",
         "aiGame": "인공지능 대국",
         "settings": "설정"
+    },
+    "analysis": {
+      "start": "분석 시작",
+      "recognize": "바둑판 인식",
+      "analyzing": "분석 중..."
     }
 }

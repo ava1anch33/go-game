@@ -16,6 +16,7 @@
                     @ionChange="setLanguage($event.detail.value)"
                     :toggle-icon="earthSharp"
                     interface="popover"
+                    :value="locale"
                 >
                     <ion-select-option value="cn">简</ion-select-option>
                     <ion-select-option value="hk">繁</ion-select-option>
@@ -32,8 +33,11 @@
 import { setLanguage } from '@/locales'
 import { IonHeader, IonToolbar, IonTitle, IonButtons, IonSelect, IonSelectOption } from '@ionic/vue'
 import { earthSharp } from 'ionicons/icons'
+import { useI18n } from 'vue-i18n';
 
 defineProps<{
     title: string
 }>()
+
+const { locale } =useI18n()
 </script>

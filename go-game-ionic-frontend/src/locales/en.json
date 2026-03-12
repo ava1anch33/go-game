@@ -14,5 +14,10 @@
         "analysis": "Analysis",
         "aiGame": "AI Game",
         "settings": "Settings"
+    },
+    "analysis": {
+        "start": "Start Analysis",
+        "recognize": "Board Recognition",
+        "analyzing": "Analyzing..."
     }
 }

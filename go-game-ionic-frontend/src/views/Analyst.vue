@@ -15,7 +15,7 @@
             </div>
 
             <div class="settings-panel">
-                <h3 class="panel-title">棋盘识别</h3>
+                <h3 class="panel-title">{{ $t('analysis.recognize') }}</h3>
 
                 <ion-button
                     expand="block"
@@ -27,7 +27,7 @@
                     class="action-btn"
                 >
                     <ion-spinner v-if="analyzing" name="crescent" slot="start"></ion-spinner>
-                    {{ analyzing ? '分析中...' : '开始分析' }}
+                    {{ analyzing ? $t('analysis.analyzing') : $t('analysis.start') }}
                 </ion-button>
             </div>
         </ion-content>
