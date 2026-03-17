@@ -2,11 +2,11 @@ export interface User {
     email: string
     role: string
     profile: {
-        avatar: Blob
+        avatar: Base64URLString
         phoneCode: String
         phone: String
         firstName: String
-        LastName: String
+        lastName: String
     }
     googleId: string
     githubId: string

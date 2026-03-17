@@ -72,7 +72,7 @@ async function analystImage() {
 <style scoped>
 .board-wrapper {
     width: 100%;
-    aspect-ratio: 1 / 1; 
+    aspect-ratio: 1 / 1;
     max-width: 100vw;
     max-height: 70vh;
     display: flex;

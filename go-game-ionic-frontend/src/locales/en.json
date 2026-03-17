@@ -33,6 +33,29 @@
         "yourTurn": "Your turn!",
         "aiLose": "AI resigns, you win!"
     },
+    "settings": {
+        "clickToChangeAvatar": "Click to change avatar",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "firstNamePlaceholder": "Please enter first name",
+        "lastNamePlaceholder": "Please enter last name",
+        "countryCode": "Country Code",
+        "countryCodePlaceholder": "Select country code",
+        "phoneNumber": "Phone Number",
+        "phoneNumberPlaceholder": "Please enter phone number",
+        "save": "Save",
+        "saving": "Saving...",
+        "logout": "Logout",
+        "countryCodes": {
+            "cn": "Mainland China",
+            "jp": "Japan",
+            "kr": "South Korea",
+            "hk": "Hong Kong",
+            "mo": "Macau",
+            "tw": "Taiwan",
+            "us": "USA/Canada"
+        }
+    },
     "goScore": {
         "blackWins": "Black wins by {count} points",
         "whiteWins": "White wins by {count} points",
@@ -53,8 +76,10 @@
         "nine": "nine"
     },
     "common": {
-        "yes": "Yes", 
-        "no": "No"
+        "yes": "Yes",
+        "no": "No",
+        "confirm": "Confirm",
+        "cancel": "Cancel"
     },
     "errors": {
         "title": "Error",

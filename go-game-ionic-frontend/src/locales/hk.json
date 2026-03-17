@@ -33,6 +33,29 @@
         "yourTurn": "輪到你了！",
         "aiLose": "AI 認輸，你贏了！"
     },
+    "settings": {
+        "clickToChangeAvatar": "點擊更換頭像",
+        "firstName": "名",
+        "lastName": "姓",
+        "firstNamePlaceholder": "請輸入名字",
+        "lastNamePlaceholder": "請輸入姓氏",
+        "countryCode": "區號",
+        "countryCodePlaceholder": "選擇區號",
+        "phoneNumber": "電話號碼",
+        "phoneNumberPlaceholder": "請輸入電話號碼",
+        "save": "保存",
+        "saving": "保存中...",
+        "logout": "退出登錄",
+        "countryCodes": {
+            "cn": "中國大陸",
+            "hk": "中国香港",
+            "mo": "中国澳門",
+            "tw": "中国台灣",
+            "jp": "日本",
+            "kr": "韓國",
+            "us": "美國/加拿大"
+        }
+    },
     "goScore": {
         "blackWins": "黑勝 {count}子",
         "whiteWins": "白勝 {count}子",
@@ -54,7 +77,9 @@
     },
     "common": {
         "yes": "是",
-        "no": "否"
+        "no": "否",
+        "confirm": "確認",
+        "cancel": "取消"
     },
     "errors": {
         "title": "錯誤",

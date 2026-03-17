@@ -2,7 +2,11 @@
     <ion-page>
         <CustomHeader :title="$t('tabs.aiGame')" show-back-button />
 
-        <ion-content :fullscreen="true" class="ion-padding" style="--background: linear-gradient(135deg, #667eea 0%, #764ba2 100%)">
+        <ion-content
+            :fullscreen="true"
+            class="ion-padding"
+            style="--background: linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+        >
             <div class="board-container">
                 <div :class="{ 'cursor-disable': aiThinking || !isGaming }">
                     <BoardPixi
@@ -29,13 +33,13 @@
 
                 <div class="form-item">
                     <ion-label position="stacked">{{ $t('aiGame.aiFirst') }}</ion-label>
-                    <ion-toggle 
-						v-model="gameSettingForm.aiFirst" 
-						aria-label="Tertiary toggle" 
-						class="ai-first-toggle"
-						color="tertiary" 
-						justify="space-between"
-					></ion-toggle>
+                    <ion-toggle
+                        v-model="gameSettingForm.aiFirst"
+                        aria-label="Tertiary toggle"
+                        class="ai-first-toggle"
+                        color="tertiary"
+                        justify="space-between"
+                    ></ion-toggle>
                 </div>
 
                 <div class="form-item">
@@ -50,7 +54,9 @@
                         ticks
                         color="primary"
                     ></ion-range>
-                    <div class="slider-tip">{{ $t('aiGame.currentAiAttempt', { attempt: gameSettingForm.aiAttempts }) }}</div>
+                    <div class="slider-tip">
+                        {{ $t('aiGame.currentAiAttempt', { attempt: gameSettingForm.aiAttempts }) }}
+                    </div>
                 </div>
 
                 <div class="button-group">
@@ -80,8 +86,8 @@
                 <div class="status-tip" v-if="isGaming">
                     <ion-spinner v-if="aiThinking" name="crescent" color="primary"></ion-spinner>
                     <span v-if="aiThinking">
-						{{ $t('aiGame.aiThinking') }}
-					</span>
+                        {{ $t('aiGame.aiThinking') }}
+                    </span>
                     <span v-else>
                         {{ $t('aiGame.yourTurn') }}
                     </span>
@@ -100,7 +106,7 @@ import {
     IonLabel,
     IonInput,
     IonRange,
-	IonToggle,
+    IonToggle,
 } from '@ionic/vue'
 import BoardPixi from '@/components/BoardPixi.vue'
 import { useGameStore } from '@/stores'
@@ -283,6 +289,6 @@ onMounted(() => {
 }
 
 .ai-first-toggle {
-	margin-top: 15px;
+    margin-top: 15px;
 }
 </style>

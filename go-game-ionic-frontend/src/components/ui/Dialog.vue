@@ -10,8 +10,8 @@
                         <slot>{{ content }}</slot>
                     </section>
                     <footer class="dialog-footer">
-                        <Button :type="'secondary'" @click="close">取消</Button>
-                        <Button :type="'primary'" @click="confirm">确定</Button>
+                        <Button :type="'secondary'" @click="close">{{ $t("common.cancel") }}</Button>
+                        <Button :type="'primary'" @click="confirm">{{ $t("common.confirm") }}</Button>
                     </footer>
                 </div>
             </div>

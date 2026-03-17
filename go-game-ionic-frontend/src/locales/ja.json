@@ -33,6 +33,29 @@
         "yourTurn": "あなたの番です！",
         "aiLose": "AIが投了、あなたの勝ち！"
     },
+    "settings": {
+        "clickToChangeAvatar": "クリックしてアバターを変更",
+        "firstName": "名",
+        "lastName": "姓",
+        "firstNamePlaceholder": "名前を入力してください",
+        "lastNamePlaceholder": "姓を入力してください",
+        "countryCode": "国コード",
+        "countryCodePlaceholder": "国コードを選択してください",
+        "phoneNumber": "電話番号",
+        "phoneNumberPlaceholder": "電話番号を入力してください",
+        "save": "保存",
+        "saving": "保存中...",
+        "logout": "ログアウト",
+        "countryCodes": {
+            "cn": "中国",
+            "jp": "日本",
+            "kr": "韓国",
+            "hk": "香港",
+            "mo": "マカオ",
+            "tw": "台湾",
+            "us": "アメリカ/カナダ"
+        }
+    },
     "goScore": {
         "blackWins": "黒勝ち {count}目",
         "whiteWins": "白勝ち {count}目",
@@ -54,7 +77,9 @@
     },
     "common": {
         "yes": "はい",
-        "no": "いいえ"
+        "no": "いいえ",
+        "confirm": "確認",
+        "cancel": "キャンセル"
     },
     "errors": {
         "title": "エラー",

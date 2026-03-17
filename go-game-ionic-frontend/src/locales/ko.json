@@ -33,6 +33,29 @@
         "yourTurn": "당신의 차례입니다!",
         "aiLose": "AI가 항복했습니다, 당신이 이겼습니다!"
     },
+    "settings": {
+        "clickToChangeAvatar": "아바타 변경하려면 클릭",
+        "firstName": "이름",
+        "lastName": "성",
+        "firstNamePlaceholder": "이름을 입력하세요",
+        "lastNamePlaceholder": "성을 입력하세요",
+        "countryCode": "국가 코드",
+        "countryCodePlaceholder": "국가 코드를 선택하세요",
+        "phoneNumber": "전화번호",
+        "phoneNumberPlaceholder": "전화번호를 입력하세요",
+        "save": "저장",
+        "saving": "저장 중...",
+        "logout": "로그아웃",
+        "countryCodes": {
+            "cn": "중국 본토",
+            "jp": "일본",
+            "kr": "한국",
+            "hk": "홍콩",
+            "mo": "마카오",
+            "tw": "대만",
+            "us": "미국/캐나다"
+        }
+    },
     "goScore": {
         "blackWins": "흑 승 {count}집",
         "whiteWins": "백 승 {count}집",
@@ -54,7 +77,9 @@
     },
     "common": {
         "yes": "예",
-        "no": "아니오"
+        "no": "아니오",
+        "confirm": "확인",
+        "cancel": "취소"
     },
     "errors": {
         "title": "오류",

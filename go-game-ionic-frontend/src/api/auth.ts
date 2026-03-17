@@ -1,5 +1,5 @@
 import type { User } from '@/types'
-import { FetchPost } from './httpClient'
+import { FetchPost, FetchPut } from './httpClient'
 
 export async function apiRegister(email: string, password: string) {
     return FetchPost<{ user: User; accessToken: string }>('/register', {
@@ -24,5 +24,12 @@ export async function apiLogout() {
 export async function apiLookForUserInfo() {
     return FetchPost<{ user: User }>('/user', {
         payloadType: 'json',
+    })
+}
+
+export async function uploadAvatarApi(file: Base64URLString) {
+    return FetchPut('/user/avatar', {
+        payloadType: 'json',
+        body: { file }
     })
 }

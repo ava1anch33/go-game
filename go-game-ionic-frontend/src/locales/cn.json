@@ -21,17 +21,40 @@
         "analyzing": "分析中..."
     },
     "aiGame": {
-		"gameSetting": "游戏设置",
-		"gameName": "游戏名称",
-		"gameNamePlaceholder": "请输入游戏名称",
-		"aiFirst": "AI 先手（执黑）？",
-		"aiStrength": "AI 思考强度（尝试次数）",
-		"currentAiAttempt": "当前 AI 尝试次数：{attempt}",
-		"createGame": "创建游戏",
-		"endGame": "收官",
-		"aiThinking": "AI 思考中...",
-		"yourTurn": "轮到你了！",
+        "gameSetting": "游戏设置",
+        "gameName": "游戏名称",
+        "gameNamePlaceholder": "请输入游戏名称",
+        "aiFirst": "AI 先手（执黑）？",
+        "aiStrength": "AI 思考强度（尝试次数）",
+        "currentAiAttempt": "当前 AI 尝试次数：{attempt}",
+        "createGame": "创建游戏",
+        "endGame": "收官",
+        "aiThinking": "AI 思考中...",
+        "yourTurn": "轮到你了！",
         "aiLose": "AI 认输，你赢了！"
+    },
+    "settings": {
+        "clickToChangeAvatar": "点击更换头像",
+        "firstName": "名",
+        "lastName": "姓",
+        "firstNamePlaceholder": "请输入名字",
+        "lastNamePlaceholder": "请输入姓氏",
+        "countryCode": "区号",
+        "countryCodePlaceholder": "选择区号",
+        "phoneNumber": "电话号码",
+        "phoneNumberPlaceholder": "请输入电话号码",
+        "save": "保存",
+        "saving": "保存中...",
+        "logout": "退出登录",
+        "countryCodes": {
+            "cn": "中国大陆",
+            "jp": "日本",
+            "kr": "韩国",
+            "hk": "中国香港",
+            "mo": "中国澳门",
+            "tw": "中国台湾",
+            "us": "美国/加拿大"
+        }
     },
     "goScore": {
         "blackWins": "黑胜 {count}子",
@@ -52,12 +75,14 @@
         "eight": "八",
         "nine": "九"
     },
-	"common": {
-		"yes": "是",
-		"no": "否"
-	},
+    "common": {
+        "yes": "是",
+        "no": "否",
+        "confirm": "确认",
+        "cancel": "取消"
+    },
     "errors": {
         "title": "错误",
         "invalidCredentials": "无效的邮箱或密码。"
-    }    
+    }
 }
