@@ -2,7 +2,7 @@
     <ion-page>
         <CustomHeader :title="$t('tabs.aiGame')" show-back-button />
 
-        <ion-content :fullscreen="true" class="ion-padding">
+        <ion-content :fullscreen="true" class="ion-padding" style="--background: linear-gradient(135deg, #667eea 0%, #764ba2 100%)">
             <div class="board-container">
                 <div :class="{ 'cursor-disable': aiThinking || !isGaming }">
                     <BoardPixi
@@ -108,8 +108,10 @@ import { showDialog } from '@/components/ui/dialog'
 import { apiEndGame } from '@/api'
 import { reactive, ref, onMounted } from 'vue'
 import CustomHeader from '@/components/ui/CustomHeader.vue'
+import { useI18n } from 'vue-i18n'
 
 const game = useGameStore()
+const { t } = useI18n()
 
 const isGaming = ref(false)
 const aiThinking = ref(false)
@@ -131,8 +133,8 @@ const createNewGame = async () => {
     } catch (err) {
         console.error('創建遊戲失敗', err)
         await showDialog({
-            title: '錯誤',
-            content: '創建遊戲失敗，請重試',
+            title: t('errors.title'),
+            content: t('errors.invalidCredentials'),
         })
         isGaming.value = false
     } finally {
@@ -151,8 +153,8 @@ const handleClick = async (x: number, y: number) => {
         const aiSuccess = await game.getAiThinking(gameSettingForm.aiAttempts)
         if (aiSuccess === false) {
             await showDialog({
-                title: '收官！',
-                content: 'AI 認輸！',
+                title: t('aiGame.endGame'),
+                content: t('aiGame.aiLose'),
             })
             game.reset()
             isGaming.value = false
@@ -170,7 +172,7 @@ const endGame = async () => {
     const result = game.determineWhoIsWinner()
 
     await showDialog({
-        title: '勝負判斷',
+        title: t('aiGame.endGame'),
         content: result.result,
     })
 

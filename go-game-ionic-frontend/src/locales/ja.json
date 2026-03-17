@@ -28,12 +28,17 @@
         "aiStrength": "AIの思考強度（試行回数）",
         "currentAiAttempt": "現在：{attempt} 回のシミュレーション",
         "createNew": "新しいゲームを作成",
-        "endGame": "終局（ゲーム終了）",
+        "endGame": "終局",
         "aiThinking": "AIが思考中...",
-        "yourTurn": "あなたの番です！"
+        "yourTurn": "あなたの番です！",
+        "aiLose": "AIが投了、あなたの勝ち！"
     },
     "common": {
         "yes": "はい",
         "no": "いいえ"
+    },
+    "errors": {
+        "title": "エラー",
+        "invalidCredentials": "無効なメールアドレスまたはパスワードです。"
     }
 }

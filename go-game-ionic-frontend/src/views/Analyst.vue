@@ -72,9 +72,9 @@ async function analystImage() {
 <style scoped>
 .board-wrapper {
     width: 100%;
-    aspect-ratio: 1 / 1; /* 保持棋盘正方形 */
+    aspect-ratio: 1 / 1; 
     max-width: 100vw;
-    max-height: 70vh; /* 防止键盘弹出时挤压 */
+    max-height: 70vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -89,7 +89,7 @@ async function analystImage() {
     background: rgba(255, 255, 255, 0.95);
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
-    padding: 20px 24px 34px 24px; /* 底部留安全区 */
+    padding: 20px 24px 34px 24px;
     box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.1);
     z-index: 10;
 }
@@ -102,7 +102,6 @@ async function analystImage() {
     color: #333;
 }
 
-/* 按钮样式：保持原渐变 + Ionic 适配 */
 .action-btn {
     --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     --border-radius: 12px;
@@ -124,15 +123,5 @@ async function analystImage() {
 .action-btn:disabled {
     --background: linear-gradient(135deg, #667eea80 0%, #764ba280 100%);
     opacity: 0.6;
-}
-
-/* 手机端小屏幕适配 */
-@media (max-height: 700px) {
-    .board-wrapper {
-        max-height: 55vh;
-    }
-    .settings-panel {
-        padding: 16px 20px 28px 20px;
-    }
 }
 </style>

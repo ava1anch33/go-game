@@ -28,12 +28,17 @@
         "aiStrength": "AI 思考強度（嘗試次數）",
         "currentAiAttempt": "當前：{attempt} 次模擬",
         "createNew": "創建新遊戲",
-        "endGame": "收官（結束遊戲）",
+        "endGame": "收官",
         "aiThinking": "AI 思考中...",
-        "yourTurn": "輪到你了！"
+        "yourTurn": "輪到你了！",
+        "aiLose": "AI 認輸，你贏了！"
     },
     "common": {
         "yes": "是",
         "no": "否"
+    },
+    "errors": {
+        "title": "錯誤",
+        "invalidCredentials": "無效的電郵或密碼。"
     }
 }

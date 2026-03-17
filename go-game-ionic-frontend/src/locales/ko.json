@@ -28,12 +28,17 @@
         "aiStrength": "AI 생각 강도 (시도 횟수)",
         "currentAiAttempt": "현재: {attempt}회 시뮬레이션",
         "createNew": "새 게임 만들기",
-        "endGame": "종료 (게임 끝내기)",
+        "endGame": "종료",
         "aiThinking": "AI 생각 중...",
-        "yourTurn": "당신의 차례입니다!"
+        "yourTurn": "당신의 차례입니다!",
+        "aiLose": "AI가 항복했습니다, 당신이 이겼습니다!"
     },
     "common": {
         "yes": "예",
         "no": "아니오"
+    },
+    "errors": {
+        "title": "오류",
+        "invalidCredentials": "잘못된 이메일 또는 비밀번호입니다."
     }
 }
