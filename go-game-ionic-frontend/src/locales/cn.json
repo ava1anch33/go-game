@@ -33,6 +33,25 @@
 		"yourTurn": "轮到你了！",
         "aiLose": "AI 认输，你赢了！"
     },
+    "goScore": {
+        "blackWins": "黑胜 {count}子",
+        "whiteWins": "白胜 {count}子",
+        "ten": "十",
+        "and": "又",
+        "quarter": "四分之一",
+        "half": "二分之一",
+        "threeQuarter": "四分之三",
+        "zero": "零",
+        "one": "一",
+        "two": "二",
+        "three": "三",
+        "four": "四",
+        "five": "五",
+        "six": "六",
+        "seven": "七",
+        "eight": "八",
+        "nine": "九"
+    },
 	"common": {
 		"yes": "是",
 		"no": "否"

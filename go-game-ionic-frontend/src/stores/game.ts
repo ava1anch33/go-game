@@ -15,7 +15,7 @@ export const useGameStore = defineStore('game', () => {
 
     /** Current player */
     const currentPlayer = ref<Stone>(Stone.Black)
-    /** trigger webGL render stone */
+    /** trigger webGL to render stone */
     const changed = ref(false)
     const gameId = ref<string | null>(null)
     /** playing history */
@@ -34,7 +34,7 @@ export const useGameStore = defineStore('game', () => {
         [0, -1],
         [0, 1],
     ]
-    /** black need more komi place to win since it is first move */
+    /** black need more komi place to win according to modern go game rule since it is first move */
     const komi = ref<number>(7.5)
 
     /** index position from 2-D to 1-D */

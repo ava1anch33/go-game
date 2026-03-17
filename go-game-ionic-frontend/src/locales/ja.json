@@ -33,6 +33,25 @@
         "yourTurn": "あなたの番です！",
         "aiLose": "AIが投了、あなたの勝ち！"
     },
+    "goScore": {
+        "blackWins": "黒勝ち {count}目",
+        "whiteWins": "白勝ち {count}目",
+        "ten": "十",
+        "and": "また",
+        "quarter": "4分の1",
+        "half": "半",
+        "threeQuarter": "4分の3",
+        "zero": "零",
+        "one": "一",
+        "two": "二",
+        "three": "三",
+        "four": "四",
+        "five": "五",
+        "six": "六",
+        "seven": "七",
+        "eight": "八",
+        "nine": "九"
+    },
     "common": {
         "yes": "はい",
         "no": "いいえ"

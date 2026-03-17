@@ -33,6 +33,25 @@
         "yourTurn": "당신의 차례입니다!",
         "aiLose": "AI가 항복했습니다, 당신이 이겼습니다!"
     },
+    "goScore": {
+        "blackWins": "흑 승 {count}집",
+        "whiteWins": "백 승 {count}집",
+        "ten": "열",
+        "and": "그리고",
+        "quarter": "4분의 1",
+        "half": "반",
+        "threeQuarter": "4분의 3",
+        "zero": "영",
+        "one": "일",
+        "two": "이",
+        "three": "삼",
+        "four": "사",
+        "five": "오",
+        "six": "육",
+        "seven": "칠",
+        "eight": "팔",
+        "nine": "구"
+    },
     "common": {
         "yes": "예",
         "no": "아니오"

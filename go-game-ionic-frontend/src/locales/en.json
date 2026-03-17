@@ -33,6 +33,25 @@
         "yourTurn": "Your turn!",
         "aiLose": "AI resigns, you win!"
     },
+    "goScore": {
+        "blackWins": "Black wins by {count} points",
+        "whiteWins": "White wins by {count} points",
+        "ten": "ten",
+        "and": "and",
+        "quarter": "quarter",
+        "half": "half",
+        "threeQuarter": "three quarters",
+        "zero": "zero",
+        "one": "one",
+        "two": "two",
+        "three": "three",
+        "four": "four",
+        "five": "five",
+        "six": "six",
+        "seven": "seven",
+        "eight": "eight",
+        "nine": "nine"
+    },
     "common": {
         "yes": "Yes", 
         "no": "No"
