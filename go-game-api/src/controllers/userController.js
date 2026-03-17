@@ -19,7 +19,7 @@ async function logout(req, res, next) {
         if (!currentUser) {
             return successResponse(res, { message: 'ok' })
         }
-        await userService.clearAllRefreshTokens(currentUser._id)
+        await userService.clearAllRefreshTokens(currentUser.id)
         successResponse(res, {
             message: 'ok',
         })
@@ -40,8 +40,21 @@ async function updateUserInfo(req, res, next) {
     }
 }
 
+async function uploadAvatar(req, res, next) {
+    try {
+        const { file: avatar } = req.body
+        const user = await userService.updateUserAvatar(req.user.id, avatar)
+        successResponse(res, {
+            user,
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
 export default {
     getUserInfo,
     updateUserInfo,
+    uploadAvatar,
     logout,
 }

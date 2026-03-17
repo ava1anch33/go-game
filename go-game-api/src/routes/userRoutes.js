@@ -7,5 +7,6 @@ router.use(protect)
 
 router.post('/user', userController.getUserInfo)
 router.put('/user', userController.updateUserInfo)
+router.put('/user/avatar', userController.uploadAvatar)
 
 export default router

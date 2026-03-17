@@ -68,6 +68,14 @@ class UserService {
         }
         return updated
     }
+
+    async updateUserAvatar(id, avatar) {
+        const updated = await userRepository.updateById(id, { 'profile.avatar': avatar })
+        if (!updated) {
+            throw new AppError('User not found', 404, 'USER_NOT_FOUND')
+        } 
+        return updated
+    }
 }
 
 export const userService = new UserService()
