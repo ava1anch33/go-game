@@ -20,6 +20,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import Button from './Button.vue'
 
 const visible = ref(false)

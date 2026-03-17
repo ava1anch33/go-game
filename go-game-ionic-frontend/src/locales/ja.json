@@ -16,8 +16,24 @@
         "settings": "設定"
     },
     "analysis": {
-      "start": "分析開始",
-      "recognize": "棋盤認識",
-      "analyzing": "分析中..."
+        "start": "分析開始",
+        "recognize": "棋盤認識",
+        "analyzing": "分析中..."
+    },
+    "aiGame": {
+        "gameSetting": "ゲーム設定",
+        "gameName": "ゲーム名",
+        "gameNamePlaceholder": "ゲーム名を入力してください",
+        "aiFirst": "AIが先手（黒）？",
+        "aiStrength": "AIの思考強度（試行回数）",
+        "currentAiAttempt": "現在：{attempt} 回のシミュレーション",
+        "createNew": "新しいゲームを作成",
+        "endGame": "終局（ゲーム終了）",
+        "aiThinking": "AIが思考中...",
+        "yourTurn": "あなたの番です！"
+    },
+    "common": {
+        "yes": "はい",
+        "no": "いいえ"
     }
 }

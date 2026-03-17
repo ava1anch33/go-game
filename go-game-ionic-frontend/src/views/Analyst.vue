@@ -35,12 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-    IonPage,
-    IonContent,
-    IonButton,
-    IonSpinner
-} from '@ionic/vue'
+import { IonPage, IonContent, IonButton, IonSpinner } from '@ionic/vue'
 import BoardPixi from '@/components/BoardPixi.vue'
 import { useGameStore } from '@/stores'
 import { ref, onMounted } from 'vue'

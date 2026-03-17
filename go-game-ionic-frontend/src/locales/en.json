@@ -19,5 +19,21 @@
         "start": "Start Analysis",
         "recognize": "Board Recognition",
         "analyzing": "Analyzing..."
+    },
+    "aiGame": {
+        "gameSetting": "Game Setting",
+        "gameName": "Game Name",
+        "gameNamePlaceholder": "Please enter game name",
+        "aiFirst": "AI goes first (Black)?",
+        "aiStrength": "AI Thinking Strength (Attempts)",
+        "currentAiAttempt": "Current: {attempt} simulations",
+        "createNew": "Create New Game",
+        "endGame": "End Game",
+        "aiThinking": "AI Thinking...",
+        "yourTurn": "Your turn!"
+    },
+    "common": {
+        "yes": "Yes", 
+        "no": "No"
     }
 }

@@ -16,8 +16,24 @@
         "settings": "设置"
     },
     "analysis": {
-      "start": "开始分析",
-      "recognize": "棋盘识别",
-      "analyzing": "分析中..."
-    }
+        "start": "开始分析",
+        "recognize": "棋盘识别",
+        "analyzing": "分析中..."
+    },
+    "aiGame": {
+		"gameSetting": "游戏设置",
+		"gameName": "游戏名称",
+		"gameNamePlaceholder": "请输入游戏名称",
+		"aiFirst": "AI 先手（执黑）？",
+		"aiStrength": "AI 思考强度（尝试次数）",
+		"currentAiAttempt": "当前 AI 尝试次数：{attempt}",
+		"createGame": "创建游戏",
+		"endGame": "收官（结束游戏）",
+		"aiThinking": "AI 思考中...",
+		"yourTurn": "轮到你了！"
+    },
+	"common": {
+		"yes": "是",
+		"no": "否"
+	}
 }

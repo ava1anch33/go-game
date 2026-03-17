@@ -16,8 +16,24 @@
         "settings": "설정"
     },
     "analysis": {
-      "start": "분석 시작",
-      "recognize": "바둑판 인식",
-      "analyzing": "분석 중..."
+        "start": "분석 시작",
+        "recognize": "바둑판 인식",
+        "analyzing": "분석 중..."
+    },
+    "aiGame": {
+        "gameSetting": "게임 설정",
+        "gameName": "게임 이름",
+        "gameNamePlaceholder": "게임 이름을 입력하세요",
+        "aiFirst": "AI가 먼저 시작합니까? (흑)",
+        "aiStrength": "AI 생각 강도 (시도 횟수)",
+        "currentAiAttempt": "현재: {attempt}회 시뮬레이션",
+        "createNew": "새 게임 만들기",
+        "endGame": "종료 (게임 끝내기)",
+        "aiThinking": "AI 생각 중...",
+        "yourTurn": "당신의 차례입니다!"
+    },
+    "common": {
+        "yes": "예",
+        "no": "아니오"
     }
 }

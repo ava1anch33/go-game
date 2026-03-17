@@ -16,8 +16,24 @@
         "settings": "設定"
     },
     "analysis": {
-      "start": "開始分析",
-      "recognize": "棋盤識別",
-      "analyzing": "分析中..."
+        "start": "開始分析",
+        "recognize": "棋盤識別",
+        "analyzing": "分析中..."
+    },
+    "aiGame": {
+        "gameSetting": "遊戲設定",
+        "gameName": "遊戲名稱",
+        "gameNamePlaceholder": "請輸入遊戲名稱",
+        "aiFirst": "AI 先手（執黑）？",
+        "aiStrength": "AI 思考強度（嘗試次數）",
+        "currentAiAttempt": "當前：{attempt} 次模擬",
+        "createNew": "創建新遊戲",
+        "endGame": "收官（結束遊戲）",
+        "aiThinking": "AI 思考中...",
+        "yourTurn": "輪到你了！"
+    },
+    "common": {
+        "yes": "是",
+        "no": "否"
     }
 }
