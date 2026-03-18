@@ -154,7 +154,6 @@ const handleAvatarUpload = async (event: Event) => {
     await auth.uploadAvatar(file)
 }
 
-// 保存個人資料
 const saveProfile = async () => {
     saving.value = true
 

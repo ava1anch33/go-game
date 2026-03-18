@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema(
         },
         profile: {
             avatar: {
-                type: Buffer,
+                type: String,
                 default: null,
             },
             phoneCode: String,
@@ -39,9 +39,6 @@ const userSchema = new mongoose.Schema(
             firstName: String,
             lastName: String,
         },
-        googleId: { type: String, default: null },
-        wechatId: { type: String, default: null },
-        githubId: { type: String, default: null },
         refreshTokens: [
             {
                 token: { type: String, required: true },
@@ -57,9 +54,6 @@ const userSchema = new mongoose.Schema(
     },
 )
 
-userSchema.index({ googleId: 1 })
-userSchema.index({ wechatId: 1 })
-userSchema.index({ githubId: 1 })
 
 userSchema.methods.generateAccessToken = function () {
     return jwt.sign(
@@ -104,9 +98,6 @@ userSchema.set('toJSON', {
         delete ret._id
         delete ret.password
         delete ret.refreshTokens
-        delete ret.googleId
-        delete ret.wechatId
-        delete ret.githubId
 
         return ret
     },
