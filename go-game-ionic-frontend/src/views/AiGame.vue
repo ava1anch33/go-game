@@ -49,7 +49,6 @@
                         :min="5"
                         :max="1000"
                         :step="5"
-                        :disabled="isGaming"
                         snaps
                         ticks
                         color="primary"
@@ -68,7 +67,7 @@
                         @click="createNewGame"
                         class="action-btn"
                     >
-                        {{ $t('aiGame.createNew') }}
+                        {{ $t('aiGame.createGame') }}
                     </ion-button>
 
                     <ion-button
@@ -82,7 +81,6 @@
                     </ion-button>
                 </div>
 
-                <!-- 狀態提示 -->
                 <div class="status-tip" v-if="isGaming">
                     <ion-spinner v-if="aiThinking" name="crescent" color="primary"></ion-spinner>
                     <span v-if="aiThinking">
@@ -110,11 +108,12 @@ import {
 } from '@ionic/vue'
 import BoardPixi from '@/components/BoardPixi.vue'
 import { useGameStore } from '@/stores'
-import { showDialog } from '@/components/ui/dialog'
 import { apiEndGame } from '@/api'
 import { reactive, ref, onMounted } from 'vue'
 import CustomHeader from '@/components/ui/CustomHeader.vue'
+import { modalController } from '@ionic/vue' 
 import { useI18n } from 'vue-i18n'
+import MessageModal from '@/components/ui/MessageModal.vue'
 
 const game = useGameStore()
 const { t } = useI18n()
@@ -128,6 +127,23 @@ const gameSettingForm = reactive({
     aiAttempts: 100,
 })
 
+const showMessage = async (title: string, content: string) => {
+  const modal = await modalController.create({
+    component: MessageModal,
+    componentProps: {
+      title,
+      content,
+    },
+    cssClass: 'small-message-modal',
+    initialBreakpoint: 0.4,
+    breakpoints: [0, 0.4, 0.8], 
+    backdropDismiss: false,    
+  })
+
+  await modal.present()
+  await modal.onWillDismiss()
+}
+
 const createNewGame = async () => {
     if (isGaming.value) return
 
@@ -137,11 +153,10 @@ const createNewGame = async () => {
     try {
         await game.createNewGame(gameSettingForm.name, gameSettingForm.aiFirst)
     } catch (err) {
-        console.error('創建遊戲失敗', err)
-        await showDialog({
-            title: t('errors.title'),
-            content: t('errors.invalidCredentials'),
-        })
+        await showMessage(
+            t('errors.title'),
+            t('errors.invalidCredentials'),
+        )
         isGaming.value = false
     } finally {
         aiThinking.value = false
@@ -158,10 +173,10 @@ const handleClick = async (x: number, y: number) => {
     try {
         const aiSuccess = await game.getAiThinking(gameSettingForm.aiAttempts)
         if (aiSuccess === false) {
-            await showDialog({
-                title: t('aiGame.endGame'),
-                content: t('aiGame.aiLose'),
-            })
+            await showMessage(
+                t('aiGame.endGame'),
+                t('aiGame.aiLose'),
+            )
             game.reset()
             isGaming.value = false
         }
@@ -177,10 +192,10 @@ const endGame = async () => {
 
     const result = game.determineWhoIsWinner()
 
-    await showDialog({
-        title: t('aiGame.endGame'),
-        content: result.result,
-    })
+    await showMessage(
+        t('aiGame.endGame'),
+        result.result
+    )
 
     apiEndGame(game.gameId!, game.board)
 
