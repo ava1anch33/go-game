@@ -28,7 +28,7 @@ class HttpClient {
 
 	private isRefreshing = false
 	private refreshQueue: Array<() => void> = []
-	private noNeedRefreshUrls = ['/login', '/refresh', '/register']
+	private noNeedRefreshUrls = ['/login', '/refresh', '/register', '/logout']
 
 	static getInstance() {
 		if (!this.instance) this.instance = new HttpClient()
