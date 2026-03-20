@@ -1,6 +1,6 @@
 <template>
     <ion-page>
-        <CustomHeader :title="$t('tabs.analysis')" show-back-button />
+        <CustomHeader :title="$t('tabs.analysis')" />
 
         <ion-content
             class="ion-no-padding"
@@ -59,7 +59,6 @@ async function analystImage() {
     try {
         await game.analystImgGame()
     } catch (err) {
-        console.error('分析失败:', err)
         // 可选：显示 Ionic toast 提示
         // const toast = await toastController.create({ message: '分析失败', duration: 2000 });
         // await toast.present();

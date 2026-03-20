@@ -1,6 +1,6 @@
 <template>
     <ion-page>
-        <CustomHeader :title="$t('tabs.analysis')" show-back-button />
+        <CustomHeader :title="$t('tabs.settings')"/>
 
         <ion-content :fullscreen="true">
             <div class="avatar-section ion-text-center ion-padding">

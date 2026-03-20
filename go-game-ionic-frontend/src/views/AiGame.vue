@@ -1,6 +1,6 @@
 <template>
     <ion-page>
-        <CustomHeader :title="$t('tabs.aiGame')" show-back-button />
+        <CustomHeader :title="$t('tabs.aiGame')" />
 
         <ion-content
             :fullscreen="true"
@@ -111,9 +111,8 @@ import { useGameStore } from '@/stores'
 import { apiEndGame } from '@/api'
 import { reactive, ref, onMounted } from 'vue'
 import CustomHeader from '@/components/ui/CustomHeader.vue'
-import { modalController } from '@ionic/vue' 
 import { useI18n } from 'vue-i18n'
-import MessageModal from '@/components/ui/MessageModal.vue'
+import { showMessage } from '@/components/ui/modal'
 
 const game = useGameStore()
 const { t } = useI18n()
@@ -126,23 +125,6 @@ const gameSettingForm = reactive({
     aiFirst: false,
     aiAttempts: 100,
 })
-
-const showMessage = async (title: string, content: string) => {
-  const modal = await modalController.create({
-    component: MessageModal,
-    componentProps: {
-      title,
-      content,
-    },
-    cssClass: 'small-message-modal',
-    initialBreakpoint: 0.4,
-    breakpoints: [0, 0.4, 0.8], 
-    backdropDismiss: false,    
-  })
-
-  await modal.present()
-  await modal.onWillDismiss()
-}
 
 const createNewGame = async () => {
     if (isGaming.value) return
