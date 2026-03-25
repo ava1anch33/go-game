@@ -1,4 +1,53 @@
 {
+    "header": {
+        "language": "Switch Language"
+    },
+    "nav": {
+        "aiGame": "Play",
+        "analysis": "Analysis",
+        "setting": "Settings",
+        "home": "Go Realm"
+    },
+    "home": {
+        "title": "Go Realm",
+        "welcome": "Hello, "
+    },
+    "setting": {
+        "title": "Influence Zone",
+        "lastName": "Last Name",
+        "firstName": "First Name",
+        "phoneCode": "Code",
+        "phone": "Phone",
+        "sync": "Sync Board",
+        "security": "Security",
+        "google": "Google",
+        "github": "GitHub",
+        "changePassword": "Change Password",
+        "logout": "Logout"
+    },
+    "game": {
+        "title": "Game Settings",
+        "gameName": "Game Name",
+        "aiFirst": "AI First (Black)?",
+        "aiAttempts": "AI Thinking Intensity (Attempts)",
+        "simulations": "simulations",
+        "createGame": "Create New Game",
+        "endGame": "End Game",
+        "aiThinking": "AI is thinking...",
+        "yourTurn": "Turn",
+        "youBlack": "Black (You)",
+        "youWhite": "White (AI)",
+        "place": "to move",
+        "gameOver": "Game Over!",
+        "aiSurrender": "AI Surrenders!",
+        "judge": "Result",
+        "yes": "Yes",
+        "no": "No"
+    },
+    "analyst": {
+        "title": "Board Recognition",
+        "startAnalysis": "Start Analysis"
+    },
     "login": {
         "title": "Go · Realm",
         "email": "Email",
@@ -8,6 +57,14 @@
         "registerNow": "Register Now",
         "backToGame": "Return to Game",
         "newToGame": "New to the Game",
-        "confirmPassword": "Confirm"
+        "confirmPassword": "Confirm",
+        "error": "Error",
+        "errorMessage": "Login or registration failed. Please try again.",
+        "notMember": "Not a Member?",
+        "isMember": "Is a Member?",
+        "joinNow": "Join Now!",
+        "loginNow": "Log in!",
+        "go": "Go",
+        "join": "Join"
     }
 }

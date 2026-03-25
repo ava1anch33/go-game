@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import BoardPixi from '@/components/BoardPixi.vue'
 import { useGameStore } from '@/stores'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const game = useGameStore()
 const analyzing = ref(false)
 
@@ -25,11 +27,12 @@ async function analystImage() {
 		</div>
 
 		<div class="settings-panel">
-			<h3 class="panel-title">棋盘识别</h3>
-			<button class="action-btn" @click="analystImage">开始分析</button>
+			<h3 class="panel-title">{{ t('analyst.title') }}</h3>
+			<button class="action-btn" @click="analystImage">{{ t('analyst.startAnalysis') }}</button>
 		</div>
 	</div>
 </template>
+
 <style lang="css" scoped>
 .game-layout {
 	display: flex;

@@ -1,4 +1,53 @@
 {
+    "header": {
+        "language": "언어 전환"
+    },
+    "nav": {
+        "aiGame": "대국",
+        "analysis": "분석",
+        "setting": "설정",
+        "home": "바둑 경계"
+    },
+    "home": {
+        "title": "바둑 경계",
+        "welcome": "안녕하세요, "
+    },
+    "setting": {
+        "title": "영향 범위",
+        "lastName": "성",
+        "firstName": "이름",
+        "phoneCode": "국가코드",
+        "phone": "전화번호",
+        "sync": "바둑판 동기화",
+        "security": "보안",
+        "google": "Google",
+        "github": "GitHub",
+        "changePassword": "비밀번호 변경",
+        "logout": "로그아웃"
+    },
+    "game": {
+        "title": "게임 설정",
+        "gameName": "게임 이름",
+        "aiFirst": "AI 선공 (흑)?",
+        "aiAttempts": "AI 생각 강도 (시도 횟수)",
+        "simulations": "회 시뮬레이션",
+        "createGame": "새 게임 만들기",
+        "endGame": "종료",
+        "aiThinking": "AI 생각 중...",
+        "yourTurn": "차례",
+        "youBlack": "흑 (당신)",
+        "youWhite": "백 (AI)",
+        "place": "두기",
+        "gameOver": "게임 종료!",
+        "aiSurrender": "AI 항복!",
+        "judge": "결과 판단",
+        "yes": "예",
+        "no": "아니오"
+    },
+    "analyst": {
+        "title": "바둑판 인식",
+        "startAnalysis": "분석 시작"
+    },
     "login": {
         "title": "바둑 · 경계",
         "email": "이메일",
@@ -8,6 +57,14 @@
         "registerNow": "지금 가입하기",
         "backToGame": "바둑판으로 돌아가기",
         "newToGame": "바둑 세계에 처음 오신 분",
-        "confirmPassword": "비밀번호 확인"
+        "confirmPassword": "비밀번호 확인",
+        "error": "오류",
+        "errorMessage": "로그인 또는 등록에 실패했습니다. 다시 시도해 주세요.",
+        "notMember": "회원이 아니신가요?",
+        "isMember": "회원가요?",
+        "joinNow": "지금 가입하기!",
+        "loginNow": "로그인!",
+        "go": "시작",
+        "join": "참여"
     }
 }

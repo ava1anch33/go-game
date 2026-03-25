@@ -1,7 +1,24 @@
 <script setup lang="ts">
 import { useAuthStore } from '@/stores'
 import { useRoute } from 'vue-router'
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, Directive } from 'vue'
+import { useI18n } from 'vue-i18n'
+import LanguageSwitcher from '@/components/LanguageSwitcher.vue'
+
+// 自定义指令：点击外部关闭下拉框
+const vClickOutside: Directive = {
+  mounted(el, binding) {
+    el._clickOutside = (event: MouseEvent) => {
+      if (!(el === event.target || el.contains(event.target as Node))) {
+        binding.value()
+      }
+    }
+    document.addEventListener('click', el._clickOutside)
+  },
+  unmounted(el) {
+    document.removeEventListener('click', el._clickOutside)
+  },
+}
 
 const auth = useAuthStore()
 const route = useRoute()
@@ -9,19 +26,21 @@ const route = useRoute()
 const avatarUrl = ref<string | null>(null)
 const objectUrl = ref<string | null>(null)
 
-const navLinks = [
-	{ route: '/go/ai-game', label: '对弈', icon: '🤖' },
-	{ route: '/go/analysis', label: '分析', icon: '📊' },
-	{ route: '/go/setting', label: '设置', icon: '⚙️' },
-]
+const { t } = useI18n()
+
+const navLinks = computed(() => [
+	{ route: '/go/ai-game', label: t('nav.aiGame'), icon: '🤖' },
+	{ route: '/go/analysis', label: t('nav.analysis'), icon: '📊' },
+	{ route: '/go/setting', label: t('nav.setting'), icon: '⚙️' },
+])
 
 const isActive = (linkRoute: string) => {
 	return route.path === linkRoute || route.path.startsWith(linkRoute + '/')
 }
 
 const currentPageTitle = computed(() => {
-	const matched = navLinks.find((item) => isActive(item.route))
-	return matched ? matched.label : '弈境'
+	const matched = navLinks.value.find((item) => isActive(item.route))
+	return matched ? matched.label : t('home.title')
 })
 
 const updateAvatar = () => {
@@ -76,7 +95,7 @@ onUnmounted(() => {
 		<aside class="sidebar">
 			<div class="logo">
 				<span class="logo-icon">⚫⚪</span>
-				<h1>弈境</h1>
+				<h1>{{ $t('home.title') }}</h1>
 			</div>
 
 			<nav class="nav-menu">
@@ -104,12 +123,14 @@ onUnmounted(() => {
 				<h2>{{ currentPageTitle }}</h2>
 
 				<div class="user-area">
+					<LanguageSwitcher />
+
 					<div class="user-profile">
 						<div class="avatar-wrapper">
 							<img
 								v-if="avatarUrl"
 								:src="avatarUrl"
-								alt="用戶頭像"
+								alt="User Avatar"
 								class="user-avatar"
 								@error="handleImageError"
 							/>
@@ -150,7 +171,7 @@ onUnmounted(() => {
 						</div>
 
 						<span class="welcome">
-							你好，{{ auth.user?.profile?.LastName || 'Client' }}
+							{{ $t('home.welcome') }}{{ auth.user?.profile?.LastName || 'Client' }}
 						</span>
 					</div>
 				</div>
@@ -173,6 +194,7 @@ onUnmounted(() => {
 .user-area {
 	display: flex;
 	align-items: center;
+	gap: 16px;
 }
 
 .user-profile {
@@ -331,6 +353,8 @@ onUnmounted(() => {
 	justify-content: space-between;
 	padding: 0 32px;
 	flex-shrink: 0;
+	position: relative;
+	z-index: 100;
 }
 
 .header h2 {

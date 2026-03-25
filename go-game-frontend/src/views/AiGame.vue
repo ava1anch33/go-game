@@ -9,7 +9,9 @@ import Radio from '@/components/ui/CustomRadio.vue'
 import Slider from '@/components/ui/CustomSlider.vue'
 import { showDialog } from '@/components/ui/dialog'
 import { apiEndGame } from '@/api'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const game = useGameStore()
 
 const isGaming = ref(false)
@@ -48,8 +50,8 @@ const handleClick = async (x: number, y: number) => {
 		const aiSuccess = await game.getAiThinking(gameSettingForm.aiAttempts)
 		if (aiSuccess === false) {
 			await showDialog({
-				title: '收官！',
-				content: 'AI认输！',
+				title: t('game.gameOver'),
+				content: t('game.aiSurrender'),
 			})
 			game.reset()
 		}
@@ -63,7 +65,7 @@ const endGame = async () => {
 	const result = game.determineWhoIsWinner()
 
 	await showDialog({
-		title: '胜负判断',
+		title: t('game.judge'),
 		content: result.result,
 	})
 
@@ -89,30 +91,30 @@ onMounted(() => {
 		</div>
 
 		<div class="settings-panel">
-			<h2>游戏设置</h2>
+			<h2>{{ t('game.title') }}</h2>
 
 			<div class="form-item">
-				<label>游戏名称</label>
+				<label>{{ t('game.gameName') }}</label>
 				<Input v-if="!isGaming" v-model="gameSettingForm.name" />
 				<div v-else class="value">{{ gameSettingForm.name }}</div>
 			</div>
 
 			<div class="form-item">
-				<label>AI 先手（执黑）?</label>
+				<label>{{ t('game.aiFirst') }}</label>
 				<RadioGroup
 					v-model="gameSettingForm.aiFirst"
 					direction="horizontal"
 					:disabled="isGaming"
 				>
-					<Radio :value="true">是</Radio>
-					<Radio :value="false">否</Radio>
+					<Radio :value="true">{{ t('game.yes') }}</Radio>
+					<Radio :value="false">{{ t('game.no') }}</Radio>
 				</RadioGroup>
 			</div>
 
 			<div class="form-item">
-				<label>AI 思考强度（尝试次数）</label>
+				<label>{{ t('game.aiAttempts') }}</label>
 				<Slider v-model="gameSettingForm.aiAttempts" :min="5" :max="1000" :step="5" />
-				<div class="slider-tip">当前：{{ gameSettingForm.aiAttempts }} 次模拟</div>
+				<div class="slider-tip">{{ t('game.simulations') }}: {{ gameSettingForm.aiAttempts }}</div>
 			</div>
 
 			<!-- 操作按钮 -->
@@ -123,21 +125,21 @@ onMounted(() => {
 					@click="createNewGame"
 					:disabled="isGaming"
 				>
-					创建新游戏
+					{{ t('game.createGame') }}
 				</Button>
 
 				<Button type="danger" @click="endGame" :disabled="!isGaming">
-					收官（结束游戏）
+					{{ t('game.endGame') }}
 				</Button>
 			</div>
 
 			<!-- 当前状态提示 -->
 			<div class="status-tip" v-if="isGaming">
-				<span v-if="aiThinking">AI 正在思考...</span>
+				<span v-if="aiThinking">{{ t('game.aiThinking') }}</span>
 				<span v-else
-					>轮到
-					{{ game.currentPlayer === Stone.Black ? '黑方（你）' : '白方（AI）' }}
-					下子</span
+					>{{ t('game.yourTurn') }}
+					{{ game.currentPlayer === Stone.Black ? t('game.youBlack') : t('game.youWhite') }}
+					{{ t('game.place') }}</span
 				>
 			</div>
 		</div>
@@ -163,6 +165,8 @@ onMounted(() => {
 	padding: 24px;
 	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 	overflow-y: auto;
+	position: relative;
+	z-index: 1;
 }
 
 h2 {

@@ -19,32 +19,32 @@
 
 			<form @submit.prevent="handleSubmit" class="form-body">
 				<div class="input-group">
-					<label>Email</label>
+					<label>{{ $t('login.email') }}</label>
 					<input
 						v-model="formData.email"
 						type="text"
-						placeholder="User ID / Email"
+						:placeholder="$t('login.email')"
 						required
 					/>
 				</div>
 
 				<div class="input-group">
-					<label>Password</label>
+					<label>{{ $t('login.password') }}</label>
 					<input
 						v-model="formData.password"
 						type="password"
-						placeholder="Password"
+						:placeholder="$t('login.password')"
 						required
 					/>
 				</div>
 
 				<Transition name="fade-slide">
 					<div v-if="!isLogin" class="input-group">
-						<label>Confirm</label>
+						<label>{{ $t('login.confirmPassword') }}</label>
 						<input
 							v-model="formData.confirmPassword"
 							type="password"
-							placeholder="Confirm Password"
+							:placeholder="$t('login.confirmPassword')"
 							required
 						/>
 					</div>
@@ -52,15 +52,15 @@
 
 				<div class="actions">
 					<button type="submit" class="btn-main">
-						{{ isLogin ? 'Go' : 'Join' }}
+						{{ isLogin ? $t('login.go') : $t('login.join') }}
 					</button>
 				</div>
 			</form>
 
 			<div class="footer">
-				<span>{{ isLogin ? 'Not a Member?' : 'Is a Member?' }}</span>
+				<span>{{ isLogin ? $t('login.notMember') : $t('login.isMember') }}</span>
 				<a href="#" @click.prevent="toggleMode" class="toggle-link">
-					{{ isLogin ? 'Join Now!' : 'Log in!' }}
+					{{ isLogin ? $t('login.joinNow') : $t('login.loginNow') }}
 				</a>
 			</div>
 		</div>
@@ -70,10 +70,11 @@
 <script setup lang="ts">
 import { showDialog } from '@/components/ui/dialog'
 import { useAuthStore } from '@/stores'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const auth = useAuthStore()
 const router = useRouter()
-
 const isLogin = ref(true)
 
 const formData = reactive({
@@ -98,8 +99,8 @@ const handleSubmit = async () => {
 		router.replace({ name: 'AiGame' })
 	} catch {
 		await showDialog({
-			title: '错误',
-			content: '登录或注册失败，请重试。',
+			title: t('login.error'),
+			content: t('login.errorMessage'),
 		})
 	}
 }

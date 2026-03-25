@@ -1,4 +1,53 @@
 {
+    "header": {
+        "language": "言語を切り替え"
+    },
+    "nav": {
+        "aiGame": "対局",
+        "analysis": "分析",
+        "setting": "設定",
+        "home": "囲碁境"
+    },
+    "home": {
+        "title": "囲碁境",
+        "welcome": "こんにちは、"
+    },
+    "setting": {
+        "title": "影響範囲",
+        "lastName": "姓",
+        "firstName": "名",
+        "phoneCode": "国コード",
+        "phone": "電話番号",
+        "sync": "棋盤同期",
+        "security": "セキュリティ",
+        "google": "Google",
+        "github": "GitHub",
+        "changePassword": "パスワード変更",
+        "logout": "退出"
+    },
+    "game": {
+        "title": "ゲーム設定",
+        "gameName": "ゲーム名",
+        "aiFirst": "AI先手（黒）?",
+        "aiAttempts": "AI思考強度（試行回数）",
+        "simulations": "回シミュレーション",
+        "createGame": "新規ゲーム作成",
+        "endGame": "終局（終了）",
+        "aiThinking": "AI思考中...",
+        "yourTurn": "番",
+        "youBlack": "黒（あなた）",
+        "youWhite": "白（AI）",
+        "place": "石を打つ",
+        "gameOver": "終局！",
+        "aiSurrender": "AI投了！",
+        "judge": "結果判定",
+        "yes": "はい",
+        "no": "いいえ"
+    },
+    "analyst": {
+        "title": "棋盤認識",
+        "startAnalysis": "分析開始"
+    },
     "login": {
         "title": "囲碁 ・ 境",
         "email": "メールアドレス",
@@ -8,6 +57,14 @@
         "registerNow": "今すぐ登録",
         "backToGame": "棋局に戻る",
         "newToGame": "棋界へようこそ",
-        "confirmPassword": "パスワード確認"
+        "confirmPassword": "パスワード確認",
+        "error": "エラー",
+        "errorMessage": "ログインまたは登録に失敗しました。再試行してください。",
+        "notMember": "メンバーではない方？",
+        "isMember": "メンバーの方？",
+        "joinNow": "今すぐ参加！",
+        "loginNow": "ログイン！",
+        "go": "開始",
+        "join": "参加"
     }
 }

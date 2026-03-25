@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { useAuthStore } from '@/stores'
+import { useI18n } from 'vue-i18n'
 import Button from '@/components/ui/CustomButton.vue'
 
+const { t } = useI18n()
 const auth = useAuthStore()
 const user = computed(() => auth.user)
 
@@ -37,38 +39,38 @@ const save = async () => {
 			</section>
 
 			<section class="hud influence">
-				<h3>个人势力范围</h3>
+				<h3>{{ t('setting.title') }}</h3>
 
 				<div class="grid">
-					<input v-model="form.lastName" placeholder="姓" />
-					<input v-model="form.firstName" placeholder="名" />
-					<input v-model="form.phoneCode" placeholder="+86" />
-					<input v-model="form.phone" placeholder="手机号" />
+					<input v-model="form.lastName" :placeholder="t('setting.lastName')" />
+					<input v-model="form.firstName" :placeholder="t('setting.firstName')" />
+					<input v-model="form.phoneCode" :placeholder="t('setting.phoneCode')" />
+					<input v-model="form.phone" :placeholder="t('setting.phone')" />
 				</div>
 
-				<Button type="primary" @click="save">同步棋盘</Button>
+				<Button type="primary" @click="save">{{ t('setting.sync') }}</Button>
 			</section>
 
 			<!-- 安全 -->
 			<section class="hud security">
-				<h3>安全连接</h3>
+				<h3>{{ t('setting.security') }}</h3>
 
 				<div class="oauth">
-					<span>Google</span>
+					<span>{{ t('setting.google') }}</span>
 					<i :class="user?.googleId ? 'stone white' : 'stone empty'" />
 				</div>
 
 				<div class="oauth">
-					<span>GitHub</span>
+					<span>{{ t('setting.github') }}</span>
 					<i :class="user?.githubId ? 'stone white' : 'stone empty'" />
 				</div>
 
-				<Button type="secondary">修改密码</Button>
+				<Button type="secondary">{{ t('setting.changePassword') }}</Button>
 			</section>
 
 			<!-- 危险区 -->
 			<section class="hud danger">
-				<Button type="danger" @click="auth.logout">落子 · 退出</Button>
+				<Button type="danger" @click="auth.logout">{{ t('setting.logout') }}</Button>
 			</section>
 		</div>
 	</div>

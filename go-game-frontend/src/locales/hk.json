@@ -1,4 +1,53 @@
 {
+    "header": {
+        "language": "切換語言"
+    },
+    "nav": {
+        "aiGame": "對弈",
+        "analysis": "分析",
+        "setting": "設置",
+        "home": "弈境"
+    },
+    "home": {
+        "title": "弈境",
+        "welcome": "你好，"
+    },
+    "setting": {
+        "title": "個人勢力範圍",
+        "lastName": "姓",
+        "firstName": "名",
+        "phoneCode": "區號",
+        "phone": "手機號",
+        "sync": "同步棋盤",
+        "security": "安全連接",
+        "google": "Google",
+        "github": "GitHub",
+        "changePassword": "修改密碼",
+        "logout": "落子 · 退出"
+    },
+    "game": {
+        "title": "遊戲設置",
+        "gameName": "遊戲名稱",
+        "aiFirst": "AI 先手（執黑）?",
+        "aiAttempts": "AI 思考強度（嘗試次數）",
+        "simulations": "次模擬",
+        "createGame": "創建新遊戲",
+        "endGame": "收官（結束遊戲）",
+        "aiThinking": "AI 正在思考...",
+        "yourTurn": "輪到",
+        "youBlack": "黑方（你）",
+        "youWhite": "白方（AI）",
+        "place": "下子",
+        "gameOver": "收官！",
+        "aiSurrender": "AI認輸！",
+        "judge": "勝負判斷",
+        "yes": "是",
+        "no": "否"
+    },
+    "analyst": {
+        "title": "棋盤識別",
+        "startAnalysis": "開始分析"
+    },
     "login": {
         "title": "弈 · 境",
         "email": "電郵",
@@ -8,6 +57,14 @@
         "registerNow": "即刻註冊",
         "backToGame": "重返棋局",
         "newToGame": "初入棋局",
-        "confirmPassword": "確認密碼"
+        "confirmPassword": "確認密碼",
+        "error": "錯誤",
+        "errorMessage": "登入或註冊失敗，請重試。",
+        "notMember": "仲未有帳號？",
+        "isMember": "已有帳號？",
+        "joinNow": "即刻加入！",
+        "loginNow": "登入！",
+        "go": "開始",
+        "join": "加入"
     }
 }
