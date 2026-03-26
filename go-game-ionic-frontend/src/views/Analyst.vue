@@ -40,9 +40,12 @@ import BoardPixi from '@/components/BoardPixi.vue'
 import { useGameStore } from '@/stores'
 import { ref, onMounted } from 'vue'
 import CustomHeader from '@/components/ui/CustomHeader.vue'
+import { showDialog } from '@/components/ui/dialog'
+import { useI18n } from 'vue-i18n'
 
 const game = useGameStore()
 const analyzing = ref(false)
+const { t } = useI18n()
 
 onMounted(() => {
     game.reset()
@@ -59,9 +62,10 @@ async function analystImage() {
     try {
         await game.analystImgGame()
     } catch (err) {
-        // 可选：显示 Ionic toast 提示
-        // const toast = await toastController.create({ message: '分析失败', duration: 2000 });
-        // await toast.present();
+        await showDialog({
+            title: t('dialog.errorTitle'),
+            content: t('dialog.analysisFailed'),
+        })
     } finally {
         analyzing.value = false
     }

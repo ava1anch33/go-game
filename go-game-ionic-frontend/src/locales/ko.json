@@ -6,6 +6,8 @@
         "submit": "바둑",
         "noAccount": "아직 계정이 없으신가요?",
         "registerNow": "지금 가입하기",
+        "haveAccount": "이미 계정이 있으신가요?",
+        "loginNow": "지금 로그인하기",
         "backToGame": "바둑판으로 돌아가기",
         "newToGame": "바둑 세계에 처음 오신 분",
         "confirmPassword": "비밀번호 확인"
@@ -81,8 +83,8 @@
         "confirm": "확인",
         "cancel": "취소"
     },
-    "errors": {
-        "title": "오류",
+    "dialog": {
+        "errorTitle": "오류",
         "invalidCredentials": "잘못된 이메일 또는 비밀번호입니다."
     }
 }

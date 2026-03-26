@@ -6,6 +6,8 @@
         "submit": "弈",
         "noAccount": "仲未有帳號？",
         "registerNow": "即刻註冊",
+        "haveAccount": "已有帳號？",
+        "loginNow": "前往登入",
         "backToGame": "重返棋局",
         "newToGame": "初入棋局",
         "confirmPassword": "確認密碼"
@@ -81,8 +83,8 @@
         "confirm": "確認",
         "cancel": "取消"
     },
-    "errors": {
-        "title": "錯誤",
+    "dialog": {
+        "errorTitle": "錯誤",
         "invalidCredentials": "無效的電郵或密碼。"
     }
 }
