@@ -6,6 +6,8 @@
         "submit": "Go",
         "noAccount": "No account yet?",
         "registerNow": "Register Now",
+        "haveAccount": "Already have an account?",
+        "loginNow": "Login Now",
         "backToGame": "Return to Game",
         "newToGame": "New to the Game",
         "confirmPassword": "Confirm"
@@ -81,8 +83,8 @@
         "confirm": "Confirm",
         "cancel": "Cancel"
     },
-    "errors": {
-        "title": "Error",
+    "dialog": {
+        "errorTitle": "Error",
         "invalidCredentials": "Invalid email or password."
     }
 }

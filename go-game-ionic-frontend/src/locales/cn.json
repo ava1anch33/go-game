@@ -6,6 +6,8 @@
         "submit": "弈",
         "noAccount": "还没有账号？",
         "registerNow": "立即注册",
+        "haveAccount": "已有账号？",
+        "loginNow": "前往登陆",
         "backToGame": "重返棋局",
         "newToGame": "初入棋局",
         "confirmPassword": "确认密码"
@@ -81,8 +83,14 @@
         "confirm": "确认",
         "cancel": "取消"
     },
-    "errors": {
-        "title": "错误",
-        "invalidCredentials": "无效的邮箱或密码。"
+    "dialog": {
+        "errorTitle": "错误",
+        "successTitle": "成功",
+        "updateSuccess": "个人信息更新成功",
+        "updateFailed": "更新失败，请稍后再试",
+        "invalidCredentials": "无效的邮箱或密码。",
+        "pwdMisMatch": "两次输入的密码不一致",
+        "loginOrRegisterFailed": "登录或注册失败，请稍后再试",
+        "analysisFailed": "分析失败，请稍后再试"
     }
 }

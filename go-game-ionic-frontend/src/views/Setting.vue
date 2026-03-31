@@ -158,17 +158,16 @@ const saveProfile = async () => {
     saving.value = true
 
     try {
-        // 這裡呼叫你的更新 API
         // await updateUserProfile(user.value)
 
         await showDialog({
-            title: '成功',
-            content: '個人資料已更新',
+            title: t('dialog.successTitle'),
+            content: t('dialog.updateSuccess'),
         })
     } catch (err) {
         await showDialog({
-            title: '錯誤',
-            content: '更新失敗，請稍後再試',
+            title: t('dialog.errorTitle'),
+            content: t('dialog.updateFailed'),
         })
     } finally {
         saving.value = false

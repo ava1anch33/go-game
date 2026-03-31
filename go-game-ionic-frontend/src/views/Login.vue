@@ -63,15 +63,15 @@
 
                         <div class="actions ion-margin-top">
                             <ion-button expand="block" type="submit" class="btn-main" shape="round">
-                                {{ isLogin ? $t('login.submit') : $t('login.submit') }}
+                                {{ $t('login.submit') }}
                             </ion-button>
                         </div>
                     </form>
 
                     <div class="footer ion-text-center ion-margin-top">
-                        <span>{{ isLogin ? $t('login.noAccount') : '已有帳號？' }}</span>
+                        <span>{{ isLogin ? $t('login.noAccount') : $t('login.haveAccount') }}</span>
                         <a href="#" @click.prevent="toggleMode" class="toggle-link">
-                            {{ isLogin ? $t('login.registerNow') : '前往登入' }}
+                            {{ isLogin ? $t('login.registerNow') : $t('login.loginNow') }}
                         </a>
                     </div>
                 </div>
@@ -87,9 +87,11 @@ import { useAuthStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import { reactive, ref } from 'vue'
 import CustomHeader from '@/components/ui/CustomHeader.vue'
+import { useI18n } from 'vue-i18n'
 
 const auth = useAuthStore()
 const router = useRouter()
+const { t } = useI18n()
 
 const isLogin = ref(true)
 
@@ -108,8 +110,8 @@ const toggleMode = () => {
 const handleSubmit = async () => {
     if (!isLogin.value && formData.password !== formData.confirmPassword) {
         await showDialog({
-            title: '錯誤',
-            content: '兩次輸入的密碼不一致',
+            title: t('dialog.errorTitle'),
+            content: t('dialog.pwdMisMatch'),
         })
         return
     }
@@ -123,8 +125,8 @@ const handleSubmit = async () => {
         router.replace({ name: 'AiGame' })
     } catch (error: any) {
         await showDialog({
-            title: '錯誤',
-            content: error.message || '登入/註冊失敗，請重試',
+            title: t('dialog.errorTitle'),
+            content: error.message || t('dialog.loginOrRegisterFailed'),
         })
     }
 }
