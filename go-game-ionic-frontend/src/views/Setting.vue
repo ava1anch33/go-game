@@ -107,6 +107,7 @@ import { useRouter } from 'vue-router'
 import CustomHeader from '@/components/ui/CustomHeader.vue'
 import { showDialog } from '@/components/ui/dialog'
 import { useI18n } from 'vue-i18n'
+import { updateUserProfile } from '@/api'
 
 const auth = useAuthStore()
 const router = useRouter()
@@ -155,10 +156,16 @@ const handleAvatarUpload = async (event: Event) => {
 }
 
 const saveProfile = async () => {
-    saving.value = true
+    // saving.value = true
 
     try {
-        // await updateUserProfile(user.value)
+        const profileData = {
+            firstName: user.firstName,
+            lastName: user.lastName,
+            phoneCode: user.countryCode,
+            phone: user.phone,
+        }
+        await updateUserProfile(profileData)
 
         await showDialog({
             title: t('dialog.successTitle'),

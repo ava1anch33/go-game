@@ -33,3 +33,15 @@ export async function uploadAvatarApi(file: Base64URLString) {
         body: { file },
     })
 }
+
+export async function updateUserProfile(profileData: {
+    firstName?: string
+    lastName?: string
+    phoneCode?: string
+    phone?: string
+}) {
+    return FetchPut('/user', {
+        payloadType: 'json',
+        body: profileData,
+    })
+}

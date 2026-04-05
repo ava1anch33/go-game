@@ -59,14 +59,35 @@ class UserService {
     }
 
     async updateUser(id, updateData) {
-        const forbiddenFields = ['password', 'role', 'googleId', 'wechatId', 'githubId']
-        forbiddenFields.forEach((field) => delete updateData[field])
+        const forbiddenFields = ['passwd', 'role', 'googleId', 'wechatId', 'githubId', 'email'];
 
-        const updated = await userRepository.updateById(id, updateData)
-        if (!updated) {
-            throw new AppError('User not found', 404, 'USER_NOT_FOUND')
+        forbiddenFields.forEach((field) => delete updateData[field]);
+
+        const updatePayload = {};
+
+        if (updateData.profile && typeof updateData.profile === 'object') {
+            const safeProfileFields = { ...updateData.profile };
+
+            delete safeProfileFields.avatar;
+
+            Object.keys(safeProfileFields).forEach(key => {
+                updatePayload[`profile.${key}`] = safeProfileFields[key];
+            });
         }
-        return updated
+
+        if (Object.keys(updatePayload).length === 0) {
+            throw new AppError('No valid fields to update in profile', 400, 'NO_VALID_UPDATE_FIELDS');
+        }
+
+        const updated = await userRepository.updateById(id, {
+            $set: updatePayload
+        });
+
+        if (!updated) {
+            throw new AppError('User not found', 404, 'USER_NOT_FOUND');
+        }
+
+        return updated;
     }
 
     async updateUserAvatar(id, avatar) {

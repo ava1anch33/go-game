@@ -30,8 +30,9 @@ async function logout(req, res, next) {
 
 async function updateUserInfo(req, res, next) {
     try {
-        const { user: newUserInfo } = req.body
-        const user = await userService.updateUser(newUserInfo)
+        const tokenUser = checkUserExist(req)
+        const newUserInfo = req.body
+        const user = await userService.updateUser(tokenUser.id, { profile: newUserInfo})
         successResponse(res, {
             user,
         })
