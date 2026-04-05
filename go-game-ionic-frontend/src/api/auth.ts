@@ -30,6 +30,6 @@ export async function apiLookForUserInfo() {
 export async function uploadAvatarApi(file: Base64URLString) {
     return FetchPut('/user/avatar', {
         payloadType: 'json',
-        body: { file }
+        body: { file },
     })
 }

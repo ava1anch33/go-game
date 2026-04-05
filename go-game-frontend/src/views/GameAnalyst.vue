@@ -28,7 +28,9 @@ async function analystImage() {
 
 		<div class="settings-panel">
 			<h3 class="panel-title">{{ t('analyst.title') }}</h3>
-			<button class="action-btn" @click="analystImage">{{ t('analyst.startAnalysis') }}</button>
+			<button class="action-btn" @click="analystImage">
+				{{ t('analyst.startAnalysis') }}
+			</button>
 		</div>
 	</div>
 </template>

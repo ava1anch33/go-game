@@ -135,10 +135,7 @@ const createNewGame = async () => {
     try {
         await game.createNewGame(gameSettingForm.name, gameSettingForm.aiFirst)
     } catch (err) {
-        await showMessage(
-            t('errors.title'),
-            t('errors.invalidCredentials'),
-        )
+        await showMessage(t('errors.title'), t('errors.invalidCredentials'))
         isGaming.value = false
     } finally {
         aiThinking.value = false
@@ -155,10 +152,7 @@ const handleClick = async (x: number, y: number) => {
     try {
         const aiSuccess = await game.getAiThinking(gameSettingForm.aiAttempts)
         if (aiSuccess === false) {
-            await showMessage(
-                t('aiGame.endGame'),
-                t('aiGame.aiLose'),
-            )
+            await showMessage(t('aiGame.endGame'), t('aiGame.aiLose'))
             game.reset()
             isGaming.value = false
         }
@@ -174,10 +168,7 @@ const endGame = async () => {
 
     const result = game.determineWhoIsWinner()
 
-    await showMessage(
-        t('aiGame.endGame'),
-        result.result
-    )
+    await showMessage(t('aiGame.endGame'), result.result)
 
     apiEndGame(game.gameId!, game.board)
 

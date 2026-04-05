@@ -89,6 +89,6 @@ export const useAuthStore = defineStore('auth', () => {
         setToken,
         clearToken,
         getUserDetail,
-        uploadAvatar
+        uploadAvatar,
     }
 })

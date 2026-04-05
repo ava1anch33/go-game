@@ -114,7 +114,9 @@ onMounted(() => {
 			<div class="form-item">
 				<label>{{ t('game.aiAttempts') }}</label>
 				<Slider v-model="gameSettingForm.aiAttempts" :min="5" :max="1000" :step="5" />
-				<div class="slider-tip">{{ t('game.simulations') }}: {{ gameSettingForm.aiAttempts }}</div>
+				<div class="slider-tip">
+					{{ t('game.simulations') }}: {{ gameSettingForm.aiAttempts }}
+				</div>
 			</div>
 
 			<!-- 操作按钮 -->
@@ -138,7 +140,9 @@ onMounted(() => {
 				<span v-if="aiThinking">{{ t('game.aiThinking') }}</span>
 				<span v-else
 					>{{ t('game.yourTurn') }}
-					{{ game.currentPlayer === Stone.Black ? t('game.youBlack') : t('game.youWhite') }}
+					{{
+						game.currentPlayer === Stone.Black ? t('game.youBlack') : t('game.youWhite')
+					}}
 					{{ t('game.place') }}</span
 				>
 			</div>
