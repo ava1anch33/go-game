@@ -1,0 +1,5 @@
+go-game-api/node_modules/
+go-game-frontend/node_modules/
+go-game-ionic-frontend/node_modules/
+node_modules/
+.DS_Store
