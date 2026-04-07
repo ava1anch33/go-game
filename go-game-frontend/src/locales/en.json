@@ -66,5 +66,8 @@
         "loginNow": "Log in!",
         "go": "Go",
         "join": "Join"
+    },
+    "auth": {
+        "logout": "Log Out"
     }
 }
