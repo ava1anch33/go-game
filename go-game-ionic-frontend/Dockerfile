@@ -1,4 +1,4 @@
-FROM node:20-alpine
+FROM dockerproxy.com/library/node:20-alpine
 
 WORKDIR /app
 

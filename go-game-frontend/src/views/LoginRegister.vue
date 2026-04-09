@@ -3,6 +3,10 @@
 		<div class="bg-orb orb-1"></div>
 		<div class="bg-orb orb-2"></div>
 
+		<div class="language-switcher-wrapper">
+			<LanguageSwitcher />
+		</div>
+
 		<div class="glass-card">
 			<div class="grid-line line-h"></div>
 			<div class="grid-line line-v"></div>
@@ -71,6 +75,23 @@
 import { showDialog } from '@/components/ui/dialog'
 import { useAuthStore } from '@/stores'
 import { useI18n } from 'vue-i18n'
+import { Directive } from 'vue'
+import LanguageSwitcher from '@/components/LanguageSwitcher.vue'
+
+// 自定义指令：点击外部关闭下拉框
+const vClickOutside: Directive = {
+  mounted(el, binding) {
+    el._clickOutside = (event: MouseEvent) => {
+      if (!(el === event.target || el.contains(event.target as Node))) {
+        binding.value()
+      }
+    }
+    document.addEventListener('click', el._clickOutside)
+  },
+  unmounted(el) {
+    document.removeEventListener('click', el._clickOutside)
+  },
+}
 
 const { t } = useI18n()
 const auth = useAuthStore()
@@ -117,6 +138,14 @@ const handleSubmit = async () => {
 	position: relative;
 	overflow: hidden;
 	font-family: 'PingFang SC', sans-serif;
+}
+
+/* --- 语言切换器位置 --- */
+.language-switcher-wrapper {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	z-index: 100;
 }
 
 /* --- 背景光晕动画 --- */
