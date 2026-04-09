@@ -135,10 +135,7 @@ const createNewGame = async () => {
     try {
         await game.createNewGame(gameSettingForm.name, gameSettingForm.aiFirst)
     } catch (err) {
-        await showMessage(
-            t('errors.title'),
-            t('errors.invalidCredentials'),
-        )
+        await showMessage(t('errors.title'), t('errors.invalidCredentials'))
         isGaming.value = false
     } finally {
         aiThinking.value = false
@@ -155,15 +152,11 @@ const handleClick = async (x: number, y: number) => {
     try {
         const aiSuccess = await game.getAiThinking(gameSettingForm.aiAttempts)
         if (aiSuccess === false) {
-            await showMessage(
-                t('aiGame.endGame'),
-                t('aiGame.aiLose'),
-            )
+            await showMessage(t('aiGame.endGame'), t('aiGame.aiLose'))
             game.reset()
             isGaming.value = false
         }
     } catch (err) {
-        console.error('AI 思考失敗', err)
     } finally {
         aiThinking.value = false
     }
@@ -172,12 +165,14 @@ const handleClick = async (x: number, y: number) => {
 const endGame = async () => {
     if (!isGaming.value) return
 
+    if (game.isBoardEmpty()) {
+        await showMessage(t('dialog.errorTitle'), t('analysis.emptyBoardTip'))
+        return
+    }
+
     const result = game.determineWhoIsWinner()
 
-    await showMessage(
-        t('aiGame.endGame'),
-        result.result
-    )
+    await showMessage(t('aiGame.endGame'), result.result)
 
     apiEndGame(game.gameId!, game.board)
 

@@ -44,33 +44,32 @@ class UserService {
 
     async getUserById(id) {
         const user = await userRepository.findById(id)
-        if (!user) {
-            throw new AppError('User not found', 404, 'USER_NOT_FOUND')
-        }
-        return user
+        return this.handleUserNotFound(user)
     }
 
     async getUserByEmail(email) {
         const user = await userRepository.findByEmail(email)
+        return this.handleUserNotFound(user)
+    }
+
+    async updateUser(id, updateData) {
+        const updated = await userRepository.updateById(id, updateData);
+        return this.handleUpdateFailed(updated)
+    }
+
+    async updateUserAvatar(id, avatar) {
+        const updated = await userRepository.updateById(id, { avatar })
+        return this.handleUpdateFailed(updated)
+    }
+
+    handleUserNotFound(user) {
         if (!user) {
             throw new AppError('User not found', 404, 'USER_NOT_FOUND')
         }
         return user
     }
 
-    async updateUser(id, updateData) {
-        const forbiddenFields = ['password', 'role', 'googleId', 'wechatId', 'githubId']
-        forbiddenFields.forEach((field) => delete updateData[field])
-
-        const updated = await userRepository.updateById(id, updateData)
-        if (!updated) {
-            throw new AppError('User not found', 404, 'USER_NOT_FOUND')
-        }
-        return updated
-    }
-
-    async updateUserAvatar(id, avatar) {
-        const updated = await userRepository.updateById(id, { 'profile.avatar': avatar })
+    handleUpdateFailed(updated) {
         if (!updated) {
             throw new AppError('User not found', 404, 'USER_NOT_FOUND')
         } 

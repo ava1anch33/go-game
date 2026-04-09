@@ -1,32 +1,33 @@
 <script setup lang="ts">
 import { useAuthStore } from '@/stores'
-import { useRoute } from 'vue-router'
-import { ref, computed, onMounted, onUnmounted, Directive } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import LanguageSwitcher from '@/components/LanguageSwitcher.vue'
 
-// 自定义指令：点击外部关闭下拉框
-const vClickOutside: Directive = {
-  mounted(el, binding) {
-    el._clickOutside = (event: MouseEvent) => {
-      if (!(el === event.target || el.contains(event.target as Node))) {
-        binding.value()
-      }
-    }
-    document.addEventListener('click', el._clickOutside)
-  },
-  unmounted(el) {
-    document.removeEventListener('click', el._clickOutside)
-  },
-}
-
 const auth = useAuthStore()
 const route = useRoute()
+const router = useRouter()
+const { t } = useI18n()
 
 const avatarUrl = ref<string | null>(null)
 const objectUrl = ref<string | null>(null)
+const showUserMenu = ref(false)
 
-const { t } = useI18n()
+// Sidebar state: auto-collapsed by default
+const sidebarCollapsed = ref(true)
+
+// Auto expand/collapse on mouse hover
+const handleSidebarMouseEnter = () => {
+	if (window.innerWidth >= 900) {
+		sidebarCollapsed.value = false
+	}
+}
+const handleSidebarMouseLeave = () => {
+	if (window.innerWidth >= 900) {
+		sidebarCollapsed.value = true
+	}
+}
 
 const navLinks = computed(() => [
 	{ route: '/go/ai-game', label: t('nav.aiGame'), icon: '🤖' },
@@ -39,63 +40,104 @@ const isActive = (linkRoute: string) => {
 }
 
 const currentPageTitle = computed(() => {
-	const matched = navLinks.value.find((item) => isActive(item.route))
-	return matched ? matched.label : t('home.title')
+	const found = navLinks.value.find((n) => isActive(n.route))
+	return found ? found.label : t('home.title')
 })
 
+// Load user avatar
 const updateAvatar = () => {
 	const avatarData = auth.user?.profile?.avatar
+
 	if (objectUrl.value) {
 		URL.revokeObjectURL(objectUrl.value)
 		objectUrl.value = null
 	}
+	avatarUrl.value = null
 
-	if (!avatarData) {
-		avatarUrl.value = null
+	if (!avatarData) return
+
+	if (typeof avatarData === 'string') {
+		const strData = avatarData as string
+		if (strData.startsWith('data:image')) {
+			avatarUrl.value = strData
+			return
+		}
+		console.warn('Unknown string avatar format')
 		return
 	}
 
-	let blob: Blob
+	try {
+		let blob: Blob
+		if (avatarData instanceof Blob) {
+			blob = avatarData
+		} else if (avatarData instanceof ArrayBuffer || ArrayBuffer.isView(avatarData)) {
+			blob = new Blob([avatarData], { type: 'image/jpeg' })
+		} else {
+			console.warn('Unknown avatar data type')
+			return
+		}
 
-	if (avatarData instanceof Blob) {
-		blob = avatarData
-	} else if (avatarData instanceof ArrayBuffer || ArrayBuffer.isView(avatarData)) {
-		blob = new Blob([avatarData], { type: 'image/jpeg' })
-	} else if (typeof avatarData === 'string' && (avatarData as string).startsWith('data:image')) {
-		avatarUrl.value = avatarData
-		return
-	} else {
-		console.warn('未知的 avatar 資料格式')
-		return
+		objectUrl.value = URL.createObjectURL(blob)
+		avatarUrl.value = objectUrl.value
+	} catch (e) {
+		console.error('Failed to load avatar:', e)
 	}
-
-	objectUrl.value = URL.createObjectURL(blob)
-	avatarUrl.value = objectUrl.value
 }
 
 const handleImageError = () => {
 	avatarUrl.value = null
 }
 
-onMounted(async () => {
-	await auth.getUserDetail()
+const toggleUserMenu = () => {
+	showUserMenu.value = !showUserMenu.value
+}
+const closeUserMenu = () => {
+	showUserMenu.value = false
+}
+
+const goToSetting = () => {
+	router.push('/go/setting')
+	closeUserMenu()
+}
+
+// Logout (i18n supported)
+const handleLogout = async () => {
+	closeUserMenu()
+	await auth.logout()
+	router.push('/login')
+}
+
+// Responsive layout for small screens
+const updateResponsive = () => {
+	if (window.innerWidth < 900) {
+		sidebarCollapsed.value = true
+	}
+}
+
+onMounted(() => {
 	updateAvatar()
+	updateResponsive()
+	window.addEventListener('resize', updateResponsive)
 })
 
 onUnmounted(() => {
-	if (objectUrl.value) {
-		URL.revokeObjectURL(objectUrl.value)
-	}
+	if (objectUrl.value) URL.revokeObjectURL(objectUrl.value)
+	window.removeEventListener('resize', updateResponsive)
 })
 </script>
 
 <template>
 	<div class="home-page">
-		<!-- 固定側邊欄 -->
-		<aside class="sidebar">
+		<!-- Sidebar: auto expand on mouse hover -->
+		<aside
+			class="sidebar"
+			:class="{ collapsed: sidebarCollapsed }"
+			@mouseenter="handleSidebarMouseEnter"
+			@mouseleave="handleSidebarMouseLeave"
+		>
 			<div class="logo">
 				<span class="logo-icon">⚫⚪</span>
-				<h1>{{ $t('home.title') }}</h1>
+				<h1 v-show="!sidebarCollapsed">{{ $t('home.title') }}</h1>
 			</div>
 
 			<nav class="nav-menu">
@@ -103,21 +145,17 @@ onUnmounted(() => {
 					<li v-for="item in navLinks" :key="item.route">
 						<router-link
 							:to="item.route"
-							:class="{
-								'nav-item': true,
-								active: isActive(item.route),
-							}"
+							:class="['nav-item', { active: isActive(item.route) }]"
 						>
 							<span class="icon">{{ item.icon }}</span>
-							<span>{{ item.label }}</span>
+							<span v-show="!sidebarCollapsed">{{ item.label }}</span>
 						</router-link>
 					</li>
 				</ul>
 			</nav>
-
-			<div class="sidebar-footer"></div>
 		</aside>
 
+		<!-- Main content -->
 		<main class="main-content">
 			<header class="header">
 				<h2>{{ currentPageTitle }}</h2>
@@ -125,37 +163,23 @@ onUnmounted(() => {
 				<div class="user-area">
 					<LanguageSwitcher />
 
-					<div class="user-profile">
-						<div class="avatar-wrapper">
+					<div class="user-profile" v-click-outside="closeUserMenu">
+						<div class="avatar-wrapper" @click="toggleUserMenu">
 							<img
 								v-if="avatarUrl"
 								:src="avatarUrl"
-								alt="User Avatar"
+								alt="avatar"
 								class="user-avatar"
 								@error="handleImageError"
 							/>
-							<svg
-								v-else
-								viewBox="0 0 120 120"
-								xmlns="http://www.w3.org/2000/svg"
-								class="user-avatar default-avatar"
-							>
+							<svg v-else viewBox="0 0 120 120" class="user-avatar default-avatar">
 								<defs>
 									<radialGradient id="bg" cx="50%" cy="50%" r="55%">
 										<stop offset="0%" stop-color="#667eea" />
 										<stop offset="70%" stop-color="#764ba2" />
 										<stop offset="100%" stop-color="#5a367a" />
 									</radialGradient>
-									<radialGradient id="black" cx="50%" cy="50%">
-										<stop offset="0%" stop-color="#2d1b69" />
-										<stop offset="100%" stop-color="#000" />
-									</radialGradient>
-									<radialGradient id="white" cx="50%" cy="50%">
-										<stop offset="0%" stop-color="#f8f9ff" />
-										<stop offset="100%" stop-color="#e0e7ff" />
-									</radialGradient>
 								</defs>
-
 								<circle
 									cx="60"
 									cy="60"
@@ -164,15 +188,24 @@ onUnmounted(() => {
 									stroke="#a78bfa"
 									stroke-width="2"
 								/>
-								<circle cx="60" cy="60" r="4" fill="#fbbf24" opacity="0.9" />
-								<circle cx="28" cy="28" r="18" fill="url(#black)" />
-								<circle cx="92" cy="92" r="18" fill="url(#white)" />
 							</svg>
 						</div>
 
-						<span class="welcome">
+						<span class="welcome" @click="toggleUserMenu">
 							{{ $t('home.welcome') }}{{ auth.user?.profile?.LastName || 'Client' }}
 						</span>
+
+						<!-- User dropdown menu with i18n logout text -->
+						<div class="user-dropdown" v-if="showUserMenu">
+							<div class="dropdown-item" @click="goToSetting">
+								<span>⚙️</span>
+								<span>{{ $t('nav.setting') }}</span>
+							</div>
+							<div class="dropdown-item danger" @click="handleLogout">
+								<span>🚪</span>
+								<span>{{ $t('auth.logout') }}</span>
+							</div>
+						</div>
 					</div>
 				</div>
 			</header>
@@ -185,73 +218,32 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-.content {
-	flex: 1;
-	overflow-y: auto;
-	min-height: 0;
-}
-
-.user-area {
-	display: flex;
-	align-items: center;
-	gap: 16px;
-}
-
-.user-profile {
-	display: flex;
-	align-items: center;
-	gap: 12px;
-}
-
-.avatar-wrapper {
-	width: 40px;
-	height: 40px;
-	position: relative;
-}
-
-.user-avatar,
-.default-avatar {
-	width: 100%;
-	height: 100%;
-	border-radius: 50%;
-	object-fit: cover;
-	border: 2px solid rgba(255, 255, 255, 0.25);
-	background: rgba(0, 0, 0, 0.2);
-	transition: all 0.2s;
-}
-
-.user-avatar:hover {
-	transform: scale(1.08);
-	box-shadow: 0 0 12px rgba(167, 139, 250, 0.5);
-}
-
-.user-avatar[src^='blob:'] {
-	border-color: #a78bfa;
-}
 .home-page {
 	height: 100vh;
 	display: flex;
 	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 	color: #9f9cca;
-	font-family:
-		system-ui,
-		-apple-system,
-		BlinkMacSystemFont,
-		'Segoe UI',
-		Roboto,
-		sans-serif;
 	overflow: hidden;
 }
 
+/* Sidebar: auto-collapsed + expand on hover */
 .sidebar {
 	width: 260px;
 	flex-shrink: 0;
 	background: rgba(30, 30, 60, 0.72);
-	backdrop-filter: blur(12px) saturate(160%);
+	backdrop-filter: blur(12px);
 	border-right: 1px solid rgba(255, 255, 255, 0.08);
 	display: flex;
 	flex-direction: column;
 	padding: 24px 16px;
+	transition:
+		width 0.3s ease,
+		padding 0.3s ease;
+	z-index: 100;
+}
+.sidebar.collapsed {
+	width: 70px;
+	padding: 24px 8px;
 }
 
 .logo {
@@ -259,17 +251,15 @@ onUnmounted(() => {
 	align-items: center;
 	gap: 12px;
 	margin-bottom: 48px;
-	user-select: none;
 }
-
+.sidebar.collapsed .logo {
+	justify-content: center;
+}
 .logo-icon {
-	font-size: 2.1rem;
-	line-height: 1;
+	font-size: 2rem;
 }
-
 .logo h1 {
-	font-size: 1.6rem;
-	font-weight: 700;
+	font-size: 1.5rem;
 	background: linear-gradient(90deg, #c4b5fd, #a78bfa);
 	background-clip: text;
 	-webkit-background-clip: text;
@@ -282,67 +272,36 @@ onUnmounted(() => {
 	padding: 0;
 	margin: 0;
 }
-
 .nav-item {
 	display: flex;
 	align-items: center;
 	gap: 12px;
 	padding: 14px 16px;
 	border-radius: 10px;
-	color: rgba(240, 240, 255, 0.9);
+	color: rgba(240, 240, 255, 0.95);
 	text-decoration: none;
-	font-size: 1.05rem;
 	transition: all 0.2s;
 }
-
+.sidebar.collapsed .nav-item {
+	justify-content: center;
+	padding: 14px 8px;
+}
 .nav-item:hover {
-	background: rgba(120, 100, 220, 0.22);
-	color: white;
+	background: rgba(120, 100, 220, 0.2);
+	color: #fff;
 }
-
 .nav-item.active {
-	background: rgba(120, 100, 220, 0.38);
-	color: white;
-	font-weight: 500;
-	box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+	background: rgba(120, 100, 220, 0.35);
+	color: #fff;
 }
 
-.disabled {
-	opacity: 0.38;
-	cursor: not-allowed;
-}
-
-.sidebar-footer {
-	margin-top: auto;
-	display: flex;
-	gap: 12px;
-	padding-top: 24px;
-}
-
-.btn-icon {
-	background: rgba(255, 255, 255, 0.08);
-	border: none;
-	color: #ddd;
-	width: 44px;
-	height: 44px;
-	border-radius: 10px;
-	font-size: 1.3rem;
-	cursor: pointer;
-	transition: all 0.2s;
-}
-
-.btn-icon:hover {
-	background: rgba(255, 255, 255, 0.16);
-}
-
-/* 右侧主区域 */
+/* Main content */
 .main-content {
 	flex: 1;
 	display: flex;
 	flex-direction: column;
 	overflow: hidden;
 }
-
 .header {
 	height: 72px;
 	background: rgba(20, 20, 50, 0.78);
@@ -352,98 +311,74 @@ onUnmounted(() => {
 	align-items: center;
 	justify-content: space-between;
 	padding: 0 32px;
-	flex-shrink: 0;
 	position: relative;
-	z-index: 100;
+	z-index: 99;
 }
-
 .header h2 {
 	margin: 0;
-	font-size: 1.5rem;
-	font-weight: 600;
+	font-size: 1.4rem;
 }
 
 .user-area {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+}
+.user-profile {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	position: relative;
+	cursor: pointer;
+}
+.avatar-wrapper {
+	width: 40px;
+	height: 40px;
+}
+.user-avatar {
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	object-fit: cover;
+	border: 2px solid rgba(255, 255, 255, 0.2);
+}
+.welcome {
 	font-size: 0.95rem;
 	opacity: 0.9;
 }
 
-.hero {
-	background: rgba(30, 30, 60, 0.4);
-	border-radius: 16px;
-	padding: 60px 48px;
-	margin-bottom: 32px;
-	position: relative;
+/* Dropdown menu: always on top */
+.user-dropdown {
+	position: absolute;
+	top: 50px;
+	right: 0;
+	width: 170px;
+	background: rgba(30, 30, 60, 0.92);
+	backdrop-filter: blur(10px);
+	border-radius: 10px;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+	z-index: 9999 !important;
 	overflow: hidden;
 }
-
-.hero-text {
-	position: relative;
-	z-index: 2;
-	max-width: 620px;
-}
-
-.hero h1 {
-	font-size: 3.2rem;
-	margin: 0 0 16px;
-	line-height: 1.1;
-}
-
-.hero p {
-	font-size: 1.18rem;
-	opacity: 0.92;
-	margin: 0 0 32px;
-	line-height: 1.5;
-}
-
-.hero-actions {
+.dropdown-item {
 	display: flex;
-	gap: 16px;
+	align-items: center;
+	gap: 10px;
+	padding: 12px 16px;
+	color: #eee;
+	font-size: 0.95rem;
+}
+.dropdown-item:hover {
+	background: rgba(120, 110, 200, 0.25);
+}
+.dropdown-item.danger {
+	color: #ff6b6b;
 }
 
-.btn {
-	padding: 14px 28px;
-	border-radius: 12px;
-	font-size: 1.05rem;
-	font-weight: 500;
-	cursor: pointer;
-	transition: all 0.22s;
-	border: none;
-	text-decoration: none;
-	display: inline-block;
-}
-
-.btn.primary {
-	background: linear-gradient(90deg, #7c3aed, #a78bfa);
-	color: white;
-	box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
-}
-
-.btn.primary:hover {
-	transform: translateY(-2px);
-	box-shadow: 0 10px 28px rgba(124, 58, 237, 0.5);
-}
-
-.btn.secondary {
-	background: rgba(255, 255, 255, 0.1);
-	color: #e0d5ff;
-	border: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-.btn.secondary:hover {
-	background: rgba(255, 255, 255, 0.18);
-}
-
-.placeholder-section {
-	background: rgba(30, 30, 60, 0.35);
-	border-radius: 16px;
-	padding: 40px;
-	text-align: center;
-}
-
-.empty-tip {
-	margin-top: 16px;
-	opacity: 0.75;
-	line-height: 1.6;
+.content {
+	flex: 1;
+	overflow-y: auto;
+	padding: 20px;
 }
 </style>

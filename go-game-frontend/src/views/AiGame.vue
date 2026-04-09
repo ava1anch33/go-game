@@ -20,7 +20,7 @@ const aiThinking = ref(false)
 const gameSettingForm = reactive({
 	name: 'newGame',
 	aiFirst: false,
-	aiAttempts: 100,
+	aiAttempts: 2, // set to 2 for faster testing, can be increased for stronger AI at the cost of performance
 })
 
 const createNewGame = async () => {
@@ -32,7 +32,6 @@ const createNewGame = async () => {
 	try {
 		await game.createNewGame(gameSettingForm.name, gameSettingForm.aiFirst)
 	} catch (err) {
-		console.error('创建游戏失败', err)
 		isGaming.value = false
 	} finally {
 		aiThinking.value = false
@@ -114,10 +113,11 @@ onMounted(() => {
 			<div class="form-item">
 				<label>{{ t('game.aiAttempts') }}</label>
 				<Slider v-model="gameSettingForm.aiAttempts" :min="5" :max="1000" :step="5" />
-				<div class="slider-tip">{{ t('game.simulations') }}: {{ gameSettingForm.aiAttempts }}</div>
+				<div class="slider-tip">
+					{{ t('game.simulations') }}: {{ gameSettingForm.aiAttempts }}
+				</div>
 			</div>
 
-			<!-- 操作按钮 -->
 			<div class="button-group">
 				<Button
 					type="primary"
@@ -133,12 +133,13 @@ onMounted(() => {
 				</Button>
 			</div>
 
-			<!-- 当前状态提示 -->
 			<div class="status-tip" v-if="isGaming">
 				<span v-if="aiThinking">{{ t('game.aiThinking') }}</span>
 				<span v-else
 					>{{ t('game.yourTurn') }}
-					{{ game.currentPlayer === Stone.Black ? t('game.youBlack') : t('game.youWhite') }}
+					{{
+						game.currentPlayer === Stone.Black ? t('game.youBlack') : t('game.youWhite')
+					}}
 					{{ t('game.place') }}</span
 				>
 			</div>

@@ -66,5 +66,12 @@
         "loginNow": "登入！",
         "go": "開始",
         "join": "加入"
+    },
+    "auth": {
+        "logout": "登出"
+    },
+    "notFound": {
+        "description": "棋局之外 · 此路不通",
+        "backHome": "返回弈境"
     }
 }

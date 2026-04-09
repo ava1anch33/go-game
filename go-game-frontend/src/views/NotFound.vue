@@ -2,8 +2,8 @@
 	<div ref="container" class="notfound-root">
 		<div class="overlay">
 			<h1>404</h1>
-			<p>棋局之外 · 此路不通</p>
-			<button @click="goHome">回到首页</button>
+			<p>{{ $t('notFound.description') }}</p>
+			<button @click="goHome">{{ $t('notFound.backHome') }}</button>
 		</div>
 	</div>
 </template>

@@ -20,7 +20,9 @@
     "analysis": {
         "start": "分析開始",
         "recognize": "棋盤認識",
-        "analyzing": "分析中..."
+        "analyzing": "分析中...",
+        "emptyBoardTip": "棋盤が空です。分析する前に石を置いてください。",
+        "reset": "棋盤をリセット"
     },
     "aiGame": {
         "gameSetting": "ゲーム設定",

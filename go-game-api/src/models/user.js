@@ -24,20 +24,25 @@ const userSchema = new mongoose.Schema(
         updatedAt: {
             type: Date,
         },
-        role: {
+        avatar: {
             type: String,
-            enum: ['user', 'premium'],
-            default: 'user',
+            default: null,
         },
-        profile: {
-            avatar: {
-                type: String,
-                default: null,
-            },
-            phoneCode: String,
-            phone: String,
-            firstName: String,
-            lastName: String,
+        phoneCode: {
+            type: String,
+            default: ''
+        },
+        phone: {
+            type: String,
+            default: ''
+        },
+        firstName: {
+            type: String,
+            default: ''
+        },
+        lastName: {
+            type: String,
+            default: ''
         },
         refreshTokens: [
             {

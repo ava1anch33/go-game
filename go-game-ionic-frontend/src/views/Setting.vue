@@ -1,6 +1,6 @@
 <template>
     <ion-page>
-        <CustomHeader :title="$t('tabs.settings')"/>
+        <CustomHeader :title="$t('tabs.settings')" />
 
         <ion-content :fullscreen="true">
             <div class="avatar-section ion-text-center ion-padding">
@@ -17,12 +17,12 @@
                         @change="handleAvatarUpload"
                     />
                 </div>
-                <p class="avatar-tip">{{ $t("settings.clickToChangeAvatar") }}</p>
+                <p class="avatar-tip">{{ $t('settings.clickToChangeAvatar') }}</p>
             </div>
 
             <ion-list :inset="true" lines="full">
                 <ion-item>
-                    <ion-label position="stacked">{{ $t("settings.firstName") }}</ion-label>
+                    <ion-label position="stacked">{{ $t('settings.firstName') }}</ion-label>
                     <ion-input
                         v-model="user.firstName"
                         :placeholder="$t('settings.firstNamePlaceholder')"
@@ -32,7 +32,7 @@
                 </ion-item>
 
                 <ion-item>
-                    <ion-label position="stacked">{{ $t("settings.lastName") }}</ion-label>
+                    <ion-label position="stacked">{{ $t('settings.lastName') }}</ion-label>
                     <ion-input
                         v-model="user.lastName"
                         :placeholder="$t('settings.lastNamePlaceholder')"
@@ -42,7 +42,7 @@
                 </ion-item>
 
                 <ion-item>
-                    <ion-label position="stacked">{{ $t("settings.countryCode") }}</ion-label>
+                    <ion-label position="stacked">{{ $t('settings.countryCode') }}</ion-label>
                     <ion-select
                         v-model="user.countryCode"
                         :placeholder="$t('settings.countryCodePlaceholder')"
@@ -59,7 +59,7 @@
                 </ion-item>
 
                 <ion-item>
-                    <ion-label position="stacked">{{ $t("settings.phoneNumber") }}</ion-label>
+                    <ion-label position="stacked">{{ $t('settings.phoneNumber') }}</ion-label>
                     <ion-input
                         v-model="user.phone"
                         type="tel"
@@ -105,18 +105,18 @@ import { ref, onMounted, reactive, computed } from 'vue'
 import { useAuthStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import CustomHeader from '@/components/ui/CustomHeader.vue'
-import { showDialog } from '@/components/ui/dialog'
 import { useI18n } from 'vue-i18n'
+import { showMessage } from '@/components/ui/modal'
 
 const auth = useAuthStore()
 const router = useRouter()
 const { t } = useI18n()
 
 const user = reactive({
-    avatar: null as Base64URLString | null, 
+    avatar: null as Base64URLString | null,
     firstName: '',
     lastName: '',
-    countryCode: '+852', 
+    countryCode: '+852',
     phone: '',
 })
 
@@ -155,22 +155,21 @@ const handleAvatarUpload = async (event: Event) => {
 }
 
 const saveProfile = async () => {
-    saving.value = true
+    // saving.value = true
 
     try {
-        // await updateUserProfile(user.value)
-
-        await showDialog({
-            title: t('dialog.successTitle'),
-            content: t('dialog.updateSuccess'),
-        })
+        const profileData = {
+            firstName: user.firstName,
+            lastName: user.lastName,
+            phoneCode: user.countryCode,
+            phone: user.phone,
+        }
+        await auth.modifyUserProfile(profileData)
+        await showMessage(t('dialog.successTitle'), t('dialog.updateSuccess'))
     } catch (err) {
-        await showDialog({
-            title: t('dialog.errorTitle'),
-            content: t('dialog.updateFailed'),
-        })
+        await showMessage(t('dialog.successTitle'), t('dialog.updateSuccess'))
     } finally {
-        saving.value = false
+        // saving.value = false
     }
 }
 
@@ -181,11 +180,11 @@ const logout = async () => {
 
 onMounted(() => {
     Object.assign(user, {
-        avatar: auth.user?.profile.avatar || defaultAvatar,
-        firstName: auth.user?.profile.firstName || '',
-        lastName: auth.user?.profile.lastName || '',
-        countryCode: auth.user?.profile.phoneCode || '+852',
-        phone: auth.user?.profile.phone || '',
+        avatar: auth.user?.avatar || defaultAvatar,
+        firstName: auth.user?.firstName || '',
+        lastName: auth.user?.lastName || '',
+        countryCode: auth.user?.phoneCode || '+852',
+        phone: auth.user?.phone || '',
     })
 })
 </script>
