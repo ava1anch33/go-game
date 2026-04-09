@@ -29,6 +29,16 @@
                     <ion-spinner v-if="analyzing" name="crescent" slot="start"></ion-spinner>
                     {{ analyzing ? $t('analysis.analyzing') : $t('analysis.start') }}
                 </ion-button>
+                <ion-button
+                    expand="block"
+                    color="secondary"
+                    size="large"
+                    :disabled="analyzing"
+                    @click="resetBoard"
+                    class="action-btn"
+                >
+                    {{ $t('analysis.reset') }}
+                </ion-button>
             </div>
         </ion-content>
     </ion-page>
@@ -40,8 +50,8 @@ import BoardPixi from '@/components/BoardPixi.vue'
 import { useGameStore } from '@/stores'
 import { ref, onMounted } from 'vue'
 import CustomHeader from '@/components/ui/CustomHeader.vue'
-import { showDialog } from '@/components/ui/dialog'
 import { useI18n } from 'vue-i18n'
+import { showMessage } from '@/components/ui/modal'
 
 const game = useGameStore()
 const analyzing = ref(false)
@@ -56,19 +66,22 @@ function clickBoard(x: number, y: number) {
 }
 
 async function analystImage() {
-    if (analyzing.value) return
-
-    analyzing.value = true
     try {
+        if (game.isBoardEmpty()) {
+            await showMessage(t('dialog.errorTitle'), t('analysis.emptyBoardTip'))
+            return
+        }
+        analyzing.value = true
         await game.analystImgGame()
     } catch (err) {
-        await showDialog({
-            title: t('dialog.errorTitle'),
-            content: t('dialog.analysisFailed'),
-        })
+        await showMessage(t('dialog.errorTitle'), t('dialog.analysisFailed'))
     } finally {
         analyzing.value = false
     }
+}
+
+function resetBoard() {
+    game.reset()
 }
 </script>
 

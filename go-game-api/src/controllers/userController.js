@@ -32,7 +32,7 @@ async function updateUserInfo(req, res, next) {
     try {
         const tokenUser = checkUserExist(req)
         const newUserInfo = req.body
-        const user = await userService.updateUser(tokenUser.id, { profile: newUserInfo})
+        const user = await userService.updateUser(tokenUser.id, newUserInfo)
         successResponse(res, {
             user,
         })

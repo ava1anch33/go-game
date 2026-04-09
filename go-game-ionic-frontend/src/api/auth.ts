@@ -28,7 +28,7 @@ export async function apiLookForUserInfo() {
 }
 
 export async function uploadAvatarApi(file: Base64URLString) {
-    return FetchPut('/user/avatar', {
+    return FetchPut<{ user: User }>('/user/avatar', {
         payloadType: 'json',
         body: { file },
     })
@@ -40,7 +40,7 @@ export async function updateUserProfile(profileData: {
     phoneCode?: string
     phone?: string
 }) {
-    return FetchPut('/user', {
+    return FetchPut<{ user: User }>('/user', {
         payloadType: 'json',
         body: profileData,
     })

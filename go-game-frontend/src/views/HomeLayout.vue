@@ -1,24 +1,9 @@
 <script setup lang="ts">
 import { useAuthStore } from '@/stores'
 import { useRoute } from 'vue-router'
-import { ref, computed, onMounted, onUnmounted, Directive } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import LanguageSwitcher from '@/components/LanguageSwitcher.vue'
-
-// 自定义指令：点击外部关闭下拉框
-const vClickOutside: Directive = {
-	mounted(el, binding) {
-		el._clickOutside = (event: MouseEvent) => {
-			if (!(el === event.target || el.contains(event.target as Node))) {
-				binding.value()
-			}
-		}
-		document.addEventListener('click', el._clickOutside)
-	},
-	unmounted(el) {
-		document.removeEventListener('click', el._clickOutside)
-	},
-}
 
 const auth = useAuthStore()
 const route = useRoute()
@@ -65,7 +50,6 @@ const updateAvatar = () => {
 		avatarUrl.value = avatarData
 		return
 	} else {
-		console.warn('未知的 avatar 資料格式')
 		return
 	}
 

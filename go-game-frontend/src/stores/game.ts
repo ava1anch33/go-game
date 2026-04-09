@@ -113,7 +113,6 @@ export const useGameStore = defineStore('game', () => {
 			}
 		})
 
-		// save history
 		history.value.push({
 			x,
 			y,
@@ -175,20 +174,6 @@ export const useGameStore = defineStore('game', () => {
 	/** notify webGL to rerender the board and stone */
 	function toggleChanged() {
 		changed.value = !changed.value
-	}
-
-	function undo() {
-		const last = history.value.pop()
-		if (!last) return
-
-		board[index(last.x, last.y)] = Stone.Empty
-
-		for (const c of last.captured) {
-			board[c] = last.color === Stone.Black ? Stone.White : Stone.Black
-		}
-
-		currentPlayer.value = last.color
-		toggleChanged()
 	}
 
 	function reset() {
@@ -426,7 +411,6 @@ export const useGameStore = defineStore('game', () => {
 		// actions
 		placeStone,
 		removeStones,
-		undo,
 		determineWhoIsWinner,
 		reset,
 		createNewGame,

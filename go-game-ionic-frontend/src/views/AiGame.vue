@@ -157,7 +157,6 @@ const handleClick = async (x: number, y: number) => {
             isGaming.value = false
         }
     } catch (err) {
-        console.error('AI 思考失敗', err)
     } finally {
         aiThinking.value = false
     }
@@ -165,6 +164,11 @@ const handleClick = async (x: number, y: number) => {
 
 const endGame = async () => {
     if (!isGaming.value) return
+
+    if (game.isBoardEmpty()) {
+        await showMessage(t('dialog.errorTitle'), t('analysis.emptyBoardTip'))
+        return
+    }
 
     const result = game.determineWhoIsWinner()
 

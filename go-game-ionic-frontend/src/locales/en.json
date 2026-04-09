@@ -20,7 +20,9 @@
     "analysis": {
         "start": "Start Analysis",
         "recognize": "Board Recognition",
-        "analyzing": "Analyzing..."
+        "analyzing": "Analyzing...",
+        "emptyBoardTip": "The board is empty. Please place some stones before analyzing.",
+        "reset": "Reset Board"
     },
     "aiGame": {
         "gameSetting": "Game Setting",

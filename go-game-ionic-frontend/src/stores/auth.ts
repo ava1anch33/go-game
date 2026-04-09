@@ -1,4 +1,4 @@
-import { apiLogin, apiLogout, apiLookForUserInfo, apiRegister, uploadAvatarApi } from '@/api'
+import { apiLogin, apiLogout, apiLookForUserInfo, apiRegister, updateUserProfile, uploadAvatarApi } from '@/api'
 import type { User } from '@/types'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
@@ -71,8 +71,18 @@ export const useAuthStore = defineStore('auth', () => {
             reader.onerror = (error) => reject(error)
             reader.readAsDataURL(file)
         })
-        await uploadAvatarApi(base64)
-        await getUserDetail()
+        const { user } = await uploadAvatarApi(base64)
+        currentUser.value = user
+    }
+
+    async function modifyUserProfile(profileData: {
+        firstName?: string
+        lastName?: string
+        phoneCode?: string
+        phone?: string
+    }) {
+        const { user } = await updateUserProfile(profileData)
+        currentUser.value = user
     }
 
     return {
@@ -90,5 +100,6 @@ export const useAuthStore = defineStore('auth', () => {
         clearToken,
         getUserDetail,
         uploadAvatar,
+        modifyUserProfile
     }
 })

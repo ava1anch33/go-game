@@ -66,5 +66,9 @@
         "loginNow": "登录！",
         "go": "开始",
         "join": "加入"
+    },
+    "notFound": {
+        "description": "棋局之外 · 此路不通",
+        "backHome": "返回弈境"
     }
 }

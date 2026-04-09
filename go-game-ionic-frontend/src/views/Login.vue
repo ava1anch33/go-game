@@ -82,12 +82,12 @@
 
 <script setup lang="ts">
 import { IonPage, IonContent, IonItem, IonLabel, IonInput, IonButton } from '@ionic/vue'
-import { showDialog } from '@/components/ui/dialog'
 import { useAuthStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import { reactive, ref } from 'vue'
 import CustomHeader from '@/components/ui/CustomHeader.vue'
 import { useI18n } from 'vue-i18n'
+import { showMessage } from '@/components/ui/modal'
 
 const auth = useAuthStore()
 const router = useRouter()
@@ -109,10 +109,7 @@ const toggleMode = () => {
 
 const handleSubmit = async () => {
     if (!isLogin.value && formData.password !== formData.confirmPassword) {
-        await showDialog({
-            title: t('dialog.errorTitle'),
-            content: t('dialog.pwdMisMatch'),
-        })
+        await showMessage(t('dialog.errorTitle'), t('dialog.pwdMisMatch'))
         return
     }
 
@@ -124,10 +121,7 @@ const handleSubmit = async () => {
         }
         router.replace({ name: 'AiGame' })
     } catch (error: any) {
-        await showDialog({
-            title: t('dialog.errorTitle'),
-            content: error.message || t('dialog.loginOrRegisterFailed'),
-        })
+        await showMessage(t('dialog.errorTitle'), error.message || t('dialog.loginOrRegisterFailed'))
     }
 }
 </script>
