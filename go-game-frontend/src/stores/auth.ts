@@ -1,4 +1,4 @@
-import { apiLogin, apiLogout, apiLookForUserInfo, apiRegister } from '@/api'
+import { apiLogin, apiLogout, apiLookForUserInfo, apiRegister, changePassword, updateUserProfile, uploadAvatarApi } from '@/api'
 import type { User } from '@/types'
 
 export const useAuthStore = defineStore('auth', () => {
@@ -7,7 +7,7 @@ export const useAuthStore = defineStore('auth', () => {
 
 	function hasToken(): boolean {
 		syncTokenWithStore()
-		return Boolean(token.value)
+		return token.value !== null
 	}
 
 	function setToken(newToken: string) {
@@ -65,6 +65,32 @@ export const useAuthStore = defineStore('auth', () => {
 		}
 	}
 
+	async function uploadAvatar(file: File) {
+        const base64 = await new Promise<Base64URLString>((resolve, reject) => {
+            const reader = new FileReader()
+            reader.onload = () => resolve(reader.result as string)
+            reader.onerror = (error) => reject(error)
+            reader.readAsDataURL(file)
+        })
+        const { user } = await uploadAvatarApi(base64)
+        currentUser.value = user
+    }
+
+    async function modifyUserProfile(profileData: {
+        firstName?: string
+        lastName?: string
+        phoneCode?: string
+        phone?: string
+    }) {
+        const { user } = await updateUserProfile(profileData)
+        currentUser.value = user
+    }
+
+	async function updatePassword({ currentPassword, newPassword }: { currentPassword: string; newPassword: string }) {
+		const { user } = await changePassword(currentPassword, newPassword)
+		currentUser.value = user
+	}
+
 	return {
 		get token() {
 			return token
@@ -79,5 +105,9 @@ export const useAuthStore = defineStore('auth', () => {
 		setToken,
 		clearToken,
 		getUserDetail,
+		uploadAvatar,
+		modifyUserProfile,
+		syncTokenWithStore,
+		updatePassword
 	}
 })

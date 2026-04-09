@@ -169,3 +169,5 @@ const http = HttpClient.getInstance()
 export const FetchGet = <T>(url: string, opt?: HttpOptions) => http.get<T>(url, opt)
 
 export const FetchPost = <T>(url: string, options?: HttpOptions) => http.post<T>(url, options)
+
+export const FetchPut = <T>(url: string, options?: HttpOptions) => http.put<T>(url, options)

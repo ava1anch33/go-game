@@ -45,9 +45,17 @@ async function uploadAvatar(req, res, next) {
     try {
         const { file: avatar } = req.body
         const user = await userService.updateUserAvatar(req.user.id, avatar)
-        successResponse(res, {
-            user,
-        })
+        successResponse(res, { user })
+    } catch (error) {
+        next(error)
+    }
+}
+
+async function changePassword(req, res, next) {
+    try {
+        const { currentPassword, newPassword } = req.body
+        const user = await userService.changePassword(req.user.id, currentPassword, newPassword)
+        successResponse(res, { user })
     } catch (error) {
         next(error)
     }
@@ -58,4 +66,5 @@ export default {
     updateUserInfo,
     uploadAvatar,
     logout,
+    changePassword
 }

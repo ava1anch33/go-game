@@ -53,13 +53,24 @@ class UserService {
     }
 
     async updateUser(id, updateData) {
-        const updated = await userRepository.updateById(id, updateData);
-        return this.handleUpdateFailed(updated)
+        return await this.handleUpdateFailed(id, updateData)
     }
 
     async updateUserAvatar(id, avatar) {
-        const updated = await userRepository.updateById(id, { avatar })
-        return this.handleUpdateFailed(updated)
+        return await this.handleUpdateFailed(id, { avatar })
+    }
+
+    async changePassword(id, currentPassword, newPassword) {
+        const user = await userRepository.findByIdAll(id)
+        if (!user) {
+            throw new AppError('User not found', 404, 'USER_NOT_FOUND')
+        }
+        const isMatch = await bcrypt.compare(currentPassword, user.password)
+        if (!isMatch) {
+            throw new AppError('Current password is incorrect', 400, 'INCORRECT_PASSWORD')
+        }
+        const hashedNewPassword = await bcrypt.hash(newPassword, 12)
+        return await this.handleUpdateFailed(id, { password: hashedNewPassword })
     }
 
     handleUserNotFound(user) {
@@ -69,7 +80,8 @@ class UserService {
         return user
     }
 
-    handleUpdateFailed(updated) {
+    async handleUpdateFailed(id, updateData) {
+        const updated = await userRepository.updateById(id, updateData)
         if (!updated) {
             throw new AppError('User not found', 404, 'USER_NOT_FOUND')
         } 

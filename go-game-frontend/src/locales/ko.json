@@ -18,11 +18,15 @@
         "firstName": "이름",
         "phoneCode": "국가코드",
         "phone": "전화번호",
-        "sync": "바둑판 동기화",
+        "syncPersonalInfo": "개인 정보 저장",
         "security": "보안",
         "google": "Google",
         "github": "GitHub",
         "changePassword": "비밀번호 변경",
+        "currentPassword": "현재 비밀번호",
+        "newPassword": "새 비밀번호",
+        "confirmNewPassword": "새 비밀번호 확인",
+        "infoMisMatch": "개인 정보가 일치하지 않습니다. 확인 후 다시 시도해주세요",
         "logout": "로그아웃"
     },
     "game": {
@@ -73,5 +77,11 @@
     "notFound": {
         "description": "바둑판 밖 · 통행 금지",
         "backHome": "바둑 경계로 돌아가기"
-     }
+    },
+    "dialog": {
+        "errorTitle": "오류",
+        "successTitle": "성공",
+        "updateSuccess": "개인 정보가 성공적으로 업데이트되었습니다",
+        "updateFailed": "업데이트 실패, 나중에 다시 시도해 주세요"
+    }
 }

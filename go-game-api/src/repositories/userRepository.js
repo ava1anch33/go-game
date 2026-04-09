@@ -5,6 +5,10 @@ class UserRepository {
         return User.findById(id).select('-password')
     }
 
+    async findByIdAll(id) {
+        return User.findById(id).select('+password')
+    }
+
     async findByEmail(email) {
         return User.findOne({ email }).select('+password')
     }

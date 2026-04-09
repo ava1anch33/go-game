@@ -1,11 +1,9 @@
 export interface User {
 	email: string
 	role: string
-	profile: {
-		avatar: Blob
-		phoneCode: string
-		phone: string
-		firstName: string
-		LastName: string
-	}
+	avatar: Base64URLString
+	phoneCode: string
+	phone: string
+	firstName: string
+	lastName: string
 }

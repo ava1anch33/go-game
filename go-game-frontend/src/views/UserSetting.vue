@@ -2,25 +2,87 @@
 import { useAuthStore } from '@/stores'
 import { useI18n } from 'vue-i18n'
 import Button from '@/components/ui/CustomButton.vue'
+import { showDialog } from '@/components/ui/dialog'
 
 const { t } = useI18n()
 const auth = useAuthStore()
 const user = computed(() => auth.user)
+const fileUploadRef = ref<HTMLInputElement | null>(null)
+const defaultAvatar = 'https://ionicframework.com/docs/img/demos/avatar.svg'
+const avatar = ref(user.value?.avatar || defaultAvatar)
 
 const form = reactive({
-	firstName: '',
-	lastName: '',
-	phoneCode: '',
-	phone: '',
+	firstName: user.value?.firstName || '',
+	lastName: user.value?.lastName || '',
+	phoneCode: user.value?.phoneCode || '',
+	phone: user.value?.phone || '',
 })
 
-onMounted(() => {
-	if (!user.value) return
-	Object.assign(form, user.value.profile || {})
+const pwdForm = reactive({
+	currentPassword: '',
+	newPassword: '',
+	confirmNewPassword: '',
 })
+
+watch(
+	() => auth.user,
+	(newUser) => {
+		avatar.value = newUser?.avatar || defaultAvatar
+		Object.assign(form, newUser || {})
+	}
+)
+
+const handleAvatarUpload = async (event: Event) => {
+    const target = event.target as HTMLInputElement
+    const file = target.files?.[0]
+
+    if (!file) return
+
+    const reader = new FileReader()
+    reader.onload = (e) => {
+        avatar.value = e.target?.result as string
+    }
+    reader.readAsDataURL(file)
+    await auth.uploadAvatar(file)
+}
 
 const save = async () => {
-	//   await auth.updateProfile({ profile: { ...form } })
+	await auth.modifyUserProfile({
+		firstName: form.firstName,
+		lastName: form.lastName,
+		phoneCode: form.phoneCode,
+		phone: form.phone,
+	})
+
+	await showDialog({
+		title: t('dialog.successTitle'),
+		content: t('dialog.updateSuccess'),
+	})
+}
+
+const updatePassword = async () => {
+	try {
+		if (pwdForm.newPassword !== pwdForm.confirmNewPassword) {
+			showDialog({
+				title: t('dialog.errorTitle'),
+				content: t('setting.infoMisMatch'),
+			})
+			return
+		}
+		await auth.updatePassword({
+			currentPassword: pwdForm.currentPassword,
+			newPassword: pwdForm.newPassword,
+		})
+		showDialog({
+			title: t('dialog.successTitle'),
+			content: t('setting.updateSuccess'),
+		})
+	} catch (error) {
+		showDialog({
+			title: t('dialog.errorTitle'),
+			content: (error as Error).message || t('setting.updateFailed'),
+		})
+	}
 }
 </script>
 
@@ -29,12 +91,23 @@ const save = async () => {
 		<div class="setting-panel">
 			<section class="hud profile">
 				<div class="avatar">
-					<div class="stone white" />
+					<input 
+						ref="fileUploadRef" 
+						type="file"
+                        accept="image/*"
+                        hidden
+						@change="handleAvatarUpload"
+					>
+					<img
+						class="user-avatar"
+						:src="avatar" 
+						alt="avatar" 
+						@click="fileUploadRef?.click()"
+					/>
 				</div>
 
 				<div class="identity">
 					<div class="email">{{ user?.email }}</div>
-					<div class="role">{{ user?.role.toUpperCase() }}</div>
 				</div>
 			</section>
 
@@ -47,28 +120,19 @@ const save = async () => {
 					<input v-model="form.phoneCode" :placeholder="t('setting.phoneCode')" />
 					<input v-model="form.phone" :placeholder="t('setting.phone')" />
 				</div>
-
-				<Button type="primary" @click="save">{{ t('setting.sync') }}</Button>
+				<Button type="primary" @click="save">{{ t('setting.syncPersonalInfo') }}</Button>
 			</section>
 
-			<!-- 安全 -->
 			<section class="hud security">
 				<h3>{{ t('setting.security') }}</h3>
-
-				<div class="oauth">
-					<span>{{ t('setting.google') }}</span>
-					<i :class="user?.googleId ? 'stone white' : 'stone empty'" />
+				<div class="grid">
+					<input v-model="pwdForm.currentPassword" :placeholder="t('setting.currentPassword')" />
+					<input v-model="pwdForm.newPassword" :placeholder="t('setting.newPassword')" />
+					<input v-model="pwdForm.confirmNewPassword" :placeholder="t('setting.confirmNewPassword')" />
 				</div>
-
-				<div class="oauth">
-					<span>{{ t('setting.github') }}</span>
-					<i :class="user?.githubId ? 'stone white' : 'stone empty'" />
-				</div>
-
-				<Button type="secondary">{{ t('setting.changePassword') }}</Button>
+				<Button type="secondary" @click="updatePassword">{{ t('setting.changePassword') }}</Button>
 			</section>
 
-			<!-- 危险区 -->
 			<section class="hud danger">
 				<Button type="danger" @click="auth.logout">{{ t('setting.logout') }}</Button>
 			</section>
@@ -117,6 +181,14 @@ const save = async () => {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+.user-avatar {
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	object-fit: cover;
+	border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
 .identity .email {

@@ -18,11 +18,15 @@
         "firstName": "First Name",
         "phoneCode": "Code",
         "phone": "Phone",
-        "sync": "Sync Board",
+        "syncPersonalInfo": "Sync Personal Info",
         "security": "Security",
         "google": "Google",
         "github": "GitHub",
         "changePassword": "Change Password",
+        "currentPassword": "Current Password",
+        "newPassword": "New Password",
+        "confirmNewPassword": "Confirm New Password",
+        "infoMisMatch": "Personal information mismatch, please check and try again",
         "logout": "Logout"
     },
     "game": {
@@ -73,5 +77,11 @@
     "notFound": {
         "description": "Out of the board · No passage",
         "backHome": "Back to Go Realm"
+    },
+    "dialog": {
+        "errorTitle": "Error",
+        "successTitle": "Success",
+        "updateSuccess": "Personal information updated successfully",
+        "updateFailed": "Update failed, please try again later"
     }
 }

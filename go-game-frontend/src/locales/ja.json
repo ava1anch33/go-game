@@ -18,11 +18,15 @@
         "firstName": "名",
         "phoneCode": "国コード",
         "phone": "電話番号",
-        "sync": "棋盤同期",
+        "syncPersonalInfo": "個人情報を保存",
         "security": "セキュリティ",
         "google": "Google",
         "github": "GitHub",
         "changePassword": "パスワード変更",
+        "currentPassword": "現在のパスワード",
+        "newPassword": "新しいパスワード",
+        "confirmNewPassword": "新しいパスワードを確認",
+        "infoMisMatch": "個人情報が一致しません。確認して再試行してください",
         "logout": "退出"
     },
     "game": {
@@ -73,5 +77,11 @@
     "notFound": {
         "description": "盤外 · ここは通れません",
         "backHome": "囲碁境に戻る"
+    },
+    "dialog": {
+        "errorTitle": "エラー",
+        "successTitle": "成功",
+        "updateSuccess": "個人情報が正常に更新されました",
+        "updateFailed": "更新に失敗しました。後でもう一度お試しください"
     }
 }

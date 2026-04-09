@@ -10,7 +10,8 @@ const route = useRoute()
 const router = useRouter()
 const { t } = useI18n()
 
-const avatarUrl = ref<string | null>(null)
+const defaultAvatar = 'https://ionicframework.com/docs/img/demos/avatar.svg'
+
 const objectUrl = ref<string | null>(null)
 const showUserMenu = ref(false)
 
@@ -44,50 +45,6 @@ const currentPageTitle = computed(() => {
 	return found ? found.label : t('home.title')
 })
 
-// Load user avatar
-const updateAvatar = () => {
-	const avatarData = auth.user?.profile?.avatar
-
-	if (objectUrl.value) {
-		URL.revokeObjectURL(objectUrl.value)
-		objectUrl.value = null
-	}
-	avatarUrl.value = null
-
-	if (!avatarData) return
-
-	if (typeof avatarData === 'string') {
-		const strData = avatarData as string
-		if (strData.startsWith('data:image')) {
-			avatarUrl.value = strData
-			return
-		}
-		console.warn('Unknown string avatar format')
-		return
-	}
-
-	try {
-		let blob: Blob
-		if (avatarData instanceof Blob) {
-			blob = avatarData
-		} else if (avatarData instanceof ArrayBuffer || ArrayBuffer.isView(avatarData)) {
-			blob = new Blob([avatarData], { type: 'image/jpeg' })
-		} else {
-			console.warn('Unknown avatar data type')
-			return
-		}
-
-		objectUrl.value = URL.createObjectURL(blob)
-		avatarUrl.value = objectUrl.value
-	} catch (e) {
-		console.error('Failed to load avatar:', e)
-	}
-}
-
-const handleImageError = () => {
-	avatarUrl.value = null
-}
-
 const toggleUserMenu = () => {
 	showUserMenu.value = !showUserMenu.value
 }
@@ -100,28 +57,33 @@ const goToSetting = () => {
 	closeUserMenu()
 }
 
-// Logout (i18n supported)
 const handleLogout = async () => {
 	closeUserMenu()
 	await auth.logout()
 	router.push('/login')
 }
 
-// Responsive layout for small screens
 const updateResponsive = () => {
 	if (window.innerWidth < 900) {
 		sidebarCollapsed.value = true
 	}
 }
 
+onBeforeMount(async () => {
+	auth.syncTokenWithStore()
+	if (!auth.hasToken()) {
+		router.replace('/login')
+	} else if (!auth.user) {
+		await auth.getUserDetail()
+	}
+})
+
 onMounted(() => {
-	updateAvatar()
 	updateResponsive()
 	window.addEventListener('resize', updateResponsive)
 })
 
 onUnmounted(() => {
-	if (objectUrl.value) URL.revokeObjectURL(objectUrl.value)
 	window.removeEventListener('resize', updateResponsive)
 })
 </script>
@@ -166,33 +128,14 @@ onUnmounted(() => {
 					<div class="user-profile" v-click-outside="closeUserMenu">
 						<div class="avatar-wrapper" @click="toggleUserMenu">
 							<img
-								v-if="avatarUrl"
-								:src="avatarUrl"
-								alt="avatar"
 								class="user-avatar"
-								@error="handleImageError"
+								:src="(auth.user?.avatar) || defaultAvatar" 
+								alt="avatar" 
 							/>
-							<svg v-else viewBox="0 0 120 120" class="user-avatar default-avatar">
-								<defs>
-									<radialGradient id="bg" cx="50%" cy="50%" r="55%">
-										<stop offset="0%" stop-color="#667eea" />
-										<stop offset="70%" stop-color="#764ba2" />
-										<stop offset="100%" stop-color="#5a367a" />
-									</radialGradient>
-								</defs>
-								<circle
-									cx="60"
-									cy="60"
-									r="58"
-									fill="url(#bg)"
-									stroke="#a78bfa"
-									stroke-width="2"
-								/>
-							</svg>
 						</div>
 
 						<span class="welcome" @click="toggleUserMenu">
-							{{ $t('home.welcome') }}{{ auth.user?.profile?.LastName || 'Client' }}
+							{{ $t('home.welcome') }}{{ auth.user?.lastName || 'Client' }}
 						</span>
 
 						<!-- User dropdown menu with i18n logout text -->

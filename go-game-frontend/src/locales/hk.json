@@ -18,11 +18,15 @@
         "firstName": "名",
         "phoneCode": "區號",
         "phone": "手機號",
-        "sync": "同步棋盤",
+        "syncPersonalInfo": "保存個人信息",
         "security": "安全連接",
         "google": "Google",
         "github": "GitHub",
         "changePassword": "修改密碼",
+        "currentPassword": "當前密碼",
+        "newPassword": "新密碼",
+        "confirmNewPassword": "確認新密碼",
+        "infoMisMatch": "個人信息不匹配，請檢查後重試",
         "logout": "落子 · 退出"
     },
     "game": {
@@ -73,5 +77,11 @@
     "notFound": {
         "description": "棋局之外 · 此路不通",
         "backHome": "返回弈境"
+    },
+    "dialog": {
+        "errorTitle": "錯誤",
+        "successTitle": "成功",
+        "updateSuccess": "個人信息更新成功",
+        "updateFailed": "更新失敗，請稍後再試"
     }
 }
