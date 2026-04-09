@@ -44,3 +44,17 @@ export const loadingDirective: Directive<HTMLElement, boolean> = {
 		delete (el as any)._loadingEl
 	},
 }
+
+export const vClickOutside: Directive = {
+	mounted(el, binding) {
+		el._clickOutside = (event: MouseEvent) => {
+			if (!(el === event.target || el.contains(event.target as Node))) {
+				binding.value()
+			}
+		}
+		document.addEventListener('click', el._clickOutside)
+	},
+	unmounted(el) {
+		document.removeEventListener('click', el._clickOutside)
+	},
+}

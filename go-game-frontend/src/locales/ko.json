@@ -69,5 +69,9 @@
     },
     "auth": {
         "logout": "로그아웃"
-    }
+    },
+    "notFound": {
+        "description": "바둑판 밖 · 통행 금지",
+        "backHome": "바둑 경계로 돌아가기"
+     }
 }

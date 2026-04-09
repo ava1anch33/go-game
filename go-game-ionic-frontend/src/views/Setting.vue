@@ -105,9 +105,8 @@ import { ref, onMounted, reactive, computed } from 'vue'
 import { useAuthStore } from '@/stores'
 import { useRouter } from 'vue-router'
 import CustomHeader from '@/components/ui/CustomHeader.vue'
-import { showDialog } from '@/components/ui/dialog'
 import { useI18n } from 'vue-i18n'
-import { updateUserProfile } from '@/api'
+import { showMessage } from '@/components/ui/modal'
 
 const auth = useAuthStore()
 const router = useRouter()
@@ -165,19 +164,12 @@ const saveProfile = async () => {
             phoneCode: user.countryCode,
             phone: user.phone,
         }
-        await updateUserProfile(profileData)
-
-        await showDialog({
-            title: t('dialog.successTitle'),
-            content: t('dialog.updateSuccess'),
-        })
+        await auth.modifyUserProfile(profileData)
+        await showMessage(t('dialog.successTitle'), t('dialog.updateSuccess'))
     } catch (err) {
-        await showDialog({
-            title: t('dialog.errorTitle'),
-            content: t('dialog.updateFailed'),
-        })
+        await showMessage(t('dialog.successTitle'), t('dialog.updateSuccess'))
     } finally {
-        saving.value = false
+        // saving.value = false
     }
 }
 
@@ -188,11 +180,11 @@ const logout = async () => {
 
 onMounted(() => {
     Object.assign(user, {
-        avatar: auth.user?.profile.avatar || defaultAvatar,
-        firstName: auth.user?.profile.firstName || '',
-        lastName: auth.user?.profile.lastName || '',
-        countryCode: auth.user?.profile.phoneCode || '+852',
-        phone: auth.user?.profile.phone || '',
+        avatar: auth.user?.avatar || defaultAvatar,
+        firstName: auth.user?.firstName || '',
+        lastName: auth.user?.lastName || '',
+        countryCode: auth.user?.phoneCode || '+852',
+        phone: auth.user?.phone || '',
     })
 })
 </script>

@@ -20,7 +20,9 @@
     "analysis": {
         "start": "開始分析",
         "recognize": "棋盤識別",
-        "analyzing": "分析中..."
+        "analyzing": "分析中...",
+        "emptyBoardTip": "棋盤為空，請先下子再進行分析",
+        "reset": "重置棋盤"
     },
     "aiGame": {
         "gameSetting": "遊戲設定",

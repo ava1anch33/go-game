@@ -69,5 +69,9 @@
     },
     "auth": {
         "logout": "Log Out"
+    },
+    "notFound": {
+        "description": "Out of the board · No passage",
+        "backHome": "Back to Go Realm"
     }
 }

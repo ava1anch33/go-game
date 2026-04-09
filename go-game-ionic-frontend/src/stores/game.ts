@@ -414,6 +414,15 @@ export const useGameStore = defineStore('game', () => {
         toggleChanged()
     }
 
+    function isBoardEmpty(): boolean {
+        for (let i = 0; i < board.length; i++) {
+            if (board[i] !== Stone.Empty) {
+                return false
+            }
+        }
+        return true
+    }
+
     return {
         // state
         size,
@@ -434,5 +443,6 @@ export const useGameStore = defineStore('game', () => {
         createNewGame,
         getAiThinking,
         analystImgGame,
+        isBoardEmpty,
     }
 })

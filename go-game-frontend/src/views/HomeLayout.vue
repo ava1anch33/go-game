@@ -1,22 +1,9 @@
 <script setup lang="ts">
 import { useAuthStore } from '@/stores'
 import { useRoute, useRouter } from 'vue-router'
-import { ref, computed, onMounted, onUnmounted, type Directive } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import LanguageSwitcher from '@/components/LanguageSwitcher.vue'
-
-// Click outside to close directive
-const vClickOutside: Directive = {
-	mounted(el, binding) {
-		el._clickOutside = (e: MouseEvent) => {
-			if (!el.contains(e.target as Node)) binding.value()
-		}
-		document.addEventListener('click', el._clickOutside)
-	},
-	unmounted(el) {
-		document.removeEventListener('click', el._clickOutside)
-	},
-}
 
 const auth = useAuthStore()
 const route = useRoute()

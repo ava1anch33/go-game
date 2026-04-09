@@ -4,10 +4,11 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 import i18n from './i18n'
-import { loadingDirective } from './utils'
+import { loadingDirective, vClickOutside } from './utils'
 
 const app = createApp(App)
 app.directive('loading', loadingDirective)
+app.directive('click-outside', vClickOutside)
 app.use(i18n)
 app.use(createPinia())
 app.use(router)

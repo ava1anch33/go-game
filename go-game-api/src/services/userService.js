@@ -44,54 +44,32 @@ class UserService {
 
     async getUserById(id) {
         const user = await userRepository.findById(id)
-        if (!user) {
-            throw new AppError('User not found', 404, 'USER_NOT_FOUND')
-        }
-        return user
+        return this.handleUserNotFound(user)
     }
 
     async getUserByEmail(email) {
         const user = await userRepository.findByEmail(email)
+        return this.handleUserNotFound(user)
+    }
+
+    async updateUser(id, updateData) {
+        const updated = await userRepository.updateById(id, updateData);
+        return this.handleUpdateFailed(updated)
+    }
+
+    async updateUserAvatar(id, avatar) {
+        const updated = await userRepository.updateById(id, { avatar })
+        return this.handleUpdateFailed(updated)
+    }
+
+    handleUserNotFound(user) {
         if (!user) {
             throw new AppError('User not found', 404, 'USER_NOT_FOUND')
         }
         return user
     }
 
-    async updateUser(id, updateData) {
-        const forbiddenFields = ['passwd', 'role', 'googleId', 'wechatId', 'githubId', 'email'];
-
-        forbiddenFields.forEach((field) => delete updateData[field]);
-
-        const updatePayload = {};
-
-        if (updateData.profile && typeof updateData.profile === 'object') {
-            const safeProfileFields = { ...updateData.profile };
-
-            delete safeProfileFields.avatar;
-
-            Object.keys(safeProfileFields).forEach(key => {
-                updatePayload[`profile.${key}`] = safeProfileFields[key];
-            });
-        }
-
-        if (Object.keys(updatePayload).length === 0) {
-            throw new AppError('No valid fields to update in profile', 400, 'NO_VALID_UPDATE_FIELDS');
-        }
-
-        const updated = await userRepository.updateById(id, {
-            $set: updatePayload
-        });
-
-        if (!updated) {
-            throw new AppError('User not found', 404, 'USER_NOT_FOUND');
-        }
-
-        return updated;
-    }
-
-    async updateUserAvatar(id, avatar) {
-        const updated = await userRepository.updateById(id, { 'profile.avatar': avatar })
+    handleUpdateFailed(updated) {
         if (!updated) {
             throw new AppError('User not found', 404, 'USER_NOT_FOUND')
         } 

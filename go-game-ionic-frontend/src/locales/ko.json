@@ -20,7 +20,9 @@
     "analysis": {
         "start": "분석 시작",
         "recognize": "바둑판 인식",
-        "analyzing": "분석 중..."
+        "analyzing": "분석 중...",
+        "emptyBoardTip": "바둑판이 비어 있습니다. 분석하기 전에 돌을 놓아주세요.",
+        "reset": "바둑판 초기화"
     },
     "aiGame": {
         "gameSetting": "게임 설정",

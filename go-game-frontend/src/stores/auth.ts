@@ -59,7 +59,10 @@ export const useAuthStore = defineStore('auth', () => {
 			if (res) {
 				currentUser.value = res.user
 			}
-		} catch {}
+		} catch {
+			localStorage.clear()
+			window.location.href = '/login'
+		}
 	}
 
 	return {

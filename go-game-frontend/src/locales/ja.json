@@ -69,5 +69,9 @@
     },
     "auth": {
         "logout": "ログアウト"
+    },
+    "notFound": {
+        "description": "盤外 · ここは通れません",
+        "backHome": "囲碁境に戻る"
     }
 }
